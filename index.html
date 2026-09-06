@@ -7,7 +7,7 @@
 <style>
 :root{--bg:#09131f;--panel:#132235;--panel2:#1b2d43;--gold:#b99a55;--text:#f7f5ef;--muted:#9fb0c3;--blue:#2469a8;--blue2:#0e4d82;--line:#54728e;--accent:#e04e2f}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 10%,#29445a 0,#0c1d2b 42%,#07111b 100%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic UI",Meiryo,sans-serif;min-height:100vh}
-button,input{font:inherit}.app{max-width:900px;margin:auto;padding:14px 12px 40px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.title{font-size:20px;font-weight:800;letter-spacing:.04em}.branch-btn{display:flex;align-items:center;gap:10px;border:1px solid #5f7690;background:linear-gradient(#1a2a3e,#0c1725);color:#fff;border-radius:12px;padding:9px 13px;font-weight:800;box-shadow:inset 0 0 0 1px #182536}.branch-icon{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#46375c;border:2px solid #a68c52}.branch-icon span{font-size:16px}.db-note{font-size:11px;color:var(--muted);text-align:right;line-height:1.35}.formation-tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin:10px 0 2px;padding:5px;border:1px solid #2d465e;border-radius:13px;background:#0b1825cc;position:sticky;top:0;z-index:8;backdrop-filter:blur(8px)}.formation-tab{min-width:0;border:1px solid #36506a;background:linear-gradient(#182b3e,#112234);color:#aebed0;border-radius:9px;padding:8px 3px;font-size:12px;font-weight:800;white-space:nowrap}.formation-tab.active{color:#fff;border-color:#c7a85f;background:linear-gradient(#5a4725,#2d291f);box-shadow:inset 0 0 0 1px #e3c87555,0 0 12px #0006}.formation-tab .tab-num{display:block;font-size:14px;line-height:1.1}.formation-tab .tab-sub{display:block;margin-top:2px;font-size:9px;color:#91a6bb}.formation-tab.active .tab-sub{color:#f3dfae}.reset-actions{display:flex;justify-content:flex-end;gap:8px;margin:8px 2px 0}.reset-btn{border:1px solid #4c6278;background:linear-gradient(#182b3e,#0e1d2c);color:#d8e2ec;border-radius:9px;padding:7px 11px;font-size:11px;font-weight:800}.reset-btn.current{border-color:#8a6f3f;color:#f1d9a1}.reset-btn.all{border-color:#8d4a46;color:#f3b2aa;background:linear-gradient(#3a2024,#24151a)}.reset-btn:active{transform:translateY(1px)}@media(max-width:520px){.reset-actions{justify-content:stretch}.reset-btn{flex:1;padding:8px 6px;font-size:10px}}.formation{position:relative;margin-top:12px;border:1px solid rgba(185,154,85,.3);border-radius:18px;padding:20px 10px 16px;overflow:hidden;background:
+button,input{font:inherit}.app{max-width:900px;margin:auto;padding:14px 12px 40px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.title{font-size:20px;font-weight:800;letter-spacing:.04em}.branch-btn{display:flex;align-items:center;gap:10px;border:1px solid #5f7690;background:linear-gradient(#1a2a3e,#0c1725);color:#fff;border-radius:12px;padding:9px 13px;font-weight:800;box-shadow:inset 0 0 0 1px #182536}.branch-icon{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#46375c;border:2px solid #a68c52}.branch-icon span{font-size:16px}.db-note{font-size:11px;color:var(--muted);text-align:right;line-height:1.35}.formation-tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin:10px 0 2px;padding:5px;border:1px solid #2d465e;border-radius:13px;background:#0b1825cc;position:sticky;top:0;z-index:8;backdrop-filter:blur(8px)}.formation-tab{min-width:0;border:1px solid #36506a;background:linear-gradient(#182b3e,#112234);color:#aebed0;border-radius:9px;padding:8px 3px;font-size:12px;font-weight:800;white-space:nowrap}.formation-tab.active{color:#fff;border-color:#c7a85f;background:linear-gradient(#5a4725,#2d291f);box-shadow:inset 0 0 0 1px #e3c87555,0 0 12px #0006}.formation-tab .tab-num{display:block;font-size:14px;line-height:1.1}.formation-tab .tab-sub{display:block;margin-top:2px;font-size:9px;color:#91a6bb}.formation-tab.active .tab-sub{color:#f3dfae}.reset-actions{display:flex;justify-content:flex-end;gap:8px;margin:8px 2px 0}.reset-btn{border:1px solid #4c6278;background:linear-gradient(#182b3e,#0e1d2c);color:#d8e2ec;border-radius:9px;padding:7px 11px;font-size:11px;font-weight:800}.reset-btn.current{border-color:#8a6f3f;color:#f1d9a1}.reset-btn.all{border-color:#8d4a46;color:#f3b2aa;background:linear-gradient(#3a2024,#24151a)}.reset-btn:active{transform:translateY(1px)}.save-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:8px 2px 0}.save-btn{border:1px solid #3e617d;background:linear-gradient(#18334b,#102437);color:#e4eef7;border-radius:9px;padding:8px 8px;font-size:11px;font-weight:800}.save-btn.save{border-color:#557b59;color:#dff2cf}.save-btn.load{border-color:#88733d;color:#ffe3a0}.save-btn.export{border-color:#536e91;color:#cce5ff}.save-status{grid-column:1/-1;min-height:16px;text-align:right;font-size:10px;color:#91a6bb;padding-right:2px}.save-btn:active{transform:translateY(1px)}@media(max-width:520px){.reset-actions{justify-content:stretch}.reset-btn{flex:1;padding:8px 6px;font-size:10px}.save-actions{gap:6px}.save-btn{padding:8px 4px;font-size:10px}.save-status{text-align:left}}.formation{position:relative;margin-top:12px;border:1px solid rgba(185,154,85,.3);border-radius:18px;padding:20px 10px 16px;overflow:hidden;background:
 radial-gradient(circle at 26% 16%,rgba(216,79,48,.22),transparent 34%),
 radial-gradient(circle at 76% 16%,rgba(31,131,216,.24),transparent 34%),
 linear-gradient(90deg,rgba(110,53,36,.33) 0 49.7%,rgba(0,86,125,.30) 50.3% 100%),
@@ -40,6 +40,8 @@ linear-gradient(#163047,#081622);min-height:560px;box-shadow:inset 0 0 70px #000
   <div id="formationTabs" class="formation-tabs" aria-label="編制タブ"></div>
 
   <div class="reset-actions" aria-label="リセット操作"><button id="resetCurrent" class="reset-btn current">表示中の編制をリセット</button><button id="resetAll" class="reset-btn all">全編制をリセット</button></div>
+
+  <div class="save-actions" aria-label="編制の保存・出力・読み出し"><button id="saveFormation" class="save-btn save">編制を保存</button><button id="loadFormation" class="save-btn load">保存を読み出し</button><button id="exportFormation" class="save-btn export">ファイル出力</button><div id="saveStatus" class="save-status"></div></div>
 
   <div class="formation">
     <div class="side-mark attack">攻</div><div class="side-mark defense">防</div>
@@ -87,6 +89,9 @@ linear-gradient(#163047,#081622);min-height:560px;box-shadow:inset 0 0 70px #000
   <div class="sheet-head"><h3 id="modalTitle">武将選択</h3><button id="closeModal" class="close">閉じる</button></div>
   <input id="search" class="search" type="search" placeholder="武将名・技能・縁で検索" />
   <div class="filterbar"><button data-filter="all" class="active">すべて</button><button data-filter="S">適性S</button><button data-filter="A+">A以上</button></div>
+  <div id="commanderSkillFilter" class="filterbar commander-skill-filter" style="display:none"><span class="sort-label">大将発動技能</span><button data-commander-skill="" class="active">指定なし</button><button data-commander-skill="慧眼">慧眼</button><button data-commander-skill="兵家">兵家</button><button data-commander-skill="柱石">柱石</button><button data-commander-skill="求心">求心</button><button data-commander-skill="威光">威光</button><button data-commander-skill="大勇">大勇</button><button data-commander-skill="俊才">俊才</button><button data-commander-skill="強襲">強襲</button><button data-commander-skill="牽引">牽引</button><button data-commander-skill="速攻">速攻</button></div>
+  <div id="deputySkillFilter" class="filterbar deputy-skill-filter" style="display:none"><span class="sort-label">副将発動技能</span><button data-deputy-skill="" class="active">指定なし</button><button data-deputy-skill="忠義">忠義</button><button data-deputy-skill="参謀">参謀</button><button data-deputy-skill="牽引">牽引</button><button data-deputy-skill="速攻">速攻</button></div>
+  <div id="assistSkillFilter" class="filterbar assist-skill-filter" style="display:none"><span class="sort-label">与力発動技能</span><button data-assist-skill="" class="active">指定なし</button><button data-assist-skill="忠義">忠義</button><button data-assist-skill="参謀">参謀</button></div>
   <div class="filterbar tiefilterbar"><span class="sort-label">縁一致</span><button data-min-ties="0" class="active">指定なし</button><button data-min-ties="2">2個以上</button></div>
   <div class="sortbar"><span class="sort-label">並び順</span><button data-sort="default" class="active">標準</button><button data-sort="chain">連鎖率</button><button data-sort="ties">縁一致数</button></div>
   <div id="candidates" class="candidates"></div>
@@ -102,7 +107,7 @@ const roles=["大将","副将1","副将2","与力1","与力2","与力3","与力4
 const makeSelected=()=>Object.fromEntries(roles.map(r=>[r,null]));
 const formationStates=Array.from({length:6},()=>({branch:"騎馬",selected:makeSelected()}));
 let activeFormation=0;
-let branch=formationStates[0].branch; let selected=formationStates[0].selected; let activeRole=null; let filter="all"; let sortMode="default"; let minTieMatches=0;
+let branch=formationStates[0].branch; let selected=formationStates[0].selected; let activeRole=null; let filter="all"; let sortMode="default"; let minTieMatches=0; let commanderSkill=""; let deputySkill=""; let assistSkill="";
 const DOMESTIC_SKILLS=new Set(["兵站","口利","大漁","振興","農業","伐採","石工","治金","利殖","兵心","練磨","巡見","警戒","監督","能吏","人脈","宰相"]);
 let excludeDomesticSkills=false;
 const gradeRank={S:5,A:4,B:3,C:2,D:1};
@@ -110,18 +115,22 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 function clean(v){return v===null||v===undefined||v===""?"未登録":v}
 function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]))}
 function renderDBNote(){const ur=DB.filter(x=>x['レアリティ']==='UR').length;const ssr=DB.filter(x=>x['レアリティ']==='SSR').length;$('#dbNote').innerHTML=`DB登録 ${DB.length}名（UR ${ur}名 / SSR ${ssr}名）<br>6編制をタブ切替`;}
-function selectedNames(){return new Set(formationStates.flatMap(s=>Object.values(s.selected).filter(Boolean).map(x=>x["武将名"])))}
+function generalIdentityKey(name){
+  return String(name||'').normalize('NFKC').replace(/\s+/g,'').replace(/^(?:UR|SSR|SR|R)[・:_\-]*/i,'').replace(/[（(][^）)]*[）)]$/,'').trim();
+}
+function selectedNames(){return new Set(formationStates.flatMap(s=>Object.values(s.selected).filter(Boolean).map(x=>generalIdentityKey(x["武将名"]))))}
 function findGeneralUsage(name){
+  const key=generalIdentityKey(name);
   for(let fi=0;fi<formationStates.length;fi++){
     const state=formationStates[fi];
     for(const role of roles){
       const x=state.selected[role];
-      if(x&&x['武将名']===name)return {formation:fi,role};
+      if(x&&generalIdentityKey(x['武将名'])===key)return {formation:fi,role,general:x};
     }
   }
   return null;
 }
-function openPicker(role){activeRole=role; $('#modalTitle').textContent=role+'の武将を選択'; $('#search').value=''; filter='all'; sortMode='default'; minTieMatches=0; $$('.filterbar:not(.tiefilterbar) button').forEach((b,i)=>b.classList.toggle('active',i===0)); $$('.tiefilterbar button').forEach(b=>b.classList.toggle('active',b.dataset.minTies==='0')); $$('.sortbar button').forEach(b=>b.classList.toggle('active',b.dataset.sort==='default')); renderCandidates(); $('#modal').classList.add('open')}
+function openPicker(role){activeRole=role; $('#modalTitle').textContent=role+'の武将を選択'; $('#search').value=''; filter='all'; sortMode='default'; minTieMatches=0; commanderSkill=''; deputySkill=''; assistSkill=''; $$('.filterbar:not(.tiefilterbar):not(.commander-skill-filter):not(.deputy-skill-filter):not(.assist-skill-filter) button').forEach((b,i)=>b.classList.toggle('active',i===0)); $$('.tiefilterbar button').forEach(b=>b.classList.toggle('active',b.dataset.minTies==='0')); $$('.commander-skill-filter button').forEach(b=>b.classList.toggle('active',b.dataset.commanderSkill==='')); $$('.deputy-skill-filter button').forEach(b=>b.classList.toggle('active',b.dataset.deputySkill==='')); $$('.assist-skill-filter button').forEach(b=>b.classList.toggle('active',b.dataset.assistSkill==='')); $('#commanderSkillFilter').style.display=role==='大将'?'flex':'none'; $('#deputySkillFilter').style.display=(role==='副将1'||role==='副将2')?'flex':'none'; $('#assistSkillFilter').style.display=role.startsWith('与力')?'flex':'none'; $$('.sortbar button').forEach(b=>b.classList.toggle('active',b.dataset.sort==='default')); renderCandidates(); $('#modal').classList.add('open')}
 function closePicker(){ $('#modal').classList.remove('open') }
 function candidateMatch(x,q){const hay=[x['武将名'],x['技能1'],x['技能2'],x['技能3'],x['技能4'],x['縁1'],x['縁2'],x['縁3'],x['縁4'],x['縁5']].filter(Boolean).join(' ').toLowerCase();return hay.includes(q.toLowerCase())}
 function chooseGeneral(x){
@@ -130,7 +139,9 @@ function chooseGeneral(x){
     if(usage.formation===activeFormation&&usage.role===activeRole){closePicker();return;}
     const from=`編制${usage.formation+1}・${usage.role}`;
     const to=`編制${activeFormation+1}・${activeRole}`;
-    if(!confirm(`${x['武将名']}は「${from}」で使用中です。\n「${to}」へ移動しますか？`))return;
+    const usedName=usage.general?.['武将名']||x['武将名'];
+    const sameBase=usedName!==x['武将名']?`（同名武将：${usedName}）`:'';
+    if(!confirm(`${x['武将名']}${sameBase}は「${from}」で使用中です。\n「${to}」へ移動しますか？`))return;
     formationStates[usage.formation].selected[usage.role]=null;
   }
   selected[activeRole]=x;
@@ -167,6 +178,9 @@ function renderCandidates(){
   const q=$('#search').value.trim();
   let arr=DB.filter(x=>!q||candidateMatch(x,q));
   arr=arr.filter(x=>filter==='all'||(filter==='S'?x[branch]==='S':(gradeRank[x[branch]]||0)>=4));
+  if(activeRole==='大将'&&commanderSkill)arr=arr.filter(x=>[x['技能1'],x['技能2'],x['技能3'],x['技能4']].includes(commanderSkill));
+  if((activeRole==='副将1'||activeRole==='副将2')&&deputySkill)arr=arr.filter(x=>[x['技能1'],x['技能2'],x['技能3'],x['技能4']].includes(deputySkill));
+  if(activeRole&&activeRole.startsWith('与力')&&assistSkill)arr=arr.filter(x=>[x['技能1'],x['技能2'],x['技能3'],x['技能4']].includes(assistSkill));
   const metrics=new Map(arr.map(x=>[x,candidateMetrics(x)]));
   if(minTieMatches>0)arr=arr.filter(x=>metrics.get(x).ties>=minTieMatches);
   const defaultCompare=(a,b)=>(gradeRank[b[branch]]||0)-(gradeRank[a[branch]]||0)||((b['天賦']||0)-(a['天賦']||0))||a['武将名'].localeCompare(b['武将名'],'ja');
@@ -191,7 +205,7 @@ function clearRole(role){selected[role]=null;renderAll()}
 function renderSlots(){ $$('.slot').forEach(el=>{const role=el.dataset.role,x=selected[role];el.classList.toggle('empty',!x);el.classList.toggle('filled',!!x);el.querySelector('.name').textContent=x?x['武将名']:'武将を選択';el.querySelector('.apt').textContent=x?`${branch} ${clean(x[branch])}`:''}) }
 function tally(fieldNames){const m=new Map();Object.values(selected).filter(Boolean).forEach(x=>fieldNames.forEach(f=>{const v=x[f];if(v)m.set(v,(m.get(v)||0)+1)}));return [...m.entries()].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],'ja'))}
 function renderSummary(){const arr=Object.values(selected).filter(Boolean);$('#countStat').textContent=`${arr.length}/7`;$('#sStat').textContent=arr.filter(x=>x[branch]==='S').length;$('#aStat').textContent=arr.filter(x=>(gradeRank[x[branch]]||0)>=4).length;const ties=tally(['縁1','縁2','縁3','縁4','縁5']).filter(x=>x[1]>=2);$('#ties').innerHTML=ties.length?ties.map(([k,v])=>`<span class="chip shared">${k} ×${v}</span>`).join(''):'<span class="placeholder">共通する縁はまだありません</span>';const allSkills=tally(['技能1','技能2','技能3','技能4']);const skills=allSkills.filter(([k])=>!(excludeDomesticSkills&&DOMESTIC_SKILLS.has(k)));$('#skills').innerHTML=skills.length?skills.map(([k,v])=>`<span class="chip">${escapeHtml(k)}${v>1?' ×'+v:''}</span>`).join(''):'<span class="placeholder">表示する技能がありません</span>'}
-const chainEdges=[["大将","副将1"],["大将","副将2"],["副将1","与力1"],["副将1","与力2"],["副将2","与力3"],["副将2","与力4"]];
+const chainEdges=[["大将","副将1"],["副将1","与力1"],["副将1","与力2"],["大将","副将2"],["副将2","与力3"],["副将2","与力4"]];
 function num(v){if(v===null||v===undefined||v==='')return null;const n=parseFloat(String(v).replace('%',''));return Number.isFinite(n)?n:null}
 function formatRate(v){return `${Math.round(v*10)/10}%`}
 // 縁ランクは画像受領後にここへ順次登録。例: '織田家':'A'
@@ -371,11 +385,77 @@ function resetAllFormations(){
   closePicker();
   renderAll();
 }
+const SAVE_KEY='hadouFormationSaveV1';
+function makeSaveData(){
+  formationStates[activeFormation].branch=branch;
+  formationStates[activeFormation].selected=selected;
+  return {
+    app:'信長覇道 編制シミュレーター',version:1,savedAt:new Date().toISOString(),activeFormation,
+    excludeDomesticSkills,
+    formations:formationStates.map(state=>({branch:state.branch,selected:Object.fromEntries(roles.map(role=>[role,state.selected[role]?.['武将名']||null]))}))
+  };
+}
+function setSaveStatus(text){const el=$('#saveStatus');if(el)el.textContent=text;}
+function saveFormationData(){
+  try{
+    const data=makeSaveData();
+    localStorage.setItem(SAVE_KEY,JSON.stringify(data));
+    const d=new Date(data.savedAt);
+    setSaveStatus(`保存済み：${d.toLocaleString('ja-JP')}`);
+  }catch(e){alert('編制を保存できませんでした。ブラウザの保存設定をご確認ください。');}
+}
+function applySaveData(data){
+  if(!data||!Array.isArray(data.formations))throw new Error('invalid');
+  for(let i=0;i<formationStates.length;i++){
+    const src=data.formations[i]||{};
+    const nextSelected=makeSelected();
+    const names=src.selected||{};
+    for(const role of roles){
+      const name=names[role];
+      nextSelected[role]=name?DB.find(x=>x['武将名']===name)||null:null;
+    }
+    formationStates[i].branch=branches[src.branch]?src.branch:'騎馬';
+    formationStates[i].selected=nextSelected;
+  }
+  activeFormation=Math.max(0,Math.min(5,Number.isInteger(data.activeFormation)?data.activeFormation:0));
+  branch=formationStates[activeFormation].branch;
+  selected=formationStates[activeFormation].selected;
+  excludeDomesticSkills=!!data.excludeDomesticSkills;
+  $('#excludeDomestic').checked=excludeDomesticSkills;
+  $('#branchLabel').textContent=branch;$('#branchGlyph').textContent=branches[branch];
+  activeRole=null;closePicker();renderAll();
+}
+function loadFormationData(){
+  const raw=localStorage.getItem(SAVE_KEY);
+  if(!raw){alert('保存されている編制がありません。');return;}
+  if(!confirm('保存済みの編制を読み出して、現在の入力内容を置き換えますか？'))return;
+  try{
+    const data=JSON.parse(raw);applySaveData(data);
+    const d=data.savedAt?new Date(data.savedAt):null;
+    setSaveStatus(d&&!isNaN(d)?`読み出し：${d.toLocaleString('ja-JP')}`:'保存データを読み出しました');
+  }catch(e){alert('保存データを読み出せませんでした。');}
+}
+function exportFormationData(){
+  try{
+    const data=makeSaveData();
+    const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    const d=new Date();
+    const pad=n=>String(n).padStart(2,'0');
+    a.href=url;a.download=`信長覇道_編制_${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}.json`;
+    document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    setSaveStatus('編制ファイルを出力しました');
+  }catch(e){alert('編制ファイルを出力できませんでした。');}
+}
+function showExistingSaveStatus(){
+  try{const raw=localStorage.getItem(SAVE_KEY);if(!raw)return;const data=JSON.parse(raw);if(data.savedAt){const d=new Date(data.savedAt);if(!isNaN(d))setSaveStatus(`保存あり：${d.toLocaleString('ja-JP')}`);}}catch(e){}
+}
 function renderAll(){formationStates[activeFormation].branch=branch;formationStates[activeFormation].selected=selected;renderFormationTabs();renderSlots();renderSummary();renderChains();renderDetails()}
 function renderBranchMenu(){const grid=$('#branchGrid');grid.innerHTML=Object.keys(branches).map(k=>`<button class="branch-choice ${k===branch?'active':''}" data-b="${k}">${branches[k]}　${k}</button>`).join('');$$('.branch-choice').forEach(b=>b.onclick=()=>{branch=b.dataset.b;formationStates[activeFormation].branch=branch;$('#branchLabel').textContent=branch;$('#branchGlyph').textContent=branches[branch];$('#branchMenu').classList.remove('open');renderAll()})}
 $$('.slot').forEach(el=>{el.addEventListener('click',e=>{if(e.target.classList.contains('clear')){e.stopPropagation();clearRole(el.dataset.role)}else openPicker(el.dataset.role)});el.querySelector('.clear').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();clearRole(el.dataset.role)})});
 $('#excludeDomestic').addEventListener('change',e=>{excludeDomesticSkills=e.target.checked;renderSummary()});
-$('#closeModal').onclick=closePicker;$('#modal').addEventListener('click',e=>{if(e.target===$('#modal'))closePicker()});$('#search').addEventListener('input',renderCandidates);$$('.filterbar:not(.tiefilterbar) button').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;$$('.filterbar:not(.tiefilterbar) button').forEach(x=>x.classList.toggle('active',x===b));renderCandidates()});$$('.tiefilterbar button').forEach(b=>b.onclick=()=>{minTieMatches=+b.dataset.minTies;$$('.tiefilterbar button').forEach(x=>x.classList.toggle('active',x===b));renderCandidates()});$$('.sortbar button').forEach(b=>b.onclick=()=>{sortMode=b.dataset.sort;$$('.sortbar button').forEach(x=>x.classList.toggle('active',x===b));renderCandidates()});$('#resetCurrent').onclick=resetCurrentFormation;$('#resetAll').onclick=resetAllFormations;$('#branchBtn').onclick=()=>{renderBranchMenu();$('#branchMenu').classList.add('open')};$('#branchMenu').addEventListener('click',e=>{if(e.target===$('#branchMenu'))$('#branchMenu').classList.remove('open')});renderDBNote();
-renderAll();
+$('#closeModal').onclick=closePicker;$('#modal').addEventListener('click',e=>{if(e.target===$('#modal'))closePicker()});$('#search').addEventListener('input',renderCandidates);$$('.filterbar:not(.tiefilterbar):not(.commander-skill-filter):not(.deputy-skill-filter):not(.assist-skill-filter) button').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;$$('.filterbar:not(.tiefilterbar):not(.commander-skill-filter):not(.deputy-skill-filter):not(.assist-skill-filter) button').forEach(x=>x.classList.toggle('active',x===b));renderCandidates()});$$('.commander-skill-filter button').forEach(b=>b.onclick=()=>{commanderSkill=b.dataset.commanderSkill||'';$$('.commander-skill-filter button').forEach(x=>x.classList.toggle('active',x===b));renderCandidates()});$$('.deputy-skill-filter button').forEach(b=>b.onclick=()=>{deputySkill=b.dataset.deputySkill||'';$$('.deputy-skill-filter button').forEach(x=>x.classList.toggle('active',x===b));renderCandidates()});$$('.assist-skill-filter button').forEach(b=>b.onclick=()=>{assistSkill=b.dataset.assistSkill||'';$$('.assist-skill-filter button').forEach(x=>x.classList.toggle('active',x===b));renderCandidates()});$$('.tiefilterbar button').forEach(b=>b.onclick=()=>{minTieMatches=+b.dataset.minTies;$$('.tiefilterbar button').forEach(x=>x.classList.toggle('active',x===b));renderCandidates()});$$('.sortbar button').forEach(b=>b.onclick=()=>{sortMode=b.dataset.sort;$$('.sortbar button').forEach(x=>x.classList.toggle('active',x===b));renderCandidates()});$('#resetCurrent').onclick=resetCurrentFormation;$('#resetAll').onclick=resetAllFormations;$('#saveFormation').onclick=saveFormationData;$('#loadFormation').onclick=loadFormationData;$('#exportFormation').onclick=exportFormationData;$('#branchBtn').onclick=()=>{renderBranchMenu();$('#branchMenu').classList.add('open')};$('#branchMenu').addEventListener('click',e=>{if(e.target===$('#branchMenu'))$('#branchMenu').classList.remove('open')});renderDBNote();
+renderAll();showExistingSaveStatus();
 </script>
 </body></html>
