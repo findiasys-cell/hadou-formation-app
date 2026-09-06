@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>信長覇道 編制シミュレーター</title>
+<style>
+:root{--bg:#09131f;--panel:#132235;--panel2:#1b2d43;--gold:#b99a55;--text:#f7f5ef;--muted:#9fb0c3;--blue:#2469a8;--blue2:#0e4d82;--line:#54728e;--accent:#e04e2f}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 10%,#29445a 0,#0c1d2b 42%,#07111b 100%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic UI",Meiryo,sans-serif;min-height:100vh}
+button,input{font:inherit}.app{max-width:900px;margin:auto;padding:14px 12px 40px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.title{font-size:20px;font-weight:800;letter-spacing:.04em}.branch-btn{display:flex;align-items:center;gap:10px;border:1px solid #5f7690;background:linear-gradient(#1a2a3e,#0c1725);color:#fff;border-radius:12px;padding:9px 13px;font-weight:800;box-shadow:inset 0 0 0 1px #182536}.branch-icon{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#46375c;border:2px solid #a68c52}.branch-icon span{font-size:16px}.db-note{font-size:11px;color:var(--muted);text-align:right;line-height:1.35}.formation-tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin:10px 0 2px;padding:5px;border:1px solid #2d465e;border-radius:13px;background:#0b1825cc;position:sticky;top:0;z-index:8;backdrop-filter:blur(8px)}.formation-tab{min-width:0;border:1px solid #36506a;background:linear-gradient(#182b3e,#112234);color:#aebed0;border-radius:9px;padding:8px 3px;font-size:12px;font-weight:800;white-space:nowrap}.formation-tab.active{color:#fff;border-color:#c7a85f;background:linear-gradient(#5a4725,#2d291f);box-shadow:inset 0 0 0 1px #e3c87555,0 0 12px #0006}.formation-tab .tab-num{display:block;font-size:14px;line-height:1.1}.formation-tab .tab-sub{display:block;margin-top:2px;font-size:9px;color:#91a6bb}.formation-tab.active .tab-sub{color:#f3dfae}.formation{position:relative;margin-top:12px;border:1px solid rgba(185,154,85,.3);border-radius:18px;padding:20px 10px 16px;overflow:hidden;background:
+radial-gradient(circle at 26% 16%,rgba(216,79,48,.22),transparent 34%),
+radial-gradient(circle at 76% 16%,rgba(31,131,216,.24),transparent 34%),
+linear-gradient(90deg,rgba(110,53,36,.33) 0 49.7%,rgba(0,86,125,.30) 50.3% 100%),
+linear-gradient(#163047,#081622);min-height:560px;box-shadow:inset 0 0 70px #0008}.formation:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(transparent,rgba(255,255,255,.10),transparent)}
+.formation:after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(110deg,transparent 0 22px,rgba(255,255,255,.012) 23px 24px);mix-blend-mode:screen}
+.side-mark{position:absolute;top:70px;z-index:1;color:rgba(255,255,255,.13);font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"MS PMincho",serif;font-size:126px;font-weight:900;line-height:1;text-shadow:0 2px 10px #0009;pointer-events:none;transform:rotate(-7deg)}.side-mark.attack{left:18px}.side-mark.defense{right:20px;transform:rotate(7deg)}
+ .formation-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:visible}.formation-lines .glow{fill:none;stroke:rgba(93,205,220,.18);stroke-width:1.8;vector-effect:non-scaling-stroke}.formation-lines .line{fill:none;stroke:rgba(101,196,211,.70);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;filter:url(#lineGlow)}.formation-lines .left-line{stroke:rgba(213,137,104,.68)}.formation-lines .node{fill:#d9c27b;stroke:#24384b;stroke-width:.7;vector-effect:non-scaling-stroke}.formation-lines .joint{fill:#7bc3cf;stroke:#173348;stroke-width:.7;vector-effect:non-scaling-stroke}
+.slot{position:absolute;z-index:2;width:116px;min-height:88px;border:2px solid #a6946b;border-radius:18px;background:linear-gradient(#263b53,#1a2a3e);color:#fff;padding:9px 7px;text-align:center;box-shadow:0 2px 8px #0007,inset 0 0 0 2px #152235;cursor:pointer;transform:translateX(-50%)}.slot.empty{color:#c6cfda}.slot .role{font-size:12px;color:#d8d8d8}.slot .name{font-size:14px;font-weight:800;margin-top:6px;line-height:1.25}.slot .apt{font-size:11px;margin-top:4px;color:#f4d98a}.slot .clear{position:absolute;right:-6px;top:-7px;width:22px;height:22px;border:0;border-radius:50%;background:#e25135;color:#fff;font-weight:800;display:none}.slot.filled .clear{display:block}
+/* 参考画像に近い段配置 */
+.main{left:50%;top:28px}.sub1{left:28%;top:215px}.sub2{left:72%;top:215px}.assist1{left:12%;bottom:34px}.assist2{left:37%;bottom:34px}.assist3{left:63%;bottom:34px}.assist4{left:88%;bottom:34px}
+.flag-group{position:absolute;z-index:3;left:50%;top:145px;transform:translateX(-50%);width:min(360px,48%);min-width:300px;padding:12px 14px 13px;border:1px solid rgba(154,132,87,.35);border-radius:10px;background:linear-gradient(180deg,rgba(23,30,43,.88),rgba(12,20,32,.78));box-shadow:0 5px 18px #0008,inset 0 0 0 1px rgba(255,255,255,.04)}
+.flag-group:before{content:"";position:absolute;inset:0;border-radius:10px;background:radial-gradient(circle at 50% 0,rgba(89,89,126,.18),transparent 60%);pointer-events:none}.flag-row{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.flag-slot{position:relative;transform:none!important;left:auto!important;top:auto!important;width:100%;min-height:76px;border-radius:12px;padding:8px 5px}.flag-slot .role{font-size:12px}.flag-slot .name{font-size:12px;margin-top:5px}.flag-slot .apt{font-size:10px}
+.summary{margin-top:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:linear-gradient(#182c42,#102033);border:1px solid #2f4b66;border-radius:12px;padding:10px;text-align:center}.stat b{display:block;font-size:18px}.stat span{font-size:11px;color:var(--muted)}
+.chain-list{display:grid;gap:8px}.chain-row{border:1px solid #2a4158;border-radius:12px;padding:10px;background:#132235}.chain-head{display:flex;justify-content:space-between;gap:10px;align-items:center}.chain-pair{font-weight:800;font-size:13px}.chain-rate{font-size:18px;font-weight:900;color:#f4d98a}.chain-calc{margin-top:5px;font-size:11px;line-height:1.45;color:#9fb0c3}.chain-pending{color:#f7b088}.section{margin-top:16px;background:#0c1826cc;border:1px solid #263e56;border-radius:14px;padding:12px}.section h2{font-size:15px;margin:0 0 10px}.chips{display:flex;gap:6px;flex-wrap:wrap}.chip{font-size:12px;padding:6px 8px;border:1px solid #425970;border-radius:999px;background:#17283a}.chip.shared{border-color:#b99a55;color:#ffe8a8;background:#342d1f}.detail-list{display:grid;gap:8px}.detail{border:1px solid #2a4158;border-radius:12px;padding:10px;background:#132235}.detail-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.detail-name{font-weight:800}.detail-role{font-size:11px;color:#a8bdd2}.row{margin-top:6px;font-size:12px;line-height:1.45;color:#d9e2eb}.label{color:#92abc1}.warn{color:#f7b088}.placeholder{color:#7f92a5;font-size:12px}
+.modal{position:fixed;inset:0;background:#000b;display:none;align-items:flex-end;z-index:20}.modal.open{display:flex}.sheet{background:#102033;width:100%;max-height:88vh;border-radius:18px 18px 0 0;padding:12px;overflow:auto;border-top:1px solid #415a72}.sheet-head{display:flex;justify-content:space-between;align-items:center;gap:8px;position:sticky;top:-12px;background:#102033;padding:8px 0;z-index:2}.sheet-head h3{margin:0;font-size:16px}.close{border:0;background:#263a4e;color:#fff;border-radius:9px;padding:7px 10px}.search{width:100%;border:1px solid #36506a;border-radius:10px;padding:10px;background:#0a1521;color:white;margin-bottom:8px}.filterbar{display:flex;gap:6px;margin-bottom:8px}.filterbar button{border:1px solid #36506a;background:#17283a;color:#dfe8f0;border-radius:999px;padding:6px 9px;font-size:12px}.filterbar button.active{background:#215c8c;border-color:#5e9ed0}.candidates{display:grid;gap:7px}.cand{border:1px solid #2a4158;background:#16293c;color:#fff;border-radius:12px;padding:10px;text-align:left}.cand-top{display:flex;justify-content:space-between;gap:10px}.grade{font-weight:900;color:#f4d98a}.cand small{color:#9eb2c5}.disabled{opacity:.4}
+.branch-menu{position:fixed;inset:0;background:#0009;display:none;z-index:25;align-items:center;justify-content:center;padding:20px}.branch-menu.open{display:flex}.branch-card{width:min(430px,100%);background:#102033;border:1px solid #445d76;border-radius:16px;padding:14px}.branch-card h3{margin:0 0 10px}.branch-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.branch-choice{padding:13px;border-radius:12px;border:1px solid #3a5169;background:#182b3e;color:#fff;font-weight:800}.branch-choice.active{border-color:#c8aa64;background:#3a3020}.foot{margin-top:14px;color:#8296aa;font-size:11px;line-height:1.5}
+@media(max-width:560px){.app{padding-left:8px;padding-right:8px}.formation-tabs{gap:3px;padding:4px}.formation-tab{padding:7px 1px;font-size:10px;border-radius:7px}.formation-tab .tab-num{font-size:12px}.formation-tab .tab-sub{display:none}.title{font-size:17px}.formation{min-height:500px;padding-left:4px;padding-right:4px}.side-mark{top:78px;font-size:88px}.side-mark.attack{left:4px}.side-mark.defense{right:4px}.slot{width:80px;min-height:72px;border-radius:14px;padding:7px 4px}.slot .role{font-size:10px}.slot .name{font-size:10px}.slot .apt{font-size:9px}.main{top:20px}.flag-group{top:125px;width:58%;min-width:210px;padding:8px;}.flag-row{gap:6px}.flag-slot{width:100%;min-height:62px;padding:6px 3px;border-radius:10px}.flag-slot .role{font-size:9px}.flag-slot .name{font-size:9px}.flag-slot .apt{font-size:8px}.sub1{left:27%;top:195px}.sub2{left:73%;top:195px}.assist1{left:12%;bottom:28px}.assist2{left:37%;bottom:28px}.assist3{left:63%;bottom:28px}.assist4{left:88%;bottom:28px}.summary{grid-template-columns:repeat(2,1fr)}.formation-lines .line{stroke-width:2}.formation-lines .glow{stroke-width:1.5}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div>
+      <div class="title">信長覇道 編制シミュレーター</div>
+      <button id="branchBtn" class="branch-btn"><span class="branch-icon"><span id="branchGlyph">♞</span></span><span id="branchLabel">騎馬</span><span>変更</span></button>
+    </div>
+    <div class="db-note">DB: UR武将54名<br>6編制をタブ切替</div>
+  </div>
+
+  <div id="formationTabs" class="formation-tabs" aria-label="編制タブ"></div>
+
+  <div class="formation">
+    <div class="side-mark attack">攻</div><div class="side-mark defense">防</div>
+    <svg class="formation-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <filter id="lineGlow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="0.32" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <!-- 大将 → 副将 -->
+      <path class="glow" d="M50 19 L50 25 L28 25 L28 38 M50 19 L50 25 L72 25 L72 38"/>
+      <path class="line left-line" d="M50 19 L50 25 L28 25 L28 38"/>
+      <path class="line" d="M50 19 L50 25 L72 25 L72 38"/>
+      <!-- 副将1 → 与力1・2 -->
+      <path class="glow" d="M28 54 L28 63 L12 63 L12 78 M28 54 L28 63 L37 63 L37 78"/>
+      <path class="line left-line" d="M28 54 L28 63 L12 63 L12 78"/>
+      <path class="line left-line" d="M28 54 L28 63 L37 63 L37 78"/>
+      <!-- 副将2 → 与力3・4 -->
+      <path class="glow" d="M72 54 L72 63 L63 63 L63 78 M72 54 L72 63 L88 63 L88 78"/>
+      <path class="line" d="M72 54 L72 63 L63 63 L63 78"/>
+      <path class="line" d="M72 54 L72 63 L88 63 L88 78"/>
+      <circle class="node" cx="50" cy="25" r="0.75"/><circle class="joint" cx="28" cy="63" r="0.65"/><circle class="joint" cx="72" cy="63" r="0.65"/>
+    </svg>
+    <button class="slot main empty" data-role="大将"><span class="role">大将</span><div class="name">武将を選択</div><div class="apt"></div><span class="clear">×</span></button>
+    <button class="slot sub1 empty" data-role="副将1"><span class="role">副将1</span><div class="name">武将を選択</div><div class="apt"></div><span class="clear">×</span></button>
+    <button class="slot sub2 empty" data-role="副将2"><span class="role">副将2</span><div class="name">武将を選択</div><div class="apt"></div><span class="clear">×</span></button>
+    <button class="slot assist1 empty" data-role="与力1"><span class="role">与力1</span><div class="name">武将を選択</div><div class="apt"></div><span class="clear">×</span></button>
+    <button class="slot assist2 empty" data-role="与力2"><span class="role">与力2</span><div class="name">武将を選択</div><div class="apt"></div><span class="clear">×</span></button>
+    <button class="slot assist3 empty" data-role="与力3"><span class="role">与力3</span><div class="name">武将を選択</div><div class="apt"></div><span class="clear">×</span></button>
+    <button class="slot assist4 empty" data-role="与力4"><span class="role">与力4</span><div class="name">武将を選択</div><div class="apt"></div><span class="clear">×</span></button>
+  </div>
+
+  <div class="summary">
+    <div class="stat"><b id="countStat">0/7</b><span>編制人数</span></div>
+    <div class="stat"><b id="sStat">0</b><span>選択兵科 S人数</span></div>
+    <div class="stat"><b id="aStat">0</b><span>選択兵科 A以上</span></div>
+  </div>
+
+  <div class="section"><h2>上下接続の連鎖率</h2><div id="chains" class="chain-list"><span class="placeholder">上下でつながる武将を選択すると連鎖率を計算します</span></div></div>
+  <div class="section"><h2>共通する縁</h2><div id="ties" class="chips"><span class="placeholder">武将を2名以上選ぶと共通の縁を表示します</span></div></div>
+  <div class="section"><h2>技能一覧</h2><div id="skills" class="chips"><span class="placeholder">選択した武将の技能を集計します</span></div></div>
+  <div class="section"><h2>武将別データ</h2><div id="details" class="detail-list"><span class="placeholder">各枠をタップして武将を選択してください</span></div></div>
+  <div class="foot">※ 連鎖率は「下の武将の基礎連鎖 + (上の武将の発動間隔 - 下の武将の発動間隔) / 5 + 縁一致補正 + 技能補正」で計算します。縁一致補正は Aランク=12%、Bランク=8%、Cランク=4%。縁ランクは今後送信いただく画像から登録し、一致した縁ごとに補正を加算します。未登録の縁は0%として扱います。技能補正は、柱石（大将時：Ⅰ+3%／Ⅱ+4%／Ⅲ+6%）、求心（大将時：大将と同じ縁を持つ他武将人数×Ⅰ1%／Ⅱ1.25%／Ⅲ1.5%）、紐帯（連鎖する側の武将が所持時+2%）を自動反映します。同名技能が複数ある場合は部隊内の所持人数を技能Lvとして最大IIIまで判定します。</div>
+</div>
+
+<div id="modal" class="modal"><div class="sheet">
+  <div class="sheet-head"><h3 id="modalTitle">武将選択</h3><button id="closeModal" class="close">閉じる</button></div>
+  <input id="search" class="search" type="search" placeholder="武将名・技能・縁で検索" />
+  <div class="filterbar"><button data-filter="all" class="active">すべて</button><button data-filter="S">適性S</button><button data-filter="A+">A以上</button></div>
+  <div id="candidates" class="candidates"></div>
+</div></div>
+
+<div id="branchMenu" class="branch-menu"><div class="branch-card"><h3>兵科を変更</h3><div id="branchGrid" class="branch-grid"></div></div></div>
+
+<script>
+const DB = [{"武将名":"織田信長(UR)","レアリティ":"UR","天賦":1100,"足軽":"S","騎馬":"A","弓":"S","鉄砲":"A","剣豪":"C","忍者":"C","縁1":"織田家","縁2":"傾奇者","縁3":"茶の湯","縁4":"鷹","縁5":"南蛮趣味","戦法名":"六天魔王・真","戦法効果":"味方3部隊の攻撃・防御・破壊を50%上昇し撃心発生上昇50%を付与。部隊対象は敵3部隊に知略350%攻撃＋混乱、物体対象は対象に破壊350%攻撃＋周囲2部隊に知略350%攻撃と混乱。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"武略","技能2":"監督","技能3":"風雲","技能4":"布武","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/531599"},{"武将名":"武田信玄(UR)","レアリティ":"UR","天賦":1100,"足軽":"A","騎馬":"S","弓":"S","鉄砲":"C","剣豪":"C","忍者":"A","縁1":"武田家","縁2":"幕下","縁3":"源氏","縁4":"虎","縁5":"治水名人","戦法名":"風林火山・真","戦法効果":"味方4部隊の攻撃・防御・武勇・知略を60%上昇し泰然を付与。敵3部隊に知略300%攻撃。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"機略","技能2":"練磨","技能3":"慧眼","技能4":"詭道","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/531598"},{"武将名":"上杉謙信(UR)","レアリティ":"UR","天賦":1100,"足軽":"S","騎馬":"S","弓":"A","鉄砲":"C","剣豪":"A","忍者":"B","縁1":"上杉家","縁2":"平氏","縁3":"軍神","縁4":"龍","縁5":"酒豪","戦法名":"毘沙門天・真","戦法効果":"自部隊の弱化効果を全解除。味方3部隊に金剛3%を3回、戦法速度上昇20%、見切を付与。敵4部隊の強化効果を3つ解除し武勇400%攻撃。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"武略","技能2":"警戒","技能3":"神将","技能4":"神気","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/531597"},{"武将名":"帰蝶(UR)","レアリティ":"UR","天賦":1100,"足軽":"A","騎馬":"B","弓":"S","鉄砲":"S","剣豪":"C","忍者":"C","縁1":"斎藤家","縁2":"織田家","縁3":"姫/巫女","縁4":"女丈夫","縁5":"南蛮趣味","戦法名":"帰蝶の舞・真","戦法効果":"味方3部隊の知略・破壊を30%上昇し、攻撃速度上昇20%・会心威力上昇50%を付与。敵3部隊に同討を付与。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"一心","技能2":"農業","技能3":"仁愛Ⅰ","技能4":"仁愛Ⅱ","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/531596"},{"武将名":"お市(UR)","レアリティ":"UR","天賦":1050,"足軽":"S","騎馬":"S","弓":"A","鉄砲":"B","剣豪":"C","忍者":"C","縁1":"織田家","縁2":"浅井朝倉家","縁3":"姫/巫女","縁4":"教養","縁5":"渉外役","戦法名":"優美高妙・真","戦法効果":"味方3部隊の知略を40%上昇し、硬壁1回・強化打消無効3回・堅固10%を付与。敵3部隊に疑心20%を付与し知略250%攻撃。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"献身","技能2":"利殖","技能3":"慈悲","技能4":"絢爛","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/531595"},{"武将名":"羽柴秀吉(UR)","レアリティ":"UR","天賦":1100,"足軽":"S","騎馬":"B","弓":"S","鉄砲":"B","剣豪":"C","忍者":"C","縁1":"羽柴家","縁2":"織田家","縁3":"築城名人","縁4":"攻城名人","縁5":"治水名人","戦法名":"千成衾・真","戦法効果":"味方3部隊の破壊を100%上昇し、結束30%・攻撃速度上昇20%を付与。敵3部隊に破壊350%攻撃。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"好色","技能2":"早駆","技能3":"求心","技能4":"創意","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/531594"},{"武将名":"柴田勝家(UR)","レアリティ":"UR","天賦":1050,"足軽":"A","騎馬":"S","弓":"B","鉄砲":"A","剣豪":"C","忍者":"C","縁1":"織田家","縁2":"四天王","縁3":"家老","縁4":"鬼/夜叉","縁5":"豪傑","戦法名":"鬼柴田・真","戦法効果":"味方3部隊の攻撃・破壊を30%上昇し高揚25%を付与。敵3部隊に武勇300%攻撃し動揺を付与。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"豪勇","技能2":"警戒","技能3":"発奮","技能4":"牽引","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/531697"},{"武将名":"武田信繁(UR)","レアリティ":"UR","天賦":1000,"足軽":"B","騎馬":"S","弓":"S","鉄砲":"C","剣豪":"C","忍者":"C","縁1":"武田家","縁2":"源氏","縁3":"一門衆","縁4":"副将","縁5":"教養","戦法名":"一言九鼎・真","戦法効果":"味方4部隊の武勇・知略を40%上昇し結束10%を付与。敵2部隊に武勇/知略の高い方を参照した250%攻撃。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"柱石","技能2":"巡見","技能3":"活路","技能4":"機略","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/531696"},{"武将名":"長野業正(UR)","レアリティ":"UR","天賦":1050,"足軽":"S","騎馬":"B","弓":"S","鉄砲":"C","剣豪":"B","忍者":"C","縁1":"上杉家","縁2":"虎","縁3":"長寿","縁4":"籠城名人","縁5":"律義者","戦法名":"上州の黄斑・真","戦法効果":"敵3部隊に知略250%攻撃。味方2部隊に硬壁3回・堅固10%・泰然を付与。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"地利","技能2":"兵心","技能3":"一心","技能4":"守才","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/531691"},{"武将名":"北条綱成(UR)","レアリティ":"UR","天賦":1050,"足軽":"S","騎馬":"S","弓":"B","鉄砲":"C","剣豪":"C","忍者":"C","縁1":"北条家","縁2":"一門衆","縁3":"武辺者","縁4":"豪傑","縁5":"籠城名人","戦法名":"五色備え・真","戦法効果":"自部隊に不退1回を付与。味方3部隊に強化打消無効1回・結束10%を付与。敵3部隊に武勇300%攻撃。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"闘志","技能2":"警戒","技能3":"大勇","技能4":"心突","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/531690"},{"武将名":"藤堂高虎(UR)","レアリティ":"UR","天賦":1000,"足軽":"S","騎馬":"S","弓":"B","鉄砲":"B","剣豪":"C","忍者":"C","縁1":"浅井朝倉家","縁2":"羽柴家","縁3":"巨漢","縁4":"築城名人","縁5":"藩祖","戦法名":"五常の戒・真","戦法効果":"敵4部隊の攻撃・防御・武勇・知略・破壊を30%低下し、敵3部隊に知略250%攻撃。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"功名","技能2":"石工","技能3":"武略","技能4":"速攻","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/531689"},{"武将名":"本多正信(UR)","レアリティ":"UR","天賦":1000,"足軽":"S","騎馬":"A","弓":"A","鉄砲":"C","剣豪":"C","忍者":"C","縁1":"徳川家","縁2":"軍師","縁3":"家老","縁4":"奉行","縁5":"鷹","戦法名":"非常の器・真","戦法効果":"敵3部隊の防御・機動を25%低下。敵4部隊に炎上3%・混乱・同討を付与。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"才気","技能2":"振興","技能3":"封殺","技能4":"速攻","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/531688"},{"武将名":"斎藤朝信(UR)","レアリティ":"UR","天賦":1000,"足軽":"S","騎馬":"S","弓":"B","鉄砲":"C","剣豪":"C","忍者":"C","縁1":"上杉家","縁2":"家老","縁3":"奉行","縁4":"渉外役","縁5":"鍾馗","戦法名":"越後の鍾馗・真","戦法効果":"敵2部隊の知略を30%低下させ萎縮を付与し、武勇/知略の高い方を参照した250%攻撃。味方3部隊の破壊を30%上昇。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"威風","技能2":"兵心","技能3":"応報","技能4":"牽引","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/531687"},{"武将名":"早川殿(UR)","レアリティ":"UR","天賦":1000,"足軽":"S","騎馬":"A","弓":"A","鉄砲":"C","剣豪":"C","忍者":"C","縁1":"北条家","縁2":"今川家","縁3":"平氏","縁4":"姫/巫女","縁5":"女丈夫","戦法名":"双宿双飛・真","戦法効果":"味方3部隊の攻撃・武勇・知略・破壊を50%上昇。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"慈悲","技能2":"農業","技能3":"内助","技能4":"敬愛","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/531686"},{"武将名":"立花道雪(UR)","レアリティ":"UR","天賦":1100,"足軽":"S","騎馬":"A","弓":"B","鉄砲":"S","剣豪":"C","忍者":"C","縁1":"大友家","縁2":"軍神","縁3":"鬼/夜叉","縁4":"武辺者","縁5":"豪傑","戦法名":"鬼道雪・真","戦法効果":"味方3部隊に会心威力上昇75%を付与し通常攻撃威力を3%累加。敵3部隊に武勇/知略の高い方を参照した300%攻撃、防御40%低下、恐慌4%・自滅を付与。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"一心","技能2":"練磨","技能3":"一閃","技能4":"早合","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/537082"},{"武将名":"今川義元(UR)","レアリティ":"UR","天賦":1100,"足軽":"A","騎馬":"A","弓":"S","鉄砲":"C","剣豪":"S","忍者":"C","縁1":"今川家","縁2":"幕下","縁3":"源氏","縁4":"高家","縁5":"教養","戦法名":"海道一の弓取・真","戦法効果":"味方3部隊の攻撃・破壊を40%上昇し高揚30%を付与。敵3部隊に孤立を付与し知略300%攻撃、知略差に応じ最大450%。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"威光","技能2":"監督","技能3":"俊才","技能4":"聡慧","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/539970"},{"武将名":"ねね(UR)","レアリティ":"UR","天賦":1050,"足軽":"S","騎馬":"C","弓":"S","鉄砲":"A","剣豪":"C","忍者":"C","縁1":"羽柴家","縁2":"織田家","縁3":"女丈夫","縁4":"長寿","縁5":"茶の湯","戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/544346"},{"武将名":"UR前田慶次(花の慶次)","レアリティ":"UR","天賦":1100,"足軽":"S","騎馬":"S","弓":"A","鉄砲":"C","剣豪":"A","忍者":"S","縁1":"上杉家","縁2":"傾奇者","縁3":"酒豪","縁4":"巨漢","縁5":"槍名人","戦法名":"大ふへん者・真","戦法効果":"味方4部隊に見切を付与。敵4部隊に萎縮・露呈を付与し武勇300%攻撃。兵科適性S人数とUR将星ランクに応じ威力上昇。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"大勇","技能2":"警戒","技能3":"慶雲","技能4":"彼方","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/546055"},{"武将名":"UR直江兼続(花の慶次)","レアリティ":"UR","天賦":1050,"足軽":"A","騎馬":"S","弓":"S","鉄砲":"C","剣豪":"C","忍者":"C","縁1":"上杉家","縁2":"律義者","縁3":"軍師","縁4":"巨漢","縁5":"家老","戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/546054"},{"武将名":"URまつ(花の慶次)","レアリティ":"UR","天賦":1050,"足軽":"S","騎馬":"A","弓":"B","鉄砲":"S","剣豪":"C","忍者":"C","縁1":"羽柴家","縁2":"姫/巫女","縁3":"女丈夫","縁4":"渉外役","縁5":"教養","戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/546053"},{"武将名":"奥村助右衛門(UR)","レアリティ":"UR","天賦":1100,"足軽":"S","騎馬":"S","弓":"C","鉄砲":"B","剣豪":"A","忍者":"C","縁1":"傾奇者","縁2":"律義者","縁3":"槍名人","縁4":"豪傑","縁5":"家老","戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/548825"},{"武将名":"明智光秀(UR)","レアリティ":"UR","天賦":1100,"足軽":"S","騎馬":"B","弓":"C","鉄砲":"S","剣豪":"C","忍者":"A","縁1":"宗我部明智家","縁2":"四天王","縁3":"教養","縁4":"茶の湯","縁5":"射撃名人","戦法名":"神智明晰・真","戦法効果":"敵2部隊の強化効果をすべて解除。敵3部隊に知略350%攻撃し、防御30%低下・炎上3%・攻撃速度低下20%・混乱を付与。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"機略","技能2":"兵站","技能3":"才気","技能4":"離間","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/546056"},{"武将名":"島津義久(UR)","レアリティ":"UR","天賦":1100,"足軽":"S","騎馬":"C","弓":"B","鉄砲":"S","剣豪":"C","忍者":"B","縁1":"島津家","縁2":"茶の湯","縁3":"教養","縁4":"長寿","縁5":"射撃名人","戦法名":"三州総大将・真","戦法効果":"自部隊に高揚35%・結束20%を付与。味方3部隊に会心威力上昇75%を付与し通常攻撃威力を3%累加。敵3部隊に武勇/知略の高い方で300%攻撃。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"一心","技能2":"人脈","技能3":"鬼気","技能4":"賢兄","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/546057"},{"武将名":"大友宗麟(UR)","レアリティ":"UR","天賦":1100,"足軽":"B","騎馬":"S","弓":"C","鉄砲":"S","剣豪":"C","忍者":"A","縁1":"大友家","縁2":"幕下","縁3":"教養","縁4":"茶の湯","縁5":"南蛮趣味","戦法名":"上下天光・真","戦法効果":"味方3部隊の防御・武勇・知略・破壊を50%上昇し見切を付与。敵3部隊に知略300%攻撃。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"威光","技能2":"監督","技能3":"信心","技能4":"尊護","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/546058"},{"武将名":"鍋島直茂(UR)","レアリティ":"UR","天賦":1050,"足軽":"C","騎馬":"S","弓":"B","鉄砲":"S","剣豪":"B","忍者":"A","縁1":"龍造寺家","縁2":"謀略家","縁3":"軍師","縁4":"家老","縁5":"藩祖","戦法名":"仁王門・真","戦法効果":"味方3部隊の武勇・知略を30%上昇。敵2部隊に武勇/知略の高い方で300%攻撃。自部隊に堅固10%・泰然を付与。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"発奮","技能2":"監督","技能3":"忠義","技能4":"烈撃","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/546212"},{"武将名":"滝川一益(UR)","レアリティ":"UR","天賦":1000,"足軽":"A","騎馬":"A","弓":"B","鉄砲":"S","剣豪":"C","忍者":"S","縁1":"織田家","縁2":"四天王","縁3":"甲賀","縁4":"水軍","縁5":"射撃名人","戦法名":"百発必中・真","戦法効果":"敵2部隊の攻撃を20%低下。敵3部隊に知略200%攻撃。兵科適性Sで発動時、自部隊に高揚50%を付与。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"遠射","技能2":"振興","技能3":"突貫","技能4":"牽引","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/546213"},{"武将名":"宇喜多直家(UR)","レアリティ":"UR","天賦":1050,"足軽":"S","騎馬":"B","弓":"S","鉄砲":"A","剣豪":"C","忍者":"C","縁1":"宇喜多家","縁2":"毛利家","縁3":"織田家","縁4":"下剋上","縁5":"謀略家","戦法名":"暗中飛躍・真","戦法効果":"敵3部隊に病毒3%・混乱を付与し、知略300%攻撃。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"機略","技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/546214"},{"武将名":"龍造寺隆信(UR)","レアリティ":"UR","天賦":1050,"足軽":"S","騎馬":"A","弓":"C","鉄砲":"S","剣豪":"C","忍者":"B","縁1":"龍造寺家","縁2":"謀略家","縁3":"無双","縁4":"巨漢","縁5":"豪傑","戦法名":"肥前の熊・真","戦法効果":"味方3部隊の武勇を40%上昇し戦法威力を3%累加。敵3部隊に武勇300%攻撃し動揺・恐怖を付与。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/546215"},{"武将名":"北条氏康(UR)","レアリティ":"UR","天賦":1100,"足軽":"S","騎馬":"A","弓":"B","鉄砲":"A","剣豪":"C","忍者":"S","縁1":"北条家","縁2":"平氏","縁3":"虎","縁4":"教養","縁5":"籠城名人","戦法名":"理世撫民・真","戦法効果":"味方3部隊の弱化効果を3つ解除し、堅固15%・断策30%・悠然を付与。敵3部隊の強化効果を3つ解除し知略300%攻撃。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/552238"},{"武将名":"朝倉宗滴(UR)","レアリティ":"UR","天賦":1100,"足軽":"S","騎馬":"S","弓":"S","鉄砲":"C","剣豪":"C","忍者":"C","縁1":"浅井朝倉家","縁2":"鷹","縁3":"講談","縁4":"軍師","縁5":"鬼/夜叉","戦法名":"勝事本候・真","戦法効果":"自部隊に見切を付与。敵3部隊の攻撃・武勇・知略を40%低下させ、武勇/知略の高い方で300%攻撃。兵力50%以下で威力上昇、最大600%。大将発動時は敵3部隊の戦法ゲージを15%奪う。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"鬼謀","技能2":"巡見","技能3":"硬骨","技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/558901"},{"武将名":"織田信長(鉄砲/UR)","レアリティ":"UR","天賦":1100,"足軽":"S","騎馬":"C","弓":"A","鉄砲":"S","剣豪":"C","忍者":"C","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/561796"},{"武将名":"上泉信綱(UR)","レアリティ":"UR","天賦":null,"足軽":"S","騎馬":"A","弓":"C","鉄砲":"C","剣豪":"S","忍者":"C","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/561795"},{"武将名":"服部半蔵(UR)","レアリティ":"UR","天賦":null,"足軽":"S","騎馬":"C","弓":"S","鉄砲":"C","剣豪":"C","忍者":"S","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/561794"},{"武将名":"黒田官兵衛(UR)","レアリティ":"UR","天賦":null,"足軽":"S","騎馬":"A","弓":"A","鉄砲":"S","剣豪":"C","忍者":"C","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/561793"},{"武将名":"霧隠才蔵(UR)","レアリティ":"UR","天賦":null,"足軽":"A","騎馬":"B","弓":"S","鉄砲":"C","剣豪":"C","忍者":"S","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/561939"},{"武将名":"宇佐美定満(UR)","レアリティ":"UR","天賦":null,"足軽":"B","騎馬":"A","弓":"S","鉄砲":"C","剣豪":"B","忍者":"A","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/561940"},{"武将名":"山中鹿之介(UR)","レアリティ":"UR","天賦":null,"足軽":"S","騎馬":"A","弓":"B","鉄砲":"C","剣豪":"A","忍者":"C","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/561941"},{"武将名":"山本勘助(UR)","レアリティ":"UR","天賦":null,"足軽":"A","騎馬":"S","弓":"A","鉄砲":"C","剣豪":"B","忍者":"A","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/561942"},{"武将名":"北畠具教(UR)","レアリティ":"UR","天賦":null,"足軽":"S","騎馬":"C","弓":"A","鉄砲":"C","剣豪":"S","忍者":"C","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/561943"},{"武将名":"荒木村重(UR)","レアリティ":"UR","天賦":null,"足軽":"A","騎馬":"C","弓":"S","鉄砲":"S","剣豪":"C","忍者":"C","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/563885"},{"武将名":"立花誾千代(UR)","レアリティ":"UR","天賦":null,"足軽":"A","騎馬":"S","弓":"C","鉄砲":"S","剣豪":"C","忍者":"C","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/566067"},{"武将名":"本願寺顕如(UR)","レアリティ":"UR","天賦":null,"足軽":"S","騎馬":"C","弓":"S","鉄砲":"S","剣豪":"C","忍者":"C","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/568153"},{"武将名":"UR真田幸村(戦国無双)","レアリティ":"UR","天賦":null,"足軽":"S","騎馬":"S","弓":"B","鉄砲":"B","剣豪":"B","忍者":"A","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/570412"},{"武将名":"UR明智光秀(戦国無双)","レアリティ":"UR","天賦":null,"足軽":"S","騎馬":"A","弓":"C","鉄砲":"S","剣豪":"S","忍者":"C","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/570413"},{"武将名":"URお市(戦国無双)","レアリティ":"UR","天賦":null,"足軽":"A","騎馬":"C","弓":"S","鉄砲":"A","剣豪":"C","忍者":"C","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/570416"},{"武将名":"URガラシャ(戦国無双)","レアリティ":"UR","天賦":null,"足軽":"B","騎馬":"A","弓":"S","鉄砲":"A","剣豪":"C","忍者":"A","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/570415"},{"武将名":"くのいち(UR)","レアリティ":"UR","天賦":null,"足軽":"S","騎馬":"A","弓":"S","鉄砲":"C","剣豪":"C","忍者":"S","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/571689"},{"武将名":"徳川家康(UR)","レアリティ":"UR","天賦":null,"足軽":"S","騎馬":"B","弓":"S","鉄砲":"A","剣豪":"C","忍者":"A","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/573662"},{"武将名":"鈴木重秀(UR)","レアリティ":"UR","天賦":null,"足軽":"A","騎馬":"S","弓":"C","鉄砲":"S","剣豪":"C","忍者":"C","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/573661"},{"武将名":"太原雪斎(UR)","レアリティ":"UR","天賦":null,"足軽":"S","騎馬":"B","弓":"S","鉄砲":"A","剣豪":"C","忍者":"C","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/573933"},{"武将名":"蜂須賀小六(UR)","レアリティ":"UR","天賦":null,"足軽":"S","騎馬":"C","弓":"A","鉄砲":"C","剣豪":"C","忍者":"A","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/573934"},{"武将名":"松永久秀(UR)","レアリティ":"UR","天賦":null,"足軽":"S","騎馬":"C","弓":"A","鉄砲":"S","剣豪":"C","忍者":"C","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/573936"},{"武将名":"真田幸隆(UR)","レアリティ":"UR","天賦":null,"足軽":"A","騎馬":"S","弓":"S","鉄砲":"C","剣豪":"C","忍者":"A","縁1":null,"縁2":null,"縁3":null,"縁4":null,"縁5":null,"戦法名":null,"戦法効果":null,"発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":null,"技能2":null,"技能3":null,"技能4":null,"詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/573935"},{"武将名":"斎藤道三(UR)","レアリティ":"UR","天賦":1100,"足軽":"S","騎馬":"B","弓":"B","鉄砲":"S","剣豪":"C","忍者":"A","縁1":"斎藤家","縁2":"僧侶","縁3":"下剋上","縁4":"謀略家","縁5":"講談","戦法名":"乱世の蝮・真","戦法効果":"敵4部隊の防御を40%低下し病毒4%・同討を付与。敵3部隊に知略200%攻撃し、不利状態・能力変化数に応じ威力上昇。","発動間隔":null,"基礎連鎖":null,"連鎖順":null,"技能1":"封殺","技能2":"利殖","技能3":"駆逐","技能4":"睨胆","詳細ページURL":"https://gamewith.jp/nobunaga-hadou/article/show/574663"}];
+const branches={"足軽":"⚔","騎馬":"♞","弓":"弓","鉄砲":"銃","剣豪":"刀","忍者":"✥"};
+const roles=["大将","副将1","副将2","与力1","与力2","与力3","与力4"];
+const makeSelected=()=>Object.fromEntries(roles.map(r=>[r,null]));
+const formationStates=Array.from({length:6},()=>({branch:"騎馬",selected:makeSelected()}));
+let activeFormation=0;
+let branch=formationStates[0].branch; let selected=formationStates[0].selected; let activeRole=null; let filter="all";
+const gradeRank={S:5,A:4,B:3,C:2,D:1};
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+function clean(v){return v===null||v===undefined||v===""?"未登録":v}
+function selectedNames(){return new Set(formationStates.flatMap(s=>Object.values(s.selected).filter(Boolean).map(x=>x["武将名"])))}
+function findGeneralUsage(name){
+  for(let fi=0;fi<formationStates.length;fi++){
+    const state=formationStates[fi];
+    for(const role of roles){
+      const x=state.selected[role];
+      if(x&&x['武将名']===name)return {formation:fi,role};
+    }
+  }
+  return null;
+}
+function openPicker(role){activeRole=role; $('#modalTitle').textContent=role+'の武将を選択'; $('#search').value=''; filter='all'; $$('.filterbar button').forEach((b,i)=>b.classList.toggle('active',i===0)); renderCandidates(); $('#modal').classList.add('open')}
+function closePicker(){ $('#modal').classList.remove('open') }
+function candidateMatch(x,q){const hay=[x['武将名'],x['技能1'],x['技能2'],x['技能3'],x['技能4'],x['縁1'],x['縁2'],x['縁3'],x['縁4'],x['縁5']].filter(Boolean).join(' ').toLowerCase();return hay.includes(q.toLowerCase())}
+function chooseGeneral(x){
+  const usage=findGeneralUsage(x['武将名']);
+  if(usage){
+    if(usage.formation===activeFormation&&usage.role===activeRole){closePicker();return;}
+    const from=`編制${usage.formation+1}・${usage.role}`;
+    const to=`編制${activeFormation+1}・${activeRole}`;
+    if(!confirm(`${x['武将名']}は「${from}」で使用中です。\n「${to}」へ移動しますか？`))return;
+    formationStates[usage.formation].selected[usage.role]=null;
+  }
+  selected[activeRole]=x;
+  formationStates[activeFormation].selected=selected;
+  closePicker();
+  renderAll();
+}
+function renderCandidates(){const q=$('#search').value.trim();let arr=DB.filter(x=>!q||candidateMatch(x,q));arr=arr.filter(x=>filter==='all'||(filter==='S'?x[branch]==='S':(gradeRank[x[branch]]||0)>=4));arr.sort((a,b)=>(gradeRank[b[branch]]||0)-(gradeRank[a[branch]]||0)||((b['天賦']||0)-(a['天賦']||0))||a['武将名'].localeCompare(b['武将名'],'ja'));$('#candidates').innerHTML=arr.map(x=>{const usage=findGeneralUsage(x['武将名']);const same=usage&&usage.formation===activeFormation&&usage.role===activeRole;const usedText=usage&&!same?`<span style="display:block;margin-top:4px;color:#ffcf7a;font-weight:700">使用中：編制${usage.formation+1}・${usage.role}（選択で移動）</span>`:'';return `<button class="cand" data-index="${DB.indexOf(x)}"><div class="cand-top"><b>${x['武将名']}</b><span class="grade">${branch} ${clean(x[branch])}</span></div><small>天賦 ${clean(x['天賦'])} ・ 技能 ${[x['技能1'],x['技能2'],x['技能3'],x['技能4']].filter(Boolean).join(' / ')||'未登録'}${usedText}</small></button>`}).join('')||'<div class="placeholder">該当する武将がいません</div>'; $$('.cand').forEach(b=>b.addEventListener('click',()=>chooseGeneral(DB[+b.dataset.index])))}
+function clearRole(role){selected[role]=null;renderAll()}
+function renderSlots(){ $$('.slot').forEach(el=>{const role=el.dataset.role,x=selected[role];el.classList.toggle('empty',!x);el.classList.toggle('filled',!!x);el.querySelector('.name').textContent=x?x['武将名']:'武将を選択';el.querySelector('.apt').textContent=x?`${branch} ${clean(x[branch])}`:''}) }
+function tally(fieldNames){const m=new Map();Object.values(selected).filter(Boolean).forEach(x=>fieldNames.forEach(f=>{const v=x[f];if(v)m.set(v,(m.get(v)||0)+1)}));return [...m.entries()].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],'ja'))}
+function renderSummary(){const arr=Object.values(selected).filter(Boolean);$('#countStat').textContent=`${arr.length}/7`;$('#sStat').textContent=arr.filter(x=>x[branch]==='S').length;$('#aStat').textContent=arr.filter(x=>(gradeRank[x[branch]]||0)>=4).length;const ties=tally(['縁1','縁2','縁3','縁4','縁5']).filter(x=>x[1]>=2);$('#ties').innerHTML=ties.length?ties.map(([k,v])=>`<span class="chip shared">${k} ×${v}</span>`).join(''):'<span class="placeholder">共通する縁はまだありません</span>';const skills=tally(['技能1','技能2','技能3','技能4']);$('#skills').innerHTML=skills.length?skills.map(([k,v])=>`<span class="chip">${k}${v>1?' ×'+v:''}</span>`).join(''):'<span class="placeholder">技能データがありません</span>'}
+const chainEdges=[["大将","副将1"],["大将","副将2"],["副将1","与力1"],["副将1","与力2"],["副将2","与力3"],["副将2","与力4"]];
+function num(v){if(v===null||v===undefined||v==='')return null;const n=parseFloat(String(v).replace('%',''));return Number.isFinite(n)?n:null}
+function formatRate(v){return `${Math.round(v*10)/10}%`}
+// 縁ランクは画像受領後にここへ順次登録。例: '織田家':'A'
+const TIE_RANKS = {
+  '姫/巫女':'A',
+  '高家':'A',
+  '小姓':'A',
+  '幕下':'A',
+  '茶の湯':'A',
+  '傾奇者':'A',
+  '謀略家':'A',
+  '軍師':'A',
+  '巨漢':'A',
+  '酒豪':'A',
+  '射撃名人':'A',
+  '鮭':'A',
+  '虎':'A',
+  '龍':'A',
+  '無双':'A',
+  '軍神':'A',
+  '麒麟児':'A',
+  '赤備え':'A',
+  '下剋上':'A',
+  '築城名人':'A',
+  '攻城名人':'A',
+  '籠城名人':'A',
+  '鷹':'A',
+  '囲碁':'A',
+  '律義者':'A',
+  '鐘馗':'A',
+  '講談':'A',
+  '女丈夫':'A',
+  '治水名人':'A',
+  '南部家':'B',
+  '伊達最上家':'B',
+  '佐竹里見家':'B',
+  '太田家':'B',
+  '北条家':'B',
+  '武田家':'B',
+  '真田家':'B',
+  '上杉家':'B',
+  '今川家':'B',
+  '徳川家':'B',
+  '織田家':'B',
+  '斎藤家':'B',
+  '浅井朝倉家':'B',
+  '羽柴家':'B',
+  '筒井家':'B',
+  '三好細川家':'B',
+  '尼子家':'B',
+  '黒田家':'B',
+  '宇喜多家':'B',
+  '毛利家':'B',
+  '宗我部明智家':'B',
+  '大友家':'B',
+  '龍造寺家':'B',
+  '島津家':'B',
+  '伊賀':'B',
+  '甲賀':'B',
+  '雑賀本願寺':'B',
+  '水軍':'B',
+  '僧侶':'B',
+  '源氏':'B',
+  '奉行':'B',
+  '交易':'B',
+  '縦横家':'B',
+  '長寿':'B',
+  '刀剣':'B',
+  '槍名人':'B',
+  '鬼/夜叉':'B',
+  '母衣衆':'B',
+  '官位者':'B',
+  '三人衆':'B',
+  '四天王':'B',
+  '揚北衆':'B',
+  '南蛮趣味':'B',
+  '寝返り':'B',
+  '高野山':'B',
+  '平氏':'B',
+  '藤原氏':'B',
+  '藩祖':'B',
+  '豪傑':'B',
+  '渉外役':'B',
+  '副将':'B',
+  '牢人':'B',
+  '早世':'B',
+  '家老':'C',
+  '教養':'C',
+  '武辺者':'C',
+  '一門衆':'C'
+};
+const TIE_BONUS = {A:12,B:8,C:4};
+function getTies(x){return [x['縁1'],x['縁2'],x['縁3'],x['縁4'],x['縁5']].filter(Boolean)}
+function getSkills(x){return x?[x['技能1'],x['技能2'],x['技能3'],x['技能4']].filter(Boolean):[]}
+function hasSkill(x,name){return getSkills(x).includes(name)}
+function partySkillCount(name){return Object.values(selected).filter(Boolean).reduce((n,x)=>n+(hasSkill(x,name)?1:0),0)}
+function calcTieBonus(up,down){
+  const downSet=new Set(getTies(down));
+  const matches=getTies(up).filter(t=>downSet.has(t));
+  const ranked=matches.map(t=>({tie:t,rank:TIE_RANKS[t]||null,bonus:TIE_BONUS[TIE_RANKS[t]]||0}));
+  return {matches:ranked, bonus:ranked.reduce((sum,x)=>sum+x.bonus,0)};
+}
+function calcSkillBonus(upRole,downRole,up,down){
+  const main=selected['大将'];
+  let bonus=0; const parts=[];
+  // 柱石：大将自身が所持している場合に有効。部隊内の同技能人数で技能Lvを判定（最大III）。
+  if(main && hasSkill(main,'柱石')){
+    const lv=Math.min(3,partySkillCount('柱石'));
+    const b=({1:3,2:4,3:6})[lv]||0;
+    bonus+=b; parts.push(`柱石${['','Ⅰ','Ⅱ','Ⅲ'][lv]} +${b}%`);
+  }
+  // 求心：大将自身が所持している場合に有効。大将と1つ以上同じ縁を持つ「他の武将」の人数を数える。
+  if(main && hasSkill(main,'求心')){
+    const lv=Math.min(3,partySkillCount('求心'));
+    const mult=({1:1,2:1.25,3:1.5})[lv]||0;
+    const mainTies=new Set(getTies(main));
+    const sameTieCount=roles.filter(r=>r!=='大将'&&selected[r]).map(r=>selected[r]).filter(x=>getTies(x).some(t=>mainTies.has(t))).length;
+    const b=sameTieCount*mult;
+    bonus+=b; parts.push(`求心${['','Ⅰ','Ⅱ','Ⅲ'][lv]} ${sameTieCount}人×${mult}% = +${Math.round(b*100)/100}%`);
+  }
+  // 紐帯：連鎖する側（下段）の武将が所持している場合、その接続先との連鎖率+2%。
+  if(hasSkill(down,'紐帯')){bonus+=2;parts.push('紐帯Ⅰ +2%')}
+  return {bonus,parts};
+}
+function renderChains(){
+  const rows=chainEdges.map(([upRole,downRole])=>{
+    const up=selected[upRole],down=selected[downRole];
+    if(!up&&!down)return '';
+    const pair=`${upRole} → ${downRole}`;
+    if(!up||!down)return `<div class="chain-row"><div class="chain-head"><span class="chain-pair">${pair}</span><span class="chain-pending">武将未選択</span></div></div>`;
+    const base=num(down['基礎連鎖']), upInt=num(up['発動間隔']), downInt=num(down['発動間隔']);
+    const tieInfo=calcTieBonus(up,down), tieBonus=tieInfo.bonus, skillInfo=calcSkillBonus(upRole,downRole,up,down), skillBonus=skillInfo.bonus;
+    if(base===null||upInt===null||downInt===null){return `<div class="chain-row"><div class="chain-head"><span class="chain-pair">${pair}</span><span class="chain-pending">計算待ち</span></div><div class="chain-calc">${up['武将名']} → ${down['武将名']}<br>基礎連鎖 ${clean(down['基礎連鎖'])} / 上の発動間隔 ${clean(up['発動間隔'])} / 下の発動間隔 ${clean(down['発動間隔'])}</div></div>`}
+    const intervalBonus=(upInt-downInt)/5;
+    const rate=base+intervalBonus+tieBonus+skillBonus;
+    const tieText=tieInfo.matches.length?tieInfo.matches.map(x=>`${x.tie} ${x.rank?`(${x.rank}: +${x.bonus}%)`:'(ランク未登録: +0%)'}`).join(' / '):'一致なし';
+    return `<div class="chain-row"><div class="chain-head"><span class="chain-pair">${pair}</span><span class="chain-rate">${formatRate(rate)}</span></div><div class="chain-calc">${up['武将名']} → ${down['武将名']}<br>${base} + (${upInt} - ${downInt}) / 5 + ${tieBonus} + ${skillBonus} = ${Math.round(rate*10)/10}<br>縁一致: ${tieText}<br>縁一致補正: ${tieBonus}% / 技能補正: ${skillBonus}%${skillInfo.parts.length?`（${skillInfo.parts.join(' / ')}）`:''}</div></div>`;
+  }).filter(Boolean);
+  $('#chains').innerHTML=rows.length?rows.join(''):'<span class="placeholder">上下でつながる武将を選択すると連鎖率を計算します</span>';
+}
+function renderDetails(){const blocks=roles.filter(r=>selected[r]).map(r=>{const x=selected[r];const skills=[x['技能1'],x['技能2'],x['技能3'],x['技能4']].filter(Boolean).join(' / ')||'未登録';const ties=[x['縁1'],x['縁2'],x['縁3'],x['縁4'],x['縁5']].filter(Boolean).join(' / ')||'未登録';return `<div class="detail"><div class="detail-head"><div><div class="detail-role">${r}</div><div class="detail-name">${x['武将名']}</div></div><div class="grade">${branch} ${clean(x[branch])}</div></div><div class="row"><span class="label">天賦:</span> ${clean(x['天賦'])}　<span class="label">戦法:</span> ${clean(x['戦法名'])}</div><div class="row"><span class="label">戦法効果:</span> ${clean(x['戦法効果'])}</div><div class="row"><span class="label">発動間隔:</span> ${clean(x['発動間隔'])}　<span class="label">基礎連鎖:</span> ${clean(x['基礎連鎖'])}　<span class="label">連鎖順:</span> ${clean(x['連鎖順'])}</div><div class="row"><span class="label">技能:</span> ${skills}</div><div class="row"><span class="label">縁:</span> ${ties}</div></div>`}).join('');$('#details').innerHTML=blocks||'<span class="placeholder">各枠をタップして武将を選択してください</span>'}
+function renderFormationTabs(){
+  $('#formationTabs').innerHTML=formationStates.map((state,i)=>{
+    const count=Object.values(state.selected).filter(Boolean).length;
+    return `<button class="formation-tab ${i===activeFormation?'active':''}" data-tab="${i}"><span class="tab-num">編制${i+1}</span><span class="tab-sub">${state.branch} ・ ${count}/7</span></button>`;
+  }).join('');
+  $$('.formation-tab').forEach(btn=>btn.onclick=()=>switchFormation(+btn.dataset.tab));
+}
+function switchFormation(index){
+  if(index===activeFormation)return;
+  formationStates[activeFormation].branch=branch;
+  formationStates[activeFormation].selected=selected;
+  activeFormation=index;
+  branch=formationStates[index].branch;
+  selected=formationStates[index].selected;
+  activeRole=null; filter='all';
+  closePicker(); $('#branchMenu').classList.remove('open');
+  $('#branchLabel').textContent=branch; $('#branchGlyph').textContent=branches[branch];
+  renderAll();
+}
+function renderAll(){formationStates[activeFormation].branch=branch;formationStates[activeFormation].selected=selected;renderFormationTabs();renderSlots();renderSummary();renderChains();renderDetails()}
+function renderBranchMenu(){const grid=$('#branchGrid');grid.innerHTML=Object.keys(branches).map(k=>`<button class="branch-choice ${k===branch?'active':''}" data-b="${k}">${branches[k]}　${k}</button>`).join('');$$('.branch-choice').forEach(b=>b.onclick=()=>{branch=b.dataset.b;formationStates[activeFormation].branch=branch;$('#branchLabel').textContent=branch;$('#branchGlyph').textContent=branches[branch];$('#branchMenu').classList.remove('open');renderAll()})}
+$$('.slot').forEach(el=>{el.addEventListener('click',e=>{if(e.target.classList.contains('clear')){e.stopPropagation();clearRole(el.dataset.role)}else openPicker(el.dataset.role)});el.querySelector('.clear').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();clearRole(el.dataset.role)})});
+$('#closeModal').onclick=closePicker;$('#modal').addEventListener('click',e=>{if(e.target===$('#modal'))closePicker()});$('#search').addEventListener('input',renderCandidates);$$('.filterbar button').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;$$('.filterbar button').forEach(x=>x.classList.toggle('active',x===b));renderCandidates()});$('#branchBtn').onclick=()=>{renderBranchMenu();$('#branchMenu').classList.add('open')};$('#branchMenu').addEventListener('click',e=>{if(e.target===$('#branchMenu'))$('#branchMenu').classList.remove('open')});renderAll();
+</script>
+</body></html>
