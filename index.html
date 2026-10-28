@@ -547,6 +547,14 @@ body.ui-overlay-open .flag-slot .clear{
  #modal .cand{padding:12px}
 }
 </style>
+<style id="formation-move-style">
+.formation [data-role]{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.formation .move-source{opacity:.45!important}
+.formation .move-target{outline:3px solid #ffe29a;outline-offset:4px}
+.formation-move-ghost{position:fixed;z-index:1000;pointer-events:none;padding:10px 14px;background:#243e55;border:2px solid #f4d98a;border-radius:12px;color:#fff;font-size:13px;font-weight:800;box-shadow:0 6px 24px #0009;max-width:220px;transform:translate(-50%,-125%)}
+.formation-move-help{margin:8px 3px;color:#b8cbdc;font-size:11px;line-height:1.6}
+#formationMoveStatus{min-height:20px;color:#ffe3a0;font-size:12px;margin:4px 3px}
+</style>
 </head>
 <body>
 <div class="app">
@@ -564,6 +572,8 @@ body.ui-overlay-open .flag-slot .clear{
 
   <div class="save-actions" aria-label="編制の一時保存・出力・読み出し"><button id="saveFormation" class="save-btn save">一時保存</button><button id="loadFormation" class="save-btn load">保存を読み出し</button><button id="exportFormation" class="save-btn export">ファイル出力</button><button id="importFormation" class="save-btn import">ファイル入力</button><input id="importFormationFile" type="file" accept="application/json,.json" hidden><div id="saveStatus" class="save-status"></div></div>
 
+  <p class="formation-move-help">配置済みの武将は長押しして移動先へドラッグ。PCはドラッグで移動できます。武将がいる枠に重ねると入れ替えます。</p>
+  <div id="formationMoveStatus" role="status" aria-live="polite"></div>
   <div class="formation">
     <div class="side-mark attack">攻</div><div class="side-mark defense">防</div>
     <svg class="formation-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
@@ -2213,6 +2223,99 @@ itemDbField('itemDbList')?.addEventListener('change',e=>{const sel=e.target.clos
 itemDbField('itemDbList')?.addEventListener('change',e=>{const c=e.target.closest('input[data-item-effect]');if(!c)return;setItemEffectSelected(c.dataset.itemEffect,Number(c.dataset.traitIndex),c.checked);});
 populateItemDbSlotFilter();
 renderItemDb();
+
+
+// Move whole selected instances so star rank, kaiden and additional ties follow them.
+function moveFormationGeneral(from,to,formationIndex=activeFormation){
+  if(formationIndex!==activeFormation||from===to||!allRoles.includes(from)||!allRoles.includes(to)||!selected[from])return false;
+  const equip=getFormationEquipAssignments(),removed=[];
+  Object.entries(equip).forEach(([id,role])=>{
+    const next=role===from?to:role===to?from:role;
+    if((role===from||role===to)&&flagRoles.includes(next))removed.push(id);
+  });
+  if(removed.length&&!confirm('旗持には逸品を装備できません。移動する武将の逸品を外して配置を変更しますか？'))return false;
+  const first=selected[from],second=selected[to];
+  selected[to]=first;selected[from]=second||null;
+  Object.entries(equip).forEach(([id,role])=>{
+    if(role!==from&&role!==to)return;
+    const next=role===from?to:from;
+    if(flagRoles.includes(next)){delete equip[id];clearItemAssignmentEffects(id,activeFormation);}
+    else equip[id]=next;
+  });
+  formationStates[activeFormation].selected=selected;
+  saveItemEquipAssignments();saveItemEffectSelections();
+  activeRole=null;closePicker();closeGeneralDetailOverlay();renderAll();renderItemDb();
+  setSaveStatus('配置を変更しました。残す場合は「一時保存」を押してください。');
+  $('#formationMoveStatus').textContent=second?`${from}と${to}の武将を入れ替えました。`:`${first['武将名']}を${to}へ移動しました。`;
+  return true;
+}
+(function setupFormationMove(){
+  const board=document.querySelector('.formation');
+  const selector='.slot[data-role],.flag-slot[data-role]';
+  let gesture=null,blockClickUntil=0;
+  function clear(){
+    if(!gesture)return;
+    clearTimeout(gesture.timer);gesture.ghost?.remove();
+    board.querySelectorAll('.move-source,.move-target').forEach(el=>el.classList.remove('move-source','move-target'));
+    gesture=null;
+  }
+  function cancel(){if(gesture?.active){blockClickUntil=Date.now()+600;$('#formationMoveStatus').textContent='移動をキャンセルしました。';}clear();}
+  function targetAt(x,y){const el=document.elementFromPoint(x,y)?.closest(selector);return el&&board.contains(el)?el:null;}
+  function paint(x,y){
+    if(!gesture?.active)return;
+    gesture.ghost.style.left=x+'px';gesture.ghost.style.top=y+'px';
+    board.querySelectorAll('.move-target').forEach(el=>el.classList.remove('move-target'));
+    const target=targetAt(x,y);gesture.target=target?.dataset.role||null;
+    if(target&&gesture.target!==gesture.from)target.classList.add('move-target');
+  }
+  function activate(){
+    if(!gesture||gesture.index!==activeFormation||selected[gesture.from]!==gesture.general){cancel();return;}
+    gesture.active=true;gesture.source.classList.add('move-source');
+    const ghost=document.createElement('div');ghost.className='formation-move-ghost';ghost.textContent=gesture.general['武将名'];ghost.setAttribute('aria-hidden','true');document.body.appendChild(ghost);gesture.ghost=ghost;
+    $('#formationMoveStatus').textContent='移動先の枠で指を離してください。枠の外で離すとキャンセルします。';
+    paint(gesture.x,gesture.y);
+  }
+  function begin(e,x,y,id,touch){
+    if(gesture||e.target.closest('.clear,.external-slot-clear,.tactic-bar'))return;
+    const source=e.target.closest(selector);if(!source||!board.contains(source)||!selected[source.dataset.role])return;
+    gesture={source,from:source.dataset.role,general:selected[source.dataset.role],index:activeFormation,x,y,id,touch,active:false};
+    if(touch)gesture.timer=setTimeout(activate,320);
+  }
+  function move(e,x,y){
+    if(!gesture)return;
+    if(gesture.index!==activeFormation){cancel();return;}
+    if(!gesture.active){
+      if(Math.hypot(x-gesture.x,y-gesture.y)<10)return;
+      if(gesture.touch){clear();return;} // Before the hold finishes, vertical movement stays ordinary scrolling.
+      activate();
+    }
+    if(gesture?.active){if(e.cancelable)e.preventDefault();paint(x,y);}
+  }
+  function finish(e,x,y){
+    if(!gesture)return;
+    if(!gesture.active){clear();return;}
+    if(e.cancelable)e.preventDefault();blockClickUntil=Date.now()+600;
+    const g=gesture,to=targetAt(x,y)?.dataset.role;clear();
+    if(!to||to===g.from||selected[g.from]!==g.general||!moveFormationGeneral(g.from,to,g.index))$('#formationMoveStatus').textContent='移動をキャンセルしました。';
+    blockClickUntil=Date.now()+600;
+  }
+  // Non-passive touchmove is intentional: allow ordinary scroll until a long press, then track the drag.
+  board.addEventListener('touchstart',e=>{if(e.touches.length!==1){cancel();return;}const t=e.touches[0];begin(e,t.clientX,t.clientY,t.identifier,true);},{passive:true});
+  document.addEventListener('touchmove',e=>{if(!gesture?.touch)return;if(e.touches.length!==1){cancel();return;}const t=[...e.touches].find(t=>t.identifier===gesture.id);if(t)move(e,t.clientX,t.clientY);},{passive:false});
+  document.addEventListener('touchend',e=>{if(!gesture?.touch)return;const t=[...e.changedTouches].find(t=>t.identifier===gesture.id);if(t)finish(e,t.clientX,t.clientY);},{passive:false});
+  document.addEventListener('touchcancel',cancel,{passive:true});
+  board.addEventListener('pointerdown',e=>{if(e.pointerType==='touch'||e.button!==0)return;begin(e,e.clientX,e.clientY,e.pointerId,false);});
+  document.addEventListener('pointermove',e=>{if(gesture&&!gesture.touch&&gesture.id===e.pointerId)move(e,e.clientX,e.clientY);});
+  document.addEventListener('pointerup',e=>{if(gesture&&!gesture.touch&&gesture.id===e.pointerId)finish(e,e.clientX,e.clientY);});
+  document.addEventListener('pointercancel',e=>{if(gesture&&!gesture.touch&&gesture.id===e.pointerId)cancel();});
+  board.addEventListener('click',e=>{if(Date.now()<blockClickUntil){e.preventDefault();e.stopImmediatePropagation();}},true);
+  board.addEventListener('contextmenu',e=>{if(gesture||e.target.closest(selector))e.preventDefault();});
+  board.addEventListener('dragstart',e=>e.preventDefault());
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')cancel();});
+  window.addEventListener('blur',cancel);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)cancel();});
+  window.addEventListener('scroll',()=>{if(gesture&&!gesture.active)clear();},true);
+})();
 
 renderDBNote();
 renderAll();showExistingSaveStatus();
