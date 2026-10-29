@@ -1,0 +1,2345 @@
+{
+  "verifiedAt": "2026-10-28",
+  "summary": {
+    "items": 95,
+    "traits": 327,
+    "newlyPopulatedItems": 62,
+    "changedFields": {
+      "releaseCondition": 95,
+      "traitEffect": 72,
+      "traitName": 62,
+      "tie": 9
+    },
+    "releaseVerification": {
+      "web": 250,
+      "unlisted": 68,
+      "retained": 9
+    }
+  },
+  "items": [
+    {
+      "id": "gw_001",
+      "name": "宗三左文字",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/410473",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/souzasamonji/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★0で解放\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "装備武将が大将の場合、装備武将の戦法に「自身1部隊の破壊10%(縁一致:30％)上昇(15秒)」を追加\n鍛錬ランク★1で解放。装備武将が弓兵科の大将の場合、部隊の破壊+10%(縁一致:30％)\n鍛錬ランク★4で解放。装備武将が大将の場合、装備武将の戦法による「高揚」の効果+5%(縁一致:20％)\n鍛錬ランク★7で解放。装備武将が大将の場合、部隊の会心威力+5％(縁一致:さらに、通常攻撃の会心発生時攻撃を受けた敵1部隊に動揺(5秒)を付与)",
+          "after": "装備武将が大将の場合、装備武将の戦法に「自身1部隊の破壊10%(縁一致:30％)上昇(15秒)」を追加\n装備武将が弓兵科の大将の場合、部隊の破壊+10%(縁一致:30％)\n装備武将が大将の場合、装備武将の戦法による「高揚」の効果+5%(縁一致:20％)\n装備武将が大将の場合、部隊の会心威力+5％(縁一致:さらに、通常攻撃の会心発生時攻撃を受けた敵1部隊に動揺(5秒)を付与)"
+        }
+      }
+    },
+    {
+      "id": "gw_002",
+      "name": "日光一文字",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/417736",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/nikkouichimonji/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★0で解放\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "装備武将が大将の場合、部隊の会心威力+10%(縁一致:さらに、会心発生率+10％)\n鍛錬ランク★1で解放。装備武将が大将で兵力50%以下の時、部隊の攻撃速度+10%(縁一致:さらに、防御+20％)\n鍛錬ランク★4で解放。装備武将が大将の場合、交戦開始時に自身に堅固が付与されていない場合に1度だけ、自身1部隊に堅固10%(5秒)(縁一致:10秒)を付与\n鍛錬ランク★7で解放。装備武将が大将の場合、部隊の会心威力+20%(縁一致:さらに、会心発生率+20％)",
+          "after": "装備武将が大将の場合、部隊の会心威力+10%(縁一致:さらに、会心発生率+10％)\n装備武将が大将で兵力50%以下の時、部隊の攻撃速度+10%(縁一致:さらに、防御+20％)\n装備武将が大将の場合、交戦開始時に自身に堅固が付与されていない場合に1度だけ、自身1部隊に堅固10%(5秒)(縁一致:10秒)を付与\n装備武将が大将の場合、部隊の会心威力+20%(縁一致:さらに、会心発生率+20％)"
+        }
+      }
+    },
+    {
+      "id": "gw_003",
+      "name": "物吉貞宗",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/422382",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/monoyoshisadamune/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★0で解放\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_004",
+      "name": "諏訪法性兜",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/424860",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/suwahosshoukabuto/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★0で解放\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "装備武将が大将の場合、装着武将の戦法による攻撃、防御上昇の効果+5%(縁一致:+15％)\n装備武将が大将の場合、装着武将の戦法に「自身と一門衆を含む味方3部隊の戦法威力を2%(縁一致:4%)累加(90秒)」を追加\n装備武将が大将の場合、装着武将の戦法に「自身1部隊に結束10%(縁一致:20%)付与(10秒)」を追加\n装備武将が大将の場合、装着武将の戦法による攻撃、防御上昇の効果+10%(縁一致:+30％)、知略、武勇上昇の効果+5%(縁一致:+15％)",
+          "after": "装備武将が大将の場合、装着武将の戦法による攻撃、防御上昇の効果+5%(縁一致:+15％)\n装備武将が大将の場合、装着武将の戦法に 「自身と一門衆を含む味方3部隊の戦法威力を2%(縁一致:4%)累加(90秒)」を追加\n装備武将が大将の場合、装着武将の戦法に 「自身1部隊に結束10%(縁一致:20%)付与(10秒)」を追加\n装備武将が大将の場合、装着武将の戦法による攻撃、防御上昇の効果+10%(縁一致:+30％)、知略、武勇上昇の効果+5%(縁一致:+15％)"
+        }
+      }
+    },
+    {
+      "id": "gw_005",
+      "name": "仁王胴",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/432355",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/nioudou/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★0で解放\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_006",
+      "name": "日輪前立兜",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/432356",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/nichirinmaetatekabuto/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★0で解放\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_007",
+      "name": "三間槍",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/432354",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/sangenyari/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★0で解放\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_008",
+      "name": "煙管",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/428382",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "鍛錬ランク★2で解放。装着武将が大将の場合、部隊の攻撃+2%\n鍛錬ランク★4で解放。装着武将が大将の場合、部隊の攻撃+3%",
+          "after": "装着武将が大将の場合、部隊の攻撃+2%\n装着武将が大将の場合、部隊の攻撃+3%"
+        }
+      }
+    },
+    {
+      "id": "gw_009",
+      "name": "虎柄羽織",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/428380",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "鍛錬ランク★2で解放。装着武将が大将の場合、部隊の武勇+2%\n鍛錬ランク★4で解放。装着武将が大将の場合、部隊の武勇+3%",
+          "after": "装着武将が大将の場合、部隊の武勇+2%\n装着武将が大将の場合、部隊の武勇+3%"
+        }
+      }
+    },
+    {
+      "id": "gw_010",
+      "name": "朱槍",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/428381",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/shuyari/",
+      "verificationNote": "解放条件に資料間の相違あり。傾奇御免ⅡはGameWithで★2、ゲームラインで★3。無法天通Ⅰ（無法通天Ⅰ）はGameWithで★3、ゲームラインで★2。現在はGameWith掲載値を採用し、要確認として記録。",
+      "releaseVerification": [
+        "web",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★3で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "鍛錬ランク★1で解放。装着武将が大将の場合、部隊の攻撃+2%\n鍛錬ランク★2で解放。装着武将が大将の場合、部隊の攻撃+3%\n鍛錬ランク★3で解放。装着武将が大将の場合、部隊の武勇+2%\n鍛錬ランク★4で解放。装着武将が大将の場合、部隊の武勇+3%",
+          "after": "装着武将が大将の場合、部隊の攻撃+2%\n装着武将が大将の場合、部隊の攻撃+3%\n装着武将が大将の場合、部隊の武勇+2%\n装着武将が大将の場合、部隊の武勇+3%"
+        }
+      }
+    },
+    {
+      "id": "gw_011",
+      "name": "姫鶴一文字",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/429573",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/himetsuruichimonji/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★0で解放\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_012",
+      "name": "赤糸威肩白鎧",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/432305",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/akaitoodoshikatashiroyoroi/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★0で解放\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "装着武将の戦法に「自身と一門衆を含む味方3部隊の武勇、知略+5%(縁一致:+15％)上昇(15秒)」を追加\n部隊の戦法ダメージ+10%(縁一致:+20％)\n装着武将の戦法に「自身と一門衆を含む味方3部隊の攻撃3%累加(90秒)」を追加(縁一致:さらに防御3％累加(90秒)を追加)\n装着武将の戦法に「自身と一門衆を含む味方3部隊の武勇、知略+10%(縁一致:+30％)上昇(15秒)」を追加",
+          "after": "装着武将の戦法に「自身と一門衆を含む味方3部隊の武勇、知略+5%(縁一致:+15％)上昇(15秒)を追加\n部隊の戦法ダメージ+10%(縁一致:+20％)\n装着武将の戦法に「自身と一門衆を含む味方3部隊の攻撃3%累加(90秒)を追加(縁一致:さらに防御3％累加(90秒)を追加)\n装着武将の戦法に「自身と一門衆を含む味方3部隊の武勇、知略+10%(縁一致:+30％)上昇(15秒)を追加"
+        }
+      }
+    },
+    {
+      "id": "gw_013",
+      "name": "馬蘭後立付兜",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/432375",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/barinushirodatetsukikabuto/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★0で解放\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_014",
+      "name": "飯綱権現兜",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/433228",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/idunagongenkabuto/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★0で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_015",
+      "name": "金陀美胴",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/433227",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/kindamidou/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★0で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_016",
+      "name": "須和の銘刀",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/435168",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/suwanomeitou/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_017",
+      "name": "へし切長谷部",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/436480",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/heshikirihasebe/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★0で解放\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_018",
+      "name": "蝮の懐剣",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/440377",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/mamushinokaiken/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★0で解放\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_019",
+      "name": "愛山護法",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/444746",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/aizangohou/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★0で解放\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_020",
+      "name": "紅糸中白威胴丸",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/449882",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/beniitonakashiroodoshidoumaru/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★0で解放\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_021",
+      "name": "如意宝輪",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/452051",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "防勇助進\n昵懇運針\n攻撃佑援"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将が副将か与力の場合、部隊の防御+3%(縁一致:さらに武勇+3%)\n装着武将が副将か与力の場合、部隊内で繋がった配置の武将との戦法連鎖率+2% (縁一致:4%)\n装着武将が副将か与力の場合、大将の戦法発動時、部隊の攻撃+10%(縁一致:20%)(15秒)"
+        }
+      }
+    },
+    {
+      "id": "gw_022",
+      "name": "炎槍素戔嗚",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/453303",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "機動出陣\n連結盛強\n背水避捷"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将が大将の場合、出陣時に自身1部隊に機動+10%(縁一致:20%)上昇(30秒)を付与\n装着武将が大将の場合、大将の戦法による戦法速度上昇、結束の効果+5% (縁一致:10%)\n装着武将が大将の場合、出陣中に初めて兵力が30%以下になったとき、自身1部隊に通常攻撃回避100%を付与(5秒)(縁一致:10秒)"
+        }
+      }
+    },
+    {
+      "id": "gw_023",
+      "name": "霊剣布都御魂",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/453302",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "勇進鋭練\n速揚盛強\n会威拡録"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の武勇+5%(縁一致:さらに部隊の「鋭鋒」の技能Lv+1)\n装着武将が大将の場合、大将の戦法による攻撃速度上昇、高揚の効果+5% (縁一致:10%)\n装着武将が大将の場合、装着武将の戦法に「自身と一門衆を含む味方2部隊の会心威力10%(縁一致:20%)上昇(15秒)」を追加"
+        }
+      }
+    },
+    {
+      "id": "gw_024",
+      "name": "天雷召輪",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/453301",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "tie": {
+          "before": "無双,律義者",
+          "after": "無双,律儀者"
+        },
+        "traitName": {
+          "before": "",
+          "after": "戦威迎撃\n防進心練\n背水速利"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊が遊撃、待伏中に戦法で与えるダメージ+10%(縁一致:20%)\n部隊の防御+5%(縁一致:さらに部隊の「一心」の技能Lv+1)\n装着武将が副将か与力の場合、兵力が30%以下の時、部隊の戦法速度+5%(縁一致:15%)"
+        }
+      }
+    },
+    {
+      "id": "gw_025",
+      "name": "弘行琳雅",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/455766",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/hiroyukiringa/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "高揚展開\n破壊助進\n攻撃迫撃"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★0で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将が大将の場合、交戦開始時に自身に高揚が付与されていない場合に1度だけ、自身1部隊に高揚15%(縁一致：30%)(15秒)を付与\n部隊の破壊+4%(縁一致:8%)上昇(15秒)」を追加\n部隊が攻撃命令中か制圧中に、与えるダメージ+5%(縁一致:10%)"
+        }
+      }
+    },
+    {
+      "id": "gw_026",
+      "name": "烏天狗図金象嵌",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/455767",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/karasutenguzukinzougan/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "防昇展開\n領内機訓\n防衛迫撃"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★0で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将が大将の場合、交戦開始時に自身に防御上昇が付与されていない場合に1度だけ、自身1部隊に防御15%(縁一致：30%)上昇(15秒)を付与\n装着武将が大将の場合、自大名家領土内での部隊の機動+5%(縁一致：敵部隊撃破時に編制した部隊が獲得できる武将の経験値+5%)\n部隊が遊撃、待伏中に、与えるダメージ+5%(縁一致:10%)"
+        }
+      }
+    },
+    {
+      "id": "gw_027",
+      "name": "銀白檀塗合子形兜",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/456688",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "看破巧練Ⅰ\n攻知低録Ⅰ\n動同薄能Ⅰ\n攻知低録Ⅱ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の破壊+5％(縁一致:さらに、部隊の「看破」の技能Lv+1)\n装着武将が大将の場合か、副将で大将と同じ縁が2以上の場合、装着武将の戦法に「対象を含む敵3部隊の攻撃、知略を5%(縁一致:15%)低下(15秒)」を追加\n装着武将が大将の場合か、副将で大将と同じ縁が2以上の場合、編制された部隊にかかる「動揺」「同討」の効果時間‐20%(縁一致:50%)\n装着武将が大将の場合か、副将で大将と同じ縁が2以上の場合、装着武将の戦法に「対象を含む敵3部隊の攻撃、知略を10%(縁一致:30%)低下(15秒)」を追加"
+        }
+      }
+    },
+    {
+      "id": "gw_028",
+      "name": "魚鱗札二枚胴",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/452695",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/gyorinzanenimaidou/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "迅速巧練\n知破昇録1\n動怖薄能\n知破昇録2"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★0で解放\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の機動+5％(縁一致:さらに、部隊の「迅速」の技能Lv+1)\n装着武将が大将の場合か、副将で大将と同じ縁が2以上の場合、装着武将の戦法に「自信と一門衆を含む味方3部隊の知略、破壊を5%(縁一致:15%)上昇(15秒)」を追加\n装着武将が大将の場合か、副将で大将と同じ縁が2以上の場合、編制された部隊にかかる「動揺」「恐怖」の効果時間‐20%(縁一致:50%)\n装着武将が大将の場合か、副将で大将と同じ縁が2以上の場合、装着武将の戦法に「自信と一門衆を含む味方3部隊の知略、破壊を10%(縁一致:30%)上昇(15秒)」を追加"
+        }
+      }
+    },
+    {
+      "id": "gw_029",
+      "name": "備前近景",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/459294",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "unlisted",
+        "unlisted",
+        "unlisted"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "知進機練\n相即運針1\n見切展開\n相即運針1"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n未確認（Web記載なし）\n未確認（Web記載なし）\n未確認（Web記載なし）"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の知略+5％(縁一致:さらに、部隊の「機略」の技能Lv+1)\n装着武将と繋がった配置の武将と同じ縁が2以上の場合、部隊内で繋がった配置の武将との戦法連鎖率+2%(縁一致:4%)\n装着武将と繋がった配置の武将と同じ縁が2以上の場合、交戦開始時に自身に見切が付与されていない場合1度だけ、自身1部隊に見切(10秒)(縁一致:25秒)を付与\n装着武将と繋がった配置の武将と同じ縁が2以上の場合、部隊内で繋がった配置の武将との戦法連鎖率+4%(縁一致:8%)"
+        }
+      }
+    },
+    {
+      "id": "gw_030",
+      "name": "狭間筒",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/462996",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "unlisted",
+        "unlisted"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "防知助進\n銃防佑援\n知進遠練"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n未確認（Web記載なし）\n未確認（Web記載なし）"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の防御+2%(縁一致：知略+2%)\n装着武将が鉄砲兵科の場合、大将の戦法発動時、部隊の防御+10%(縁一致：20%)(15秒)\n部隊の知略+5%(縁一致：さらに、部隊の「遠射」の技能Lv+1)"
+        }
+      }
+    },
+    {
+      "id": "gw_031",
+      "name": "忍頭巾",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/462995",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "unlisted",
+        "unlisted"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "破壊助進\n敵陣忍駆\n破進発練"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n未確認（Web記載なし）\n未確認（Web記載なし）"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の破壊+2%(縁一致：4%)\n装着武将が忍者兵科の場合、敵大名家領土内での行軍速度低下を10%軽減(縁一致：20%)\n部隊の破壊+5%(縁一致：さらに、部隊の「発奮」の技能Lv+1)"
+        }
+      }
+    },
+    {
+      "id": "gw_032",
+      "name": "緋色袖無羽織",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/462994",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "unlisted",
+        "unlisted"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "攻勇助進\n刀揚展開\n勇進封練"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n未確認（Web記載なし）\n未確認（Web記載なし）"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の攻撃+2%(縁一致：武勇+2%)\n装着武将が剣豪兵科の場合、交戦開始時に自身に高揚が付与されていない場合1度だけ、自身1部隊に高揚10%(10秒)(縁一致：20%)を付与\n部隊の武勇+5%(縁一致：さらに、部隊の「封殺」の技能Lv+1)"
+        }
+      }
+    },
+    {
+      "id": "gw_033",
+      "name": "蛇目紋長烏帽子形兜",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/463283",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "unlisted",
+        "unlisted",
+        "unlisted"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "勇破盛強\n勇進頑練\n防進器練\n恐怖付術"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n未確認（Web記載なし）\n未確認（Web記載なし）\n未確認（Web記載なし）"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将の戦法による武勇、破壊上昇の効果+15%(縁一致：30%、さらに、装着武将の戦法に武勇累加2%を追加)\n部隊の武勇+5%(縁一致：さらに、部隊の「頑健」の技能Lv+1)\n部隊の防御+5%(縁一致：さらに、部隊の「器用」の技能Lv+1)\n装着武将と繋がった配置の武将と同じ縁が2以上の場合、交戦開始時、相手に恐怖が付与されていない場合1度だけ、対象とする敵1部隊に恐怖を付与(5秒)(縁一致：10秒)"
+        }
+      }
+    },
+    {
+      "id": "gw_034",
+      "name": "色々威二枚胴",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/467073",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "unlisted",
+        "unlisted",
+        "unlisted"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "進撃巧練\n戦速追録Ⅰ\n敵陣走駆\n戦速追録Ⅱ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n未確認（Web記載なし）\n未確認（Web記載なし）\n未確認（Web記載なし）"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の武勇+5%(縁一致：さらに、部隊の「進撃」の技能Lv+1)\n装着武将が騎馬兵科の大将の場合、装着武将の戦法に「自身1部隊の戦法速度10%(縁一致：20%)上昇(15秒)」を追加\n自身が大将の場合、敵大名家内領土内での行軍速度低下を10%軽減(縁一致：30%)\n装着武将が騎馬兵科の大将の場合、装着武将の戦法に「自身1部隊の武勇、知略、戦法速度10%(縁一致：20%)上昇(15秒)」を追加"
+        }
+      }
+    },
+    {
+      "id": "gw_035",
+      "name": "日本号",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/471533",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "unlisted",
+        "unlisted",
+        "unlisted"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "猛進巧練Ⅰ\n勇猛果敢Ⅰ\n槍馬攻進\n勇猛果敢Ⅱ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n未確認（Web記載なし）\n未確認（Web記載なし）\n未確認（Web記載なし）"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の武勇+5%(縁一致：さらに、部隊の「猛進」の技能Lv+1)\n装着武将が足軽、騎馬兵科の場合、部隊の会心発生率+5%(縁一致：さらに、通常攻撃が命中した部隊に動揺が付与されていない場合、20%の確率で動揺(3秒)を付与)\n装着武将が足軽、騎馬兵科の場合、部隊の攻撃+5%(縁一致：さらに武勇+5%)\n装着武将が足軽、騎馬兵科の場合、部隊の会心発生率+7%(縁一致：さらに、通常攻撃が命中した部隊に動揺が付与されていない場合、40%の確率で動揺(3秒)を付与)"
+        }
+      }
+    },
+    {
+      "id": "gw_036",
+      "name": "人別帖",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/477313",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "unlisted",
+        "unlisted"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "仁慈流々Ⅰ\n無明払暁Ⅰ\n忍者六儀"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n未確認（Web記載なし）\n未確認（Web記載なし）"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将と繋がった配置の武将と同じ縁が2以上の場合、部隊の攻撃+3%(縁一致：さらに破壊+3%)\n部隊の防御+5%(縁一致：さらに、部隊の「柱石」の技能Lv+1)\n装着武将と繋がった配置の武将と同じ縁が2以上の場合、編制された部隊にかかる「混乱」「同討」の効果時間-20%(縁一致：50%)"
+        }
+      }
+    },
+    {
+      "id": "gw_037",
+      "name": "薩摩筒",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/478006",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "反骨硬壁Ⅰ\n攻昇追録Ⅰ\n戦速加進Ⅰ\n反骨硬壁Ⅱ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "兵力が50%以下になるダメージに対して、一度だけ兵力50%を下回る分を無効にする(縁一致：さらに1回の硬壁(15秒)を付与)\n装着武将が鉄砲兵科の場合、装着武将の戦法に「自身1部隊の攻撃10%上昇(縁一致：30%)(15秒)」を追加\n装着武将が大将の場合か、副将で大将と同じ縁が2以上の場合、部隊の戦法発動速度+5%(縁一致：10%)\n兵力が50%以下になるダメージに対して、一度だけ兵力50%を下回る分を無効にし、自身1部隊に1回(縁一致：4回)の硬壁(15秒)を付与"
+        }
+      }
+    },
+    {
+      "id": "gw_038",
+      "name": "熨斗烏帽子形兜",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/480992",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "unlisted",
+        "unlisted",
+        "unlisted"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "勇威追録Ⅰ\n狗吠巧練Ⅰ\n混動薄能Ⅰ\n槍騎撃進Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n未確認（Web記載なし）\n未確認（Web記載なし）\n未確認（Web記載なし）"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装備武将が大将の場合か、副将で大将と同じ縁が2以上の場合、装着武将の戦法に「自身1部隊の武勇20%上昇(15秒)」を追加(縁一致：さらに、戦法威力を3%累加(90秒)を追加)\n部隊の武勇+5%(縁一致：さらに、部隊の「狗吠」の技能Lv+1)\n装備武将が大将の場合か、副将で大将と同じ縁が2以上の場合、編制された部隊にかかる「混乱」「動揺」の効果時間-20%(縁一致：50%)\n装着武将が足軽、騎馬兵科の場合、部隊の撃心発生率+10%(縁一致：30%)"
+        }
+      }
+    },
+    {
+      "id": "gw_039",
+      "name": "義元金箔塗小星兜",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/481566",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "unlisted",
+        "unlisted",
+        "unlisted"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "英明巧練Ⅰ\n破昇累録Ⅰ\n金剛展開Ⅰ\n防進武練Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n未確認（Web記載なし）\n未確認（Web記載なし）\n未確認（Web記載なし）"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の破壊+5%(縁一致：さらに、部隊の「英明」の技能Lv+1)\n装着武将の戦法に「自身と一門衆を含む味方3部隊の破壊2%累加(縁一致：4%)(90秒)」を追加\n装着武将が大将の場合、交戦開始時に1度だけ、1回(縁一致：2回)の金剛3%(10秒)を付与\n部隊の防御+10%(縁一致：さらに、部隊の「武略」の技能Lv+1)"
+        }
+      }
+    },
+    {
+      "id": "gw_040",
+      "name": "紺糸素懸威二枚胴",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/481650",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "unlisted",
+        "unlisted"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "防勇漸進Ⅰ\n泰然佑援Ⅰ\n背水金剛Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n未確認（Web記載なし）\n未確認（Web記載なし）"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将と繋がった配置の武将と同じ縁が2以上の場合、部隊の防御+3%(縁一致：さらに、武勇+3%)\n装着武将と繋がった配置の武将と同じ縁が2以上の場合、大将の戦法発動時、自身1部隊に泰然(5秒)(縁一致：10秒)を付与\n装着武将と繋がった配置の武将と同じ縁が2以上の場合、出陣中に初めて兵力が30%以下になった時、自身1部隊に1回(縁一致：3回)の金剛1%(15秒)を付与"
+        }
+      }
+    },
+    {
+      "id": "gw_041",
+      "name": "毛虫前立鉄地兜",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/481649",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "unlisted",
+        "unlisted"
+      ],
+      "changes": {
+        "tie": {
+          "before": "豪傑,一門衆,律義者",
+          "after": "豪傑,一門衆,律儀者"
+        },
+        "traitName": {
+          "before": "",
+          "after": "攻機支進Ⅰ\n攻撃後援Ⅰ\n勇知猛立Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n未確認（Web記載なし）\n未確認（Web記載なし）"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将と繋がった配置の武将と同じ縁が2以上の場合、部隊の攻撃+3%(縁一致：さらに、機動+3%)\n装着武将と繋がった配置の武将と同じ縁が2以上の場合、大将の戦法発動時、部隊の攻撃+10%(縁一致：20%)(15秒)\n部隊が攻撃命令中か制圧中に、部隊の武勇、知略+5%(縁一致：10%)"
+        }
+      }
+    },
+    {
+      "id": "gw_042",
+      "name": "雉子尾雌雄御太刀",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/484072",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "unlisted",
+        "unlisted",
+        "unlisted"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "併呑巧練Ⅰ\n攻撃機進Ⅰ\n勇昇拡録Ⅰ\n攻撃機進Ⅱ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n未確認（Web記載なし）\n未確認（Web記載なし）\n未確認（Web記載なし）"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の攻撃+5%(縁一致：さらに、部隊の「併呑」の技能Lv+1)\n装着武将と繋がった配置の武将と縁2以上の時、部隊が攻撃命令中か制圧中に、部隊の機動+5%(縁一致：機動+15%)\n装着武将と繋がった配置の武将と縁2以上の時、装着武将の戦法に「自身と一門衆を含む味方3部隊の武勇10%(縁一致：20%)上昇(15秒)」を追加\n装着武将と繋がった配置の武将と縁2以上の時、部隊が攻撃命令中か制圧中に、部隊の機動+15%(縁一致：機動+30%)"
+        }
+      }
+    },
+    {
+      "id": "gw_043",
+      "name": "咆愛刀",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/488831",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "tie": {
+          "before": "姫/巫女,律義者,虎",
+          "after": "姫/巫女,律儀者,虎"
+        },
+        "traitName": {
+          "before": "",
+          "after": "防御漸進Ⅰ\n治癒拡録Ⅰ\n結束拡録Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の防御+3%(縁一致：6%)\n装着武将と繋がった配置の武将と同じ縁が2以上の場合、装着武将の戦法に「自身と1部隊(縁一致：自身と一門衆を含む味方3部隊)に治癒5%付与(15秒)」を追加\n装着武将と繋がった配置の武将と同じ縁が2以上の場合、装着武将の戦法に「自身と1部隊(縁一致：自身と一門衆を含む味方3部隊)に結束10%付与(15秒)」を追加"
+        }
+      }
+    },
+    {
+      "id": "gw_044",
+      "name": "白檀塗浅葱糸威腹巻",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/490511",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "信心巧練Ⅰ\n攻進光練Ⅰ\n見切始動Ⅰ\n攻速佑援Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の防御+5%(縁一致：さらに、部隊の「信心」の技能Lv+1)\n部隊の攻撃+5%(縁一致：さらに、部隊の「威光」の技能Lv+1)\n装着武将と繋がった配置の武将と同じ縁が2以上の場合、交戦開始時に自身に見切が付与されていない場合に1度だけ、自身1部隊(縁一致：自身と一門衆を含む味方2部隊)に見切(15秒)を付与\n装着武将と繋がった配置の武将と同じ縁が2以上の場合、大将の戦法発動時、自身1部隊(縁一致：自身と一門衆を含む味方2部隊)の攻撃速度を20%上昇(対象が鉄砲兵科の場合、攻撃速度を30%上昇)(15秒)"
+        }
+      }
+    },
+    {
+      "id": "gw_045",
+      "name": "錫杖前立兜",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/492713",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "強圧巧練Ⅰ\n兵機増進Ⅰ\n攻破重進Ⅰ\n知破累録Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の破壊+5%(縁一致：さらに、部隊の「強圧」の技能Lv+1)\n部隊の兵力+5%(縁一致：さらに、機動+10%)\n装着武将が大将の場合、部隊の攻撃、破壊+5%(縁一致：10%)\n装着武将と繋がった配置の武将と同じ縁が2以上の場合、装着武将の戦法に「自身と一門衆を含む味方3部隊の知略を4%累加(90秒)」を追加(縁一致：さらに「破壊を4%累加(90%)」を追加)"
+        }
+      }
+    },
+    {
+      "id": "gw_046",
+      "name": "昇梯子二枚胴",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/496620",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "合縁運針Ⅰ\n知進求練Ⅰ\n防法妨録Ⅰ\n混乱拡録Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊が足軽、弓兵科の場合、装着武将と繋がった配置の武将との戦法連鎖率+1%(縁一致：3%)(縁2一致：さらに、装着武将と繋がった配置の武将と共通する縁が1だけの場合、対象となる武将間での戦法連鎖率+8%)\n部隊の知略+5%(縁一致：さらに、部隊の「求心」の技能Lv+1)\n装着武将の戦法に「対象を含む敵2部隊の防御15%低下(15秒)」を追加(縁一致：さらに、「武勇、知略15%低下(15秒)」を追加)\n装着武将の戦法に「対象の敵1部隊(縁一致：対象を含む敵3部隊)に混乱(15秒)を付与」を追加"
+        }
+      }
+    },
+    {
+      "id": "gw_047",
+      "name": "海老胴",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/500136",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "破壊稍進\n攻防器練\n敵陣槍駆"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の破壊+2%(縁一致：5%)\n部隊の攻撃、防御+2%(縁一致：さらに、部隊の「器用」の技能Lv1)\n装着武将が足軽兵科の場合、敵大名家領土内での行軍速度低下を15%軽減(縁一致：30%)"
+        }
+      }
+    },
+    {
+      "id": "gw_048",
+      "name": "筑紫薙刀",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/500135",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "攻撃稍進\n防進威練\n通拡騎展"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の攻撃+2%(縁一致：5%)\n部隊の防御+5%(縁一致：さらに、部隊の「威風」の技能Lv+1)\n装着武将が騎馬兵科の場合、交戦開始時に1度だけ、自身1部隊の通常攻撃の対象部隊を+1(10秒)(縁一致：20秒)する"
+        }
+      }
+    },
+    {
+      "id": "gw_049",
+      "name": "三鍬形前立兜",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/500134",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "防御稍進\n勇知邁進\n弓異薄能"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の防御+2%(縁一致：5%)\n部隊の武勇、知略+2%(縁一致：4%)\n装着武将が弓兵科の場合、自部隊にかかる不利状態や能力弱化の効果時間-10%(縁一致：20%)"
+        }
+      }
+    },
+    {
+      "id": "gw_050",
+      "name": "十月機関の制服",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/501257",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "魔導結社\n知進符術\n破進符術"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の知略+2%(縁一致：破壊+2%)\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、装着武将の戦法に「自身1部隊の知略10%(縁一致：20%)上昇(15秒)」を追加\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、交戦開始時に自身に破壊上昇が付与されていない場合、自身1部隊に破壊10%(縁一致：30%)上昇(30秒)を付与"
+        }
+      }
+    },
+    {
+      "id": "gw_051",
+      "name": "漂流者の太刀",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/501256",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "薩州刀法\n功名餓鬼\n黄泉路魁"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、装着武将の戦法に「自身1部隊の攻撃10%(縁一致：30%)上昇(15秒)を追加」\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、部隊の武勇+3%(縁一致：さらに、攻撃+3%)\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、交戦開始時に1度だけ自身1部隊に会心威力15%上昇(10秒)を付与(縁一致：さらに、1回の閃心(10秒)を付与)"
+        }
+      }
+    },
+    {
+      "id": "gw_052",
+      "name": "漂流者の長弓",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/501255",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "火薬筒矢\n精神一到\n軽業弓術"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、部隊の破壊+3%(縁一致：6%)\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、交戦開始時に1度だけ自身1部隊に攻撃15%上昇(15秒)を付与(縁一致：さらに、破壊15%上昇(15秒)を付与)\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、交戦開始時に1度だけ自身1部隊に通常攻撃回避25%(縁一致：50%)(10秒)を付与"
+        }
+      }
+    },
+    {
+      "id": "gw_053",
+      "name": "漂流者の鉄砲",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/501254",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "攻防展開\n勇知佑援\n破壊加進"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将が大将の場合、交戦開始時に1度だけ、自身1部隊に攻撃、防御5%(縁一致：10%)上昇(30秒)を付与\n装着武将が副将の場合、大将の戦法発動時、自身1部隊に武勇、知略5%(縁一致：10%)上昇(15秒)を付与\n装着武将が与力の場合、部隊の破壊+5%(縁一致：10%)"
+        }
+      }
+    },
+    {
+      "id": "gw_054",
+      "name": "神符八日月前立筋兜",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/502057",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "tie": {
+          "before": "伊達最上家,射撃名人,律義者",
+          "after": "伊達最上家,射撃名人,律儀者"
+        },
+        "traitName": {
+          "before": "",
+          "after": "才略巧練Ⅰ\n攻防増進Ⅰ\n会心砲撃Ⅰ\n通回盛強Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の知略+5%(縁一致：さらに、部隊の「才略」の技能Lv+1)\n装着武将が大将の場合か、副将で大将と同じ縁が2以上の場合、部隊の防御+5%(縁一致：さらに、攻撃+10%)\n装着武将が鉄砲兵科の場合、会心威力上昇+10%(縁一致：さらに、会心発生率+10%)\n装着武将が大将の場合か、副将で大将と同じ縁が2以上の場合、装着武将の戦法による通常攻撃回避の効果+10%(縁一致：30%)"
+        }
+      }
+    },
+    {
+      "id": "gw_055",
+      "name": "人間無骨",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/503865",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_056",
+      "name": "豊後国行平",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/503864",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "回避展開Ⅰ\n撃破功訓Ⅰ\n攻防敢闘Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将が大将の場合、交戦開始時に自身に通常攻撃回避が付与されていない場合に1度だけ、自身1部隊に通常攻撃回避15%(縁一致：30%)(15秒)を付与\n装着武将が大将の場合、敵部隊撃破時に獲得する勲功+1(縁一致：敵部隊撃破時に、編制した部隊が獲得できる武将の経験値+5%)\n部隊が攻撃命令実行中か制圧中に、部隊の攻撃、防御+5%(縁一致：10%)"
+        }
+      }
+    },
+    {
+      "id": "gw_057",
+      "name": "物干し竿",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/506655",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "巌流巧練Ⅰ\n心撃剣養Ⅰ\n攻勇追録Ⅰ\n心撃剣養Ⅱ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の武勇+5%(縁一致：さらに、部隊の「巌流」の技能Lv+1)\n装着武将が剣豪兵科で、装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、通常攻撃の会心発生時、自身1部隊の能力弱化(縁一致：不利状態と能力弱化)を1つ打ち消す\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、装着武将の戦法に「自身1部隊の攻撃、武勇10%(縁一致：30%)(15秒)」を追加\n装着武将が剣豪兵科で、装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、通常攻撃の会心発生時、自身1部隊の能力弱化(縁一致：不利状態と能力弱化)を3つ打ち消す"
+        }
+      }
+    },
+    {
+      "id": "gw_058",
+      "name": "媽愛鳴胴",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/507798",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "攻防支進Ⅰ\n撃破練訓Ⅰ\n恐怖追打Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の防御+3%(縁一致：攻撃+3%)\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、敵部隊撃破時に、編制した部隊が獲得できる武将の経験値+5%(縁一致：10%)\n装着武将が大将で、通常攻撃が命中した部隊に恐怖が付与されていない場合、15%(縁一致：30%)の確率で恐怖(3秒)を付与"
+        }
+      }
+    },
+    {
+      "id": "gw_059",
+      "name": "陰流の太刀",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/512893",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "無形巧練Ⅰ\n撃攻重進Ⅰ\n勇進兵練Ⅰ\n反骨避捷Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の攻撃+5%(縁一致：さらに、部隊の「無形」の技能Lv+1)\n装着武将が足軽、剣豪兵科の場合、攻撃+10%(縁一致：さらに、撃心発生率+10%)\n部隊の武勇+5%(縁一致：さらに、部隊の「兵家」の技能Lv+1)\n装着武将が足軽、剣豪兵科の場合、出陣中に初めて兵力が50%以下になったとき、自身1部隊に通常攻撃回避100%を付与(5秒)(縁一致：10秒)"
+        }
+      }
+    },
+    {
+      "id": "gw_060",
+      "name": "雷切",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/443253",
+      "releaseSourceUrl": "https://gameline.jp/nobunaga-hadou/foreign-affairs/warlord-strengthening/equipment/gem/raikiri/",
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "攻進心錬Ⅰ\n勇昇迫録Ⅰ\n一振如雷Ⅰ\n一振如雷Ⅱ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★0で解放\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の攻撃+5%(縁一致:さらに、部隊が発動している「一心」の技能Lv+1)\n装着武将と繋がった配置の武将と同じ縁が2以上の場合、装着武将の戦法に「自身1部隊の武勇10%(縁一致:30％)上昇(15秒)」を追加\n装着武将と繋がった配置の武将と同じ縁が2以上の場合、部隊の会心威力+5%(縁一致:さらに、通常攻撃の会心発生時、攻撃を受けた1部隊に混乱(5秒)を付与)\n装着武将と繋がった配置の武将と同じ縁が2以上の場合、部隊の会心威力+10%(縁一致:さらに、通常攻撃の会心発生時、攻撃を受けた1部隊に混乱(10秒)を付与)"
+        }
+      }
+    },
+    {
+      "id": "gw_061",
+      "name": "姫城督の薙刀",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/517718",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "城督巧練Ⅰ\n攻法増進Ⅰ\n揚速追録Ⅰ\n無双団結Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の防御+5%(縁一致：さらに、部隊の「姫城督」の技能Lv+1)\n繋がった配置の武将と同じ縁が合計2以上の場合、部隊の攻撃+5%(縁一致：さらに、武勇、知略+5%)\n装着武将の戦法に「自身1部隊に高揚15%を付与(15秒)」を追加(縁一致：さらに「自身1部隊に攻撃速度上昇15%を付与(15秒)」を追加)\n自身と繋がった配置の武将との戦法連鎖率+1%(縁一致：さらに、「無双」の縁を持つ武将間での戦法連鎖率+3%)"
+        }
+      }
+    },
+    {
+      "id": "gw_062",
+      "name": "顕如古頭形兜",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/520431",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "攻拡展開Ⅰ\n槍銃機進Ⅰ\n高揚追録Ⅰ\n修羅睨圧Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将が大将の場合か、副将で大将と同じ縁が2以上の場合、交戦開始時に1度だけ、自身1部隊に通常攻撃の対象部隊+1を付与(10秒)(縁一致：25秒)(上限4)\n装着武将が足軽、鉄砲兵科の場合、部隊の機動+10%(縁一致：30%)\n装着武将の戦法に「自身1部隊に高揚10%(縁一致：30%)(15秒)付与」を追加\n装着武将が足軽、鉄砲兵科の大将の場合、部隊の攻撃+10%(縁一致：さらに、通常攻撃会心時、対象の敵部隊に憔悴30%(10秒)を付与)"
+        }
+      }
+    },
+    {
+      "id": "gw_063",
+      "name": "鬼半蔵の槍",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/522252",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "狐走巧練Ⅰ\n機動進攻Ⅰ\n敢闘迫撃Ⅰ\n敵陣疾駆Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の知略+5%(縁一致：さらに、部隊が発動している「狐走」の技能Lv+1)\n装着武将が足軽、忍者兵科の場合、出陣時に自身1部隊に機動15%上昇(10秒)(縁一致：30秒)を付与\n装着武将が足軽、忍者兵科の大将の場合、部隊が攻撃命令中か制圧中に、与えるダメージ+5%(縁一致：15%)\n装着武将が足軽、忍者兵科の場合、敵大名家領土内での行軍速度低下を20%軽減(縁一致：50%)"
+        }
+      }
+    },
+    {
+      "id": "gw_064",
+      "name": "剛守頭",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/527331",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "南瓜邁進Ⅰ\n慌怖薄能Ⅰ\n反骨剛硬Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の武勇、知略+2%(縁一致：攻撃、防御+2%)\n装着武将が大将の場合か、副将で大将と同じ縁が2以上の場合、編制された部隊にかかる「恐慌」「恐怖」の効果時間-20%(縁一致：-50%)\n装着武将が大将の場合か、副将で大将と同じ縁が2以上の場合、出陣中に初めて兵力が50%以下になった時、自身1部隊に1回(縁一致：2回)の金剛2%、硬壁(20秒)を付与"
+        }
+      }
+    },
+    {
+      "id": "gw_065",
+      "name": "鍛鉄指揮棒",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/528509",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "鉄壁巧練Ⅰ\n金剛始動Ⅰ\n憔悴盛強Ⅰ\n金剛始動Ⅱ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の防御+5%(縁一致：さらに、部隊が発動している「鉄壁」の技能Lv+1)\n装着武将が足軽、騎馬、鉄砲兵科の場合、交戦開始時に自身に金剛が付与されていない場合に1度だけ、自身1部隊に1回(縁一致：3回)の金剛2%(15秒)を付与\n装着武将が足軽、騎馬、鉄砲兵科の場合、装着武将の戦法による憔悴の効果+5%(縁一致：20%)\n装着武将が足軽、騎馬、鉄砲兵科の場合、交戦開始時に自身に金剛が付与されていない場合に1度だけ、自身1部隊に1回(縁一致：3回)の金剛4%(15秒)を付与"
+        }
+      }
+    },
+    {
+      "id": "gw_066",
+      "name": "風魔手甲鉤",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/533699",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "暴風巧練Ⅰ\n魔爪報復Ⅰ\n自滅拡録Ⅰ\n魔爪報復Ⅱ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の知略+5%(縁一致：さらに、部隊が発動している「暴風」の技能Lv+1)\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、部隊壊滅時、攻撃してきた部隊(縁一致：攻撃してきた部隊を含む敵3部隊)に防御低下50%、呪詛2%(15秒)を付与\n装着武将の戦法に「対象の敵1部隊(縁一致：対象を含む敵3部隊)に自滅(10秒)を付与」を追加\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、部隊壊滅時、攻撃してきた部隊(縁一致：攻撃してきた部隊を含む敵3部隊)に防御低下50%、呪詛2%(15秒)、動揺(10秒)を付与"
+        }
+      }
+    },
+    {
+      "id": "gw_067",
+      "name": "蜻蛉切",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/534792",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "防進大練Ⅰ\n槍馬通撃Ⅰ\n攻進武練Ⅰ\n三鈷剣Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の防御+5%(縁一致：さらに、部隊が発動している「大勇」の技能Lv+1)\n装着武将が足軽、騎馬兵科の大将か副将の場合、部隊が通常攻撃で与えるダメージ+10%(縁一致：20%)\n部隊の攻撃+5%(縁一致：さらに、部隊が発動している「武略」の技能Lv+1)\n装着武将が足軽、騎馬兵科の大将か副将の場合、交戦開始時に自身1部隊に攻撃速度上昇10%(10秒)を付与(縁一致：さらに、見切(10秒)を付与)"
+        }
+      }
+    },
+    {
+      "id": "gw_068",
+      "name": "信念蒼槍",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/537445",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "tie": {
+          "before": "律義者,鷹,槍名人",
+          "after": "律儀者,鷹,槍名人"
+        },
+        "traitName": {
+          "before": "",
+          "after": "攻防佑援Ⅰ\n治癒展開Ⅰ\n阿卦御明Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将が与力の場合、大将の戦法発動時、自身1部隊に攻撃、防御5%(縁一致：10%)上昇(15秒)を付与\n装着武将が副将の場合、交戦開始時に1度だけ、自身1部隊に治癒3%(20秒)(縁一致：40秒)を付与\n部隊の武勇、知略、破壊+1%(縁一致：3%)"
+        }
+      }
+    },
+    {
+      "id": "gw_069",
+      "name": "黒糸威二枚胴",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/537444",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_070",
+      "name": "銀泥塗富士山形兜",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/537443",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_071",
+      "name": "弦月前立兜",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/538140",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "retained",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "-\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "部隊が騎馬、鉄砲兵科の場合、部隊の会心威力+5%(縁一致：15%)(縁2一致：さらに、鉄砲兵科の大将の場合、通常攻撃の対象部隊+1(上限4))\n装着武将が大将の場合、交戦開始時に自身に見切が付与されていない場合に1度だけ、自身1部隊に見切(10秒)(縁一致：30秒)を付与\n装着武将が騎馬、鉄砲兵科の大将の場合、通常攻撃時、敵部隊の防御を10%(縁一致：20%)下げた状態で扱う\n装着武将が騎馬、鉄砲兵科の大将の場合、通常攻撃の会心発生時、戦法威力を2%累加(重複可・打消不可)(90秒)(縁一致：さらに、戦法ゲージ+2%)(複数部隊に対して同時に会心が発生した場合でも、効果の発動は1度のみ)",
+          "after": "部隊が騎馬、鉄砲兵科の場合、部隊の会心威力+5%(縁一致：15%) (縁2一致：さらに、鉄砲兵科の大将の場合、通常攻撃の対象部隊+1(上限4))\n装着武将が大将の場合、交戦開始時に自身に見切が付与されていない場合に1度だけ、自身1部隊に見切(10秒)(縁一致：30秒)を付与\n装着武将が騎馬、鉄砲兵科の大将の場合、通常攻撃時、敵部隊の防御を10%(縁一致：20%)下げた状態で扱う\n装着武将が騎馬、鉄砲兵科の大将の場合、通常攻撃の会心発生時、戦法威力を2%累加(重複可・打消不可)(90秒) (縁一致：さらに、戦法ゲージ+2%) (複数部隊に対して同時に会心が発生した場合でも、効果の発動は1度のみ)"
+        }
+      }
+    },
+    {
+      "id": "gw_072",
+      "name": "十二間突盔形兜",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/543450",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "retained",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "-\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_073",
+      "name": "菓子図",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/544376",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "防知邁進Ⅰ\n攻進内練Ⅰ\n剛耐出陣Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の防御、知略+2%(縁一致：4%)\n部隊の攻撃+5%(縁一致：さらに、部隊が発動している「内助」の技能Lv+1)\n装着武将が大将の場合か、副将で大将と同じ縁が2以上の場合、出陣時に自身1部隊に1回(縁一致：2回)の金剛2%、不退(30秒)を付与"
+        }
+      }
+    },
+    {
+      "id": "gw_074",
+      "name": "野菊",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/546821",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "tie": {
+          "before": "傾奇者,律義者,姫/巫女",
+          "after": "傾奇者,律儀者,姫/巫女"
+        },
+        "traitName": {
+          "before": "",
+          "after": "防進献練Ⅰ\n不受出陣Ⅰ\n結束展開Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の防御+5%(縁一致：さらに、部隊が発動している「献身」の技能Lv+1)\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、出陣時、自身1部隊に1回の弱化無効(10秒)(縁一致：30秒)を付与\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、交戦開始時に1度だけ、自身1部隊(縁一致：自身と一門衆を含む味方2部隊)に結束10%(30秒)を付与"
+        }
+      }
+    },
+    {
+      "id": "gw_075",
+      "name": "南蛮鉄大短刀",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/546820",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "tie": {
+          "before": "傾奇者,律義者,交易",
+          "after": "傾奇者,律儀者,交易"
+        },
+        "traitName": {
+          "before": "",
+          "after": "攻破支進Ⅰ\n破低心打Ⅰ\n不退展開Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将が大将の場合か、副将で大将と同じ縁が2以上の場合、部隊の破壊+3%(縁一致：さらに、攻撃+3%)\n装着武将が大将の場合か、副将で大将と同じ縁が2以上の場合、通常攻撃会心時、会心が発生した部隊の破壊を10%低下(縁一致：さらに攻撃を10%低下)(15秒)\n装着武将が大将の場合か、副将で大将と同じ縁が2以上の場合、交戦開始時に自身に不退が付与されていない場合に1度だけ、自身1部隊に1回の不退(10秒)(縁一致：25秒)を付与"
+        }
+      }
+    },
+    {
+      "id": "gw_076",
+      "name": "信長公相伝兜",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/546819",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "防勇少進Ⅰ\n攻昇付録Ⅰ\n敵陣勇複Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将が大将の場合、部隊の防御+3%(縁一致：さらに武勇+3%)\n装着武将が大将の場合、装着武将の戦法に「自身1部隊の攻撃を10%(縁一致：30%)上昇(15秒)」を追加\n部隊の武勇+5%(縁一致：10%) (縁2一致：さらに、装着武将が大将の場合、敵大名家の領土内や敵大名家が所有する城、砦、港の攻城戦において、通常攻撃の対象部隊+1(上限4))"
+        }
+      }
+    },
+    {
+      "id": "gw_077",
+      "name": "鉄貫",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/547662",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "武勇助進\n刀攻低付\n防進突練"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の武勇+2%(縁一致：4%)\n装着武将が剣豪兵科の場合、交戦開始時に1度だけ、対象の敵1部隊に攻撃10%(縁一致：20%)低下(15秒)を付与\n部隊の防御+5%(縁一致：さらに、部隊が発動している「突貫」の技能Lv+1)"
+        }
+      }
+    },
+    {
+      "id": "gw_078",
+      "name": "日根野頭形兜",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/547661",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "retained",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "-\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_079",
+      "name": "鎖帷子",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/547660",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "retained",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "-\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_080",
+      "name": "浅井一文字",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/548149",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "retained",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "tie": {
+          "before": "浅井朝倉家,巨漢,律義者",
+          "after": "浅井朝倉家,巨漢,律儀者"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "-\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_081",
+      "name": "金象嵌鹿角前立兜",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/553323",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "retained",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "-\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "兵力が50%以下になるダメージを受けたとき、自身1部隊に堅固10%(10秒)(縁一致：20秒)を付与(縁2一致：さらに、1度だけ兵力50%を下回る分のダメージを無効にする)\n部隊の攻撃+5%(縁一致：さらに、部隊が発動している「才気」の技能Lv+1)\n装着武将の戦法による知略、破壊上昇の効果+10%(縁一致：30%)\n兵力が50%以下になるダメージを受けたとき、自身1部隊に堅固10%(20秒)(縁一致：さらに、結束10%(30秒))を付与(縁2一致：さらに、1度だけ兵力50%を下回る分のダメージを無効にする)",
+          "after": "兵力が50%以下になるダメージを受けたとき、自身1部隊に堅固10%(10秒)(縁一致：20秒)を付与 (縁2一致：さらに、1度だけ兵力50%を下回る分のダメージを無効にする)\n部隊の攻撃+5%(縁一致：さらに、部隊が発動している「才気」の技能Lv+1)\n装着武将の戦法による知略、破壊上昇の効果+10%(縁一致：30%)\n兵力が50%以下になるダメージを受けたとき、自身1部隊に堅固10%(20秒)(縁一致：さらに、結束10%(30秒))を付与 (縁2一致：さらに、1度だけ兵力50%を下回る分のダメージを無効にする)"
+        }
+      }
+    },
+    {
+      "id": "gw_082",
+      "name": "黄金祝冠",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/559228",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "撃破練銭Ⅰ\n金週邁進Ⅰ\n撃心加録Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、敵部隊撃破時に、編制した部隊が獲得できる武将の経験+5%(縁一致：さらに賊撃破時に入手できる銅銭+10%)\n部隊の攻撃、武勇、破壊+1%(縁一致：3%)\n装着武将が副将か与力の場合、装着武将の戦法に「自身1部隊に撃心発生上昇10%(縁一致：30%)(15秒)を付与」を追加"
+        }
+      }
+    },
+    {
+      "id": "gw_083",
+      "name": "伊賀流大苦無",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/560195",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "retained",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "-\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_084",
+      "name": "天鵞絨洋套",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/563197",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "連射巧練Ⅰ\n消沈心打Ⅰ\n鉄砲通撃Ⅰ\n烈閃展開Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の知略+5%(縁一致：さらに、部隊が発動している「連射」の技能Lv+1)\n装着武将が大将の場合、通常攻撃会心時、対象の敵部隊に消沈(5秒)(縁一致：10秒)を付与\n装着武将が鉄砲兵科の大将の場合、部隊が通常攻撃で与えるダメージ+10%(縁一致：20%)\n装着武将が大将の場合、交戦開始時に1度だけ、自身1部隊に会心威力上昇10%(15秒)を付与(縁一致：さらに2回の閃心(15秒)を付与)"
+        }
+      }
+    },
+    {
+      "id": "gw_085",
+      "name": "寅申",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/563912",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "兵力助進Ⅰ\n背水治癒Ⅰ\n苦境奮闘Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将が大将か副将の場合、部隊の兵力+2%(縁一致：4%)\n出陣中に初めて兵力が30%以下になったとき、自身1部隊に治癒5%(10秒)(縁一致：30秒)を付与\n装着武将が大将か副将で、兵力が50%以下の時、部隊の防御、武勇、知略+5%(縁一致：15%)"
+        }
+      }
+    },
+    {
+      "id": "gw_086",
+      "name": "砧蒔絵硯箱",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/564375",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "攻知邁進Ⅰ\n治癒開録Ⅰ\n防知猛立Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の攻撃、知略+2%(縁一致：4%)\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、装着武将の戦法に「自身1部隊(縁一致：自身と一門衆を含む味方2部隊)に治癒5%(15秒)付与」を追加\n部隊が攻撃命令中か制圧中に、部隊の防御、知略+5%(縁一致：10%)"
+        }
+      }
+    },
+    {
+      "id": "gw_087",
+      "name": "甕通槍",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/564374",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "勇昇展開Ⅰ\n勇破援進Ⅰ\n攻防迎撃Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将が大将の場合、交戦開始時に1度だけ、自身1部隊に武勇10%(縁一致：20%)上昇(30秒)を付与\n部隊の武勇、破壊+2%(縁一致：4%)\n部隊が遊撃、待伏中に部隊の攻撃、防御+5%(縁一致：10%)"
+        }
+      }
+    },
+    {
+      "id": "gw_088",
+      "name": "萌黄糸威二枚胴",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/566968",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "中庸巧練Ⅰ\n攻防低付Ⅰ\n撃威盛強Ⅰ\n連繋運針Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の防御+5%(縁一致：さらに部隊が発動している「中庸」の技能Lv+1)\n装着武将と繋がった配置の武将と同じ縁が2以上の場合、交戦開始時に1度だけ、対象の敵1部隊(縁一致：対象を含む敵3部隊)の攻撃、防御を10%低下(15秒)\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、装着武将の戦法による撃心威力上昇の効果+10%(縁一致：30%)\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、部隊内で繋がった配置の武将との戦法連鎖率+3%(縁一致：6%)"
+        }
+      }
+    },
+    {
+      "id": "gw_089",
+      "name": "団子",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/570456",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "背水回復Ⅰ\n甘味養生Ⅰ\n背水回復Ⅱ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、出陣中に初めて兵力が30%以下になったとき、自身1部隊の負傷兵を10%(縁一致：20%)回復\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、攻撃を受けた時、負傷兵として生存する兵力+10%(縁一致：20%)\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、出陣中に初めて兵力が30%以下になったとき、自身1部隊の負傷兵を25%(縁一致：50%)回復"
+        }
+      }
+    },
+    {
+      "id": "gw_090",
+      "name": "活水盃",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/570457",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "攻防細心Ⅰ\n活水追録Ⅰ\n背水戦昇Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の攻撃、防御+1%(縁一致：2%)\n装着武将の戦法に「自身1部隊の武勇、知略、破壊5%(縁一致：10%)上昇(10秒)」を追加\n装着武将が大将の場合、出陣中に初めて兵力が30%以下になったとき、自身1部隊の戦法ゲージを3%(縁一致：10%)上昇"
+        }
+      }
+    },
+    {
+      "id": "gw_091",
+      "name": "絶不知火",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/570458",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "兵進活練Ⅰ\n背水速揚Ⅰ\n双刃通撃Ⅰ"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "部隊の兵力+5%(縁一致：さらに、部隊が発動している「活路」の技能Lv+1)\n装着武将が大将の場合か、副将で大将と同じ縁が2以上の場合、兵力が30%以下の時、部隊の攻撃速度、会心発生率+10%(縁一致：20%)\n装着武将が足軽、弓、忍者兵科の大将か副将の場合、部隊が通常攻撃で与えるダメージ+10%(縁一致：20%)"
+        }
+      }
+    },
+    {
+      "id": "gw_092",
+      "name": "大天狗正家",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/571341",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "unlisted",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "traitName": {
+          "before": "",
+          "after": "敵陣戟駆Ⅰ\n攻防猛戟Ⅰ\n剣禅盛強Ⅰ\n断策展開"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "未確認（Web記載なし）\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "",
+          "after": "装着武将が足軽、剣豪兵科の場合、敵大名家領土内での行軍速度低下を10%軽減(縁一致：20%)(縁2一致：50%)\n装着武将が足軽、剣豪の場合、部隊が攻撃命令中か制圧中に、部隊の攻撃、防御+5%(縁一致：15%)\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、装着武将の戦法による武勇、知略上昇、通常攻撃回避の効果+5%(縁一致：20%)\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、交戦開始時に1度だけ、自身1部隊に断策50%(10秒)(縁一致：30秒)を付与"
+        }
+      }
+    },
+    {
+      "id": "gw_093",
+      "name": "天衝脇立兜",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/575522",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "retained",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "",
+          "after": "-\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_094",
+      "name": "白銀錬弓",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/577710",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "tie": {
+          "before": "長寿,律義者,茶の湯",
+          "after": "長寿,律儀者,茶の湯"
+        },
+        "releaseCondition": {
+          "before": "",
+          "after": "鍛錬ランク★1で解放\n鍛錬ランク★2で解放\n鍛錬ランク★4で解放"
+        }
+      }
+    },
+    {
+      "id": "gw_095",
+      "name": "高麗鶴光忠",
+      "sourceUrl": "https://gamewith.jp/nobunaga-hadou/article/show/579583",
+      "releaseSourceUrl": null,
+      "verificationNote": null,
+      "releaseVerification": [
+        "retained",
+        "web",
+        "web",
+        "web"
+      ],
+      "changes": {
+        "releaseCondition": {
+          "before": "解放条件なし\n鍛錬ランク★1\n鍛錬ランク★4\n鍛錬ランク★7",
+          "after": "解放条件なし\n鍛錬ランク★1で解放\n鍛錬ランク★4で解放\n鍛錬ランク★7で解放"
+        },
+        "traitEffect": {
+          "before": "大将、または大将との縁一致が2以上の副将：防御+5%(縁一致:10%)。強化縁が2つ一致し硬壁中なら全兵科に有利。\n接続配置との縁一致が合計2以上：破壊+5%(縁一致:さらに知略+10%)。\n接続配置との縁一致が合計2以上：装着武将の戦法による攻撃・知略の上昇効果+10%(縁一致:20%)。\n接続配置との縁一致が合計2以上：敵部隊撃破時、自身に金剛3%を1回(縁一致:3回)付与（15秒）。",
+          "after": "装着武将が大将か、副将で大将と同じ縁が2以上の場合、部隊の防御+5%(縁一致：10%)(縁2一致：さらに、自身に硬壁が付与されている時、全ての兵科に対して相性が良くなる)\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、部隊の破壊+5%(縁一致：さらに知略+10%)\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、装着武将の戦法による攻撃、知略上昇の効果+10%(縁一致：20%)\n装着武将と繋がった配置の武将と同じ縁が合計2以上の場合、敵部隊撃破時、自身1部隊に1回(縁一致：3回)の金剛3%(15秒)を付与"
+        }
+      }
+    }
+  ]
+}
