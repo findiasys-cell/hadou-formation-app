@@ -555,6 +555,14 @@ body.ui-overlay-open .flag-slot .clear{
 .formation-move-help{margin:8px 3px;color:#b8cbdc;font-size:11px;line-height:1.6}
 #formationMoveStatus{min-height:20px;color:#ffe3a0;font-size:12px;margin:4px 3px}
 </style>
+<style>
+@media(max-width:560px){
+  .topbar{position:static}
+  .section-tabs{top:0}
+  .search,.itemdb-search{font-size:16px}
+  .section-tab{min-height:42px}
+}
+</style>
 </head>
 <body>
 <div class="app">
@@ -857,8 +865,10 @@ function chooseGeneral(x,star4=false){
     const usedName=usage.general?.['武将名']||x['武将名'];
     const sameBase=usedName!==x['武将名']?`（同名武将：${usedName}）`:'';
     if(!confirm(`${x['武将名']}${sameBase}は「${from}」で使用中です。\n「${to}」へ移動しますか？`))return;
+    detachRoleItems(usage.role,usage.formation);
     formationStates[usage.formation].selected[usage.role]=null;
   }
+  if(selected[activeRole])detachRoleItems(activeRole);
   const movedKaiden=usage?.general?.__kaidenSkill||'';
   const movedTsuien=usage?.general?.__tsuienTie||'';
   selected[activeRole]=x['レアリティ']==='UR'?{...x,__selectedInstance:true,__star4:!!star4,__kaidenSkill:movedKaiden,__tsuienTie:movedTsuien}:{...x,__kaidenSkill:movedKaiden};
@@ -1077,7 +1087,7 @@ function renderCandidates(){
   chooseGeneral(x,c?c.checked:false);
 }));
 }
-function clearRole(role){if(!role)return;selected[role]=null;formationStates[activeFormation].selected=selected;activeRole=null;closePicker();renderAll();}
+function clearRole(role){if(!role)return;detachRoleItems(role);selected[role]=null;formationStates[activeFormation].selected=selected;activeRole=null;closePicker();renderAll();}
 function sharedTieCount(a,b){
   if(!a||!b)return 0;
   const bs=new Set(getTies(b));
@@ -1794,7 +1804,7 @@ function makeSpeedTransfer(role){
 function openSpeedCalc(role){
   const data=makeSpeedTransfer(role); if(!data)return;
   const encoded=btoa(unescape(encodeURIComponent(JSON.stringify(data))));
-  window.open(`speed.html#hadou=${encodeURIComponent(encoded)}`,'_blank');
+  window.open(`speed.html#hadou=${encodeURIComponent(encoded)}`,'_blank','noopener');
 }
 const ALL_SKILL_BASES=[...new Set(DB.flatMap(x=>[x['技能1'],x['技能2'],x['技能3'],x['技能4']]).filter(Boolean).map(skillBaseName))].sort((a,b)=>a.localeCompare(b,'ja'));
 const ALL_TIES=[...new Set(DB.flatMap(x=>[x['縁1'],x['縁2'],x['縁3'],x['縁4'],x['縁5']]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ja'));
@@ -1842,6 +1852,7 @@ function switchFormation(index){
 function resetCurrentFormation(){
   if(!Object.values(selected).some(Boolean))return;
   if(!confirm(`編制${activeFormation+1}の入力内容をすべてリセットしますか？`))return;
+  roles.forEach(role=>detachRoleItems(role));
   formationStates[activeFormation].selected=makeSelected();
   selected=formationStates[activeFormation].selected;
   activeRole=null;
@@ -1852,22 +1863,29 @@ function resetAllFormations(){
   const hasAny=formationStates.some(s=>Object.values(s.selected).some(Boolean));
   if(!hasAny)return;
   if(!confirm('編制1〜6の入力内容をすべてリセットしますか？'))return;
-  formationStates.forEach(s=>{s.selected=makeSelected();});
+  formationStates.forEach((state,index)=>{roles.forEach(role=>detachRoleItems(role,index));state.selected=makeSelected();});
   selected=formationStates[activeFormation].selected;
   activeRole=null;
   closePicker();
   renderAll();
 }
 const SAVE_KEY='hadouFormationSaveV1';
+const DRAFT_KEY='hadouFormationDraftV2';
+let draftReady=false;
+function saveDraft(){
+  if(!draftReady)return;
+  try{localStorage.setItem(DRAFT_KEY,JSON.stringify(makeSaveData()));}
+  catch{setSaveStatus('自動保存できません。ファイル出力で編制を保存できます。');}
+}
 function makeSaveData(){
   formationStates[activeFormation].branch=branch;
   formationStates[activeFormation].armor=armor;
   formationStates[activeFormation].selected=selected;
   return {
-    app:'信長覇道 編制シミュレーター',version:1,savedAt:new Date().toISOString(),activeFormation,
+    app:'信長覇道 編制シミュレーター',version:2,savedAt:new Date().toISOString(),activeFormation,
     excludeDomesticSkills,
     showDomesticOnly,
-    formations:formationStates.map(state=>({branch:state.branch,armor:!!state.armor,selected:Object.fromEntries(allRoles.map(role=>{const x=state.selected[role];return [role,x?{name:x['武将名'],star4:x['レアリティ']==='UR'?!!x.__star4:null,kaidenSkill:x.__kaidenSkill||'',tsuienTie:x['レアリティ']==='UR'?(x.__tsuienTie||''):''}:null]}))}))
+    formations:formationStates.map((state,index)=>({branch:state.branch,armor:!!state.armor,battleConditions:state.battleConditions,equipment:{...getFormationEquipAssignments(index)},itemEffects:{...getFormationEffectSelections(index)},selected:Object.fromEntries(allRoles.map(role=>{const x=state.selected[role];return [role,x?{name:x['武将名'],star4:x['レアリティ']==='UR'?!!x.__star4:null,kaidenSkill:x.__kaidenSkill||'',tsuienTie:x['レアリティ']==='UR'?(x.__tsuienTie||''):''}:null]}))}))
   };
 }
 function setSaveStatus(text){const el=$('#saveStatus');if(el)el.textContent=text;}
@@ -1880,7 +1898,9 @@ function saveFormationData(){
   }catch(e){alert('編制を一時保存できませんでした。ブラウザの保存設定をご確認ください。');}
 }
 function applySaveData(data){
-  if(!data||!Array.isArray(data.formations))throw new Error('invalid');
+  if(!data||!Array.isArray(data.formations)||!data.formations.length||[...data.formations].some(src=>!src||typeof src!=='object'||Array.isArray(src)))throw new Error('invalid');
+  const unavailable=new Set();
+  const seenItems=new Set();
   for(let i=0;i<formationStates.length;i++){
     const src=data.formations[i]||{};
     const nextSelected=makeSelected();
@@ -1889,16 +1909,39 @@ function applySaveData(data){
       const entry=names[role];
       const name=typeof entry==='string'?entry:entry?.name;
       const base=name?DB.find(x=>x['武将名']===name)||null:null;
+      if(name&&!base)unavailable.add(name);
       nextSelected[role]=base&&base['レアリティ']==='UR'?{...base,__selectedInstance:true,__star4:typeof entry==='object'?!!entry.star4:false,__kaidenSkill:typeof entry==='object'?(entry.kaidenSkill||''):'',__tsuienTie:typeof entry==='object'?(entry.tsuienTie||''):''}:base?{...base,__kaidenSkill:typeof entry==='object'?(entry.kaidenSkill||''):''}:base;
     }
     formationStates[i].branch=branches[src.branch]?src.branch:'騎馬';
     formationStates[i].armor=!!src.armor;
     formationStates[i].selected=nextSelected;
+    if(data.version>=2){
+      const conditions=makeBattleConditions();
+      for(const key of Object.keys(conditions))conditions[key]=src.battleConditions?.[key]===true;
+      formationStates[i].battleConditions=conditions;
+      const equipment=Object.create(null);
+      const effects=Object.create(null);
+      for(const [id,role] of Object.entries(src.equipment||{})){
+        if(!roles.includes(role)||!nextSelected[role]||seenItems.has(id))continue;
+        const item=itemDb.find(entry=>entry.id===id);
+        if(!item){unavailable.add(id);continue;}
+        seenItems.add(id);
+        equipment[id]=role;
+        buildTraitRecords(item).forEach((trait,index)=>{
+          const key=selectionKey(id,index);
+          if(src.itemEffects?.[key]===true)effects[key]=true;
+        });
+      }
+      itemEquipAssignments[i]=equipment;
+      itemEffectSelections[i]=effects;
+    }
   }
+  if(data.version>=2){saveItemEquipAssignments();saveItemEffectSelections();}
   activeFormation=Math.max(0,Math.min(5,Number.isInteger(data.activeFormation)?data.activeFormation:0));
   branch=formationStates[activeFormation].branch;
   armor=!!formationStates[activeFormation].armor;
   selected=formationStates[activeFormation].selected;
+  battleConditions=formationStates[activeFormation].battleConditions;
   excludeDomesticSkills=!!data.excludeDomesticSkills;
   showDomesticOnly=!!data.showDomesticOnly;
   if(showDomesticOnly)excludeDomesticSkills=false;
@@ -1906,15 +1949,16 @@ function applySaveData(data){
   $('#showDomesticOnly').checked=showDomesticOnly;
   updateBranchDisplay();
   activeRole=null;closePicker();renderAll();
+  return unavailable.size;
 }
 function loadFormationData(){
   const raw=localStorage.getItem(SAVE_KEY);
   if(!raw){alert('保存されている編制がありません。');return;}
   if(!confirm('保存済みの編制を読み出して、現在の入力内容を置き換えますか？'))return;
   try{
-    const data=JSON.parse(raw);applySaveData(data);
+    const data=JSON.parse(raw);const unavailable=applySaveData(data);
     const d=data.savedAt?new Date(data.savedAt):null;
-    setSaveStatus(d&&!isNaN(d)?`読み出し：${d.toLocaleString('ja-JP')}`:'保存データを読み出しました');
+    setSaveStatus(unavailable?`読み出し済み · このDBにないデータ ${unavailable}件`:d&&!isNaN(d)?`読み出し：${d.toLocaleString('ja-JP')}`:'保存データを読み出しました');
   }catch(e){alert('保存データを読み出せませんでした。');}
 }
 function exportFormationData(){
@@ -1941,9 +1985,9 @@ function importFormationData(file){
   reader.onload=()=>{
     try{
       const data=JSON.parse(String(reader.result||''));
-      applySaveData(data);
+      const unavailable=applySaveData(data);
       const d=data.savedAt?new Date(data.savedAt):null;
-      setSaveStatus(d&&!isNaN(d)?`ファイル読込：${d.toLocaleString('ja-JP')}`:'編制ファイルを読み込みました');
+      setSaveStatus(unavailable?`読込済み · このDBにないデータ ${unavailable}件`:d&&!isNaN(d)?`ファイル読込：${d.toLocaleString('ja-JP')}`:'編制ファイルを読み込みました');
     }catch(e){
       alert('編制ファイルを読み込めませんでした。正しいJSONファイルを選択してください。');
     }finally{
@@ -1958,6 +2002,7 @@ function showExistingSaveStatus(){
 }
 function renderAll(){formationStates[activeFormation].branch=branch;formationStates[activeFormation].armor=armor;formationStates[activeFormation].selected=selected;updateBranchDisplay();renderFormationTabs();renderSlots();renderKaidenEditor();renderSummary();renderTsuienEditor();renderChains();renderDetails();renderBattleConditionControls()
   if(typeof renderItemDb==='function')renderItemDb();
+  saveDraft();
 }
 
 function openBranchMenuLocked(){
@@ -2076,6 +2121,7 @@ document.querySelectorAll('[data-battle-condition]').forEach(c=>c.addEventListen
   renderBattleConditionControls();
   updateAbilityCollapseStatus();
   renderSummary();
+  saveDraft();
 }));
 
 
@@ -2138,7 +2184,7 @@ function resolveTieEffectText(effect,matched){
 function selectionKey(itemId,traitIndex){return `${itemId}::${traitIndex}`}
 function getFormationEffectSelections(index=activeFormation){const k=String(index);return itemEffectSelections[k]||{}}
 function isItemEffectSelected(itemId,traitIndex){return !!getFormationEffectSelections()[selectionKey(itemId,traitIndex)]}
-function setItemEffectSelected(itemId,traitIndex,on){const k=String(activeFormation);if(!itemEffectSelections[k])itemEffectSelections[k]={};const sk=selectionKey(itemId,traitIndex);if(on)itemEffectSelections[k][sk]=true;else delete itemEffectSelections[k][sk];saveItemEffectSelections();renderItemDb();}
+function setItemEffectSelected(itemId,traitIndex,on){const k=String(activeFormation);if(!itemEffectSelections[k])itemEffectSelections[k]={};const sk=selectionKey(itemId,traitIndex);if(on)itemEffectSelections[k][sk]=true;else delete itemEffectSelections[k][sk];saveItemEffectSelections();renderItemDb();saveDraft();}
 function findItemAssignmentAcrossFormations(itemId){
   for(let i=0;i<formationStates.length;i++){
     const map=getFormationEquipAssignments(i);
@@ -2149,6 +2195,14 @@ function findItemAssignmentAcrossFormations(itemId){
 function clearItemAssignmentEffects(itemId,index){
   const sel=itemEffectSelections[String(index)];
   if(sel)Object.keys(sel).filter(k=>k.startsWith(itemId+'::')).forEach(k=>delete sel[k]);
+}
+function detachRoleItems(role,index=activeFormation){
+  const assignments=getFormationEquipAssignments(index);
+  const ids=Object.keys(assignments).filter(id=>assignments[id]===role);
+  if(!ids.length)return;
+  ids.forEach(id=>{delete assignments[id];clearItemAssignmentEffects(id,index);});
+  saveItemEquipAssignments();
+  saveItemEffectSelections();
 }
 function assignItemToRole(itemId,newRole,index=activeFormation){
   const map=getFormationEquipAssignments(index),item=itemDb.find(x=>x.id===itemId);if(!item)return false;
@@ -2261,7 +2315,7 @@ function populateItemDbSlotFilter(){
 }
 itemDbField('itemDbSearch')?.addEventListener('input',renderItemDb);
 itemDbField('itemDbSlotFilter')?.addEventListener('change',renderItemDb);
-itemDbField('itemDbList')?.addEventListener('change',e=>{const sel=e.target.closest('select[data-item-equip]');if(!sel)return;const previous=getItemEquippedRole(sel.dataset.itemEquip);if(!assignItemToRole(sel.dataset.itemEquip,sel.value)){sel.value=previous;}renderItemDb();});
+itemDbField('itemDbList')?.addEventListener('change',e=>{const sel=e.target.closest('select[data-item-equip]');if(!sel)return;const previous=getItemEquippedRole(sel.dataset.itemEquip);if(!assignItemToRole(sel.dataset.itemEquip,sel.value)){sel.value=previous;}renderItemDb();saveDraft();});
 itemDbField('itemDbList')?.addEventListener('change',e=>{const c=e.target.closest('input[data-item-effect]');if(!c)return;setItemEffectSelected(c.dataset.itemEffect,Number(c.dataset.traitIndex),c.checked);});
 populateItemDbSlotFilter();
 renderItemDb();
@@ -2361,5 +2415,13 @@ function moveFormationGeneral(from,to,formationIndex=activeFormation){
 
 renderDBNote();
 renderAll();showExistingSaveStatus();
+try{
+  const draft=localStorage.getItem(DRAFT_KEY);
+  if(draft){
+    const unavailable=applySaveData(JSON.parse(draft));
+    setSaveStatus(unavailable?`前回の編制を復元 · このDBにないデータ ${unavailable}件`:'前回の編制を復元しました');
+  }
+}catch{setSaveStatus('前回の自動保存を復元できませんでした。');}
+draftReady=true;
 </script>
 </body></html>

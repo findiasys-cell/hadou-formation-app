@@ -1,0 +1,427 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#111827"><meta name="description" content="戦法速度計算"><title>戦法速度計算</title><style>
+*{box-sizing:border-box}body{margin:0;background:#eef1f5;color:#172033;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif}.top{position:sticky;top:0;z-index:10;background:#111827;color:#fff;padding:17px 18px calc(15px + env(safe-area-inset-top));box-shadow:0 3px 12px #0002}.top h1{margin:0;font-size:21px;font-weight:900;letter-spacing:.02em}.wrap{max-width:680px;margin:auto;padding:14px 14px calc(30px + env(safe-area-inset-bottom))}.card{background:#fff;border:1px solid #e5e9ef;border-radius:18px;padding:17px;margin-bottom:14px;box-shadow:0 3px 14px #1720330b}.title{display:flex;align-items:center;gap:7px;font-size:17px;margin:0 0 14px;font-weight:900}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label.head{display:block;font-size:12px;font-weight:800;color:#647084;margin-bottom:6px}.input{display:flex;align-items:center;border:1px solid #cfd6df;border-radius:12px;background:#f8fafc;overflow:hidden;transition:.15s}.input:focus-within{border-color:#111827;box-shadow:0 0 0 3px #11182712}.input input,.input select{width:100%;border:0;outline:0;background:transparent;font-size:18px;font-weight:800;padding:12px 10px;min-width:0}.unit{font-size:12px;color:#687386;padding-right:10px;font-weight:700}.unique-box{margin-top:2px}.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}.check{display:flex;align-items:center;gap:7px;padding:10px;border:1px solid #e0e5eb;border-radius:11px;background:#f8fafc;font-size:13px;font-weight:800;color:#344054;cursor:pointer;min-width:0}.check:has(input:checked){background:#eef1f5;border-color:#8d98a8;box-shadow:inset 0 0 0 1px #8d98a8}.check input{width:18px;height:18px;margin:0;accent-color:#111827;flex:0 0 auto}.check b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.check span{margin-left:auto;color:#596579;font-size:12px;white-space:nowrap}.sum{display:flex;justify-content:space-between;align-items:center;margin-top:9px;padding:10px 12px;border-radius:11px;background:#172033;color:#fff}.sum span{font-size:12px;font-weight:700}.sum strong{font-size:19px}.wide{grid-column:1/-1}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.btn{border:0;border-radius:12px;padding:13px;font-size:15px;font-weight:900;cursor:pointer}.save{background:#111827;color:#fff}.load{background:#e7ebf0;color:#172033}.reset{margin-top:9px;width:100%;background:#f3f4f6;color:#4b5565}.save-panel{margin-top:10px;border:1px solid #dde3ea;border-radius:14px;background:#f8fafc;padding:11px}.save-head{display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-bottom:9px}.close{border:0;background:transparent;color:#647084;font-weight:800;padding:4px 6px}.save-list{display:grid;gap:7px}.save-item{display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;background:#fff;border:1px solid #e0e5eb;border-radius:10px;padding:8px}.save-load{border:0;border-radius:8px;background:#172033;color:#fff;padding:8px 10px;font-weight:800}.save-del{border:0;border-radius:8px;background:#eef1f5;color:#596579;padding:8px 9px;font-weight:800}.save-name{font-size:13px;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.save-empty{font-size:12px;color:#7a8493;text-align:center;padding:8px}.status{text-align:center;font-size:11px;color:#7a8493;margin-top:8px;min-height:16px}.results{display:grid;gap:10px}.result{padding:14px 15px;border-radius:15px;background:#f8fafc;border:1px solid #dde3ea}.result .label{font-size:12px;color:#647084;font-weight:800}.result .value{font-size:30px;font-weight:950;margin-top:2px;letter-spacing:-.02em}.result.primary-result{background:#172033;color:#fff;border-color:#172033}.primary-result .label{color:#c8d0dc}.primary-result .value{font-size:34px}.sub{font-size:11px;color:#7a8493;margin-top:5px}@media(max-width:390px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}.result .value{font-size:27px}.primary-result .value{font-size:31px}}
+</style><style>.input-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.result-jump{flex:none;width:auto;padding:8px 10px;border:0;border-radius:10px;background:#2563eb;color:#fff;font-size:12px;font-weight:800}.gauge-section{grid-column:1/-1}.gauge-list{display:grid;gap:8px;margin-top:8px}.gauge-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px;border:1px solid #d7dee8;border-radius:12px;background:#f8fafc}.gauge-name{display:flex;align-items:center;gap:8px}.gauge-name input{width:20px;height:20px;margin:0}.gauge-row select{width:122px;height:40px;border:1px solid #cfd6df;border-radius:9px;background:#fff;padding:0 8px;font-weight:800}.gauge-row select:disabled{background:#e5e7eb;color:#94a3b8}.fixed-gauge{width:122px;text-align:right;font-weight:900}.gauge-summary{margin-top:10px;padding:12px;border:1px solid #bfdbfe;border-radius:14px;background:#eff6ff}.selected-total,.manual-row,.gauge-grand-total{display:flex;align-items:center;justify-content:space-between;gap:12px}.selected-total{font-size:13px}.selected-total b{font-size:20px}.manual-row{margin-top:10px;font-size:13px;font-weight:800}.gauge-manual-input{width:122px}.gauge-grand-total{margin-top:12px;padding-top:12px;border-top:1px solid #bfdbfe;font-weight:900}.gauge-grand-total strong{font-size:30px;color:#1d4ed8}</style><style>
+/* v15 layout refinement */
+:root{--panel:#ffffff;--ink:#182235;--muted:#667085;--line:#e3e8ef;--soft:#f7f9fc;--accent:#2563eb;--dark:#172033}
+body{background:linear-gradient(#eef2f7,#f7f9fc);color:var(--ink)}
+.top{padding:15px 18px calc(13px + env(safe-area-inset-top));box-shadow:0 2px 10px #17203318}
+.top h1{max-width:720px;margin:auto;font-size:20px}
+.wrap{max-width:720px;padding:16px 14px calc(34px + env(safe-area-inset-bottom))}
+.card{border-radius:20px;padding:18px;border-color:var(--line);box-shadow:0 6px 22px #1720330a}
+.title{margin-bottom:16px;font-size:18px}
+.input-head{position:sticky;top:61px;z-index:5;margin:-18px -18px 16px;padding:14px 18px;background:#fff;border-radius:20px 20px 0 0;border-bottom:1px solid #edf0f4}
+.result-jump{min-height:40px;padding:9px 13px;border-radius:11px;box-shadow:0 4px 10px #2563eb22}
+.grid{gap:12px 14px}
+.group-label{margin-top:4px;padding-top:4px;font-size:13px;font-weight:950;color:#344054;letter-spacing:.02em}
+.group-label:not(:first-child){margin-top:8px;padding-top:15px;border-top:1px solid #edf0f4}
+.field label.head{font-size:11px;color:#7a8493;margin-bottom:7px}
+.input{min-height:48px;border-radius:13px;background:#fff;box-shadow:inset 0 0 0 1px #ffffff}
+.input input,.input select{padding:12px 11px;font-size:17px}
+.checks{gap:9px}
+.check{min-height:46px;padding:9px 10px;border-radius:12px;background:#fbfcfe}
+.check:has(input:checked){background:#eef4ff;border-color:#93b4f5;box-shadow:inset 0 0 0 1px #93b4f5}
+.check input{accent-color:var(--accent)}
+.check select{height:34px!important}
+.sum{margin-top:11px;padding:12px 14px;border-radius:13px;background:var(--dark)}
+.sum strong{font-size:22px}
+.gauge-list{grid-template-columns:1fr 1fr;gap:9px}
+.gauge-row{min-height:52px;padding:10px 11px;border-radius:13px;background:#fbfcfe}
+.gauge-row:has(input:checked){background:#eef4ff;border-color:#93b4f5;box-shadow:inset 0 0 0 1px #93b4f5}
+.gauge-name input{accent-color:var(--accent)}
+.gauge-row select,.fixed-gauge{width:112px;min-width:112px}
+.gauge-summary{margin-top:11px;border-radius:15px;padding:13px;background:#f0f6ff}
+.selected-total{padding-bottom:9px;border-bottom:1px solid #d9e7ff}
+.manual-row{padding:10px 0}
+.gauge-manual-input{width:122px}
+.gauge-grand-total{padding-top:11px;border-top:1px solid #d9e7ff}
+.gauge-grand-total strong{font-size:31px;letter-spacing:-.02em}
+.actions{position:sticky;bottom:8px;z-index:4;margin:18px -4px 0;padding:7px;background:#ffffffec;border:1px solid #e8edf3;border-radius:15px;box-shadow:0 8px 24px #17203318;backdrop-filter:blur(10px)}
+.btn{min-height:46px;border-radius:11px}
+.reset{margin-top:10px}
+#results{scroll-margin-top:82px}
+.results{grid-template-columns:1fr 1fr;gap:11px}
+.result{min-height:112px;display:flex;flex-direction:column;justify-content:center;border-radius:16px;padding:15px 16px}
+.result.primary-result{grid-column:1/-1;min-height:124px}
+.result .value{font-size:29px}
+.primary-result .value{font-size:36px}
+.sub{text-align:center;margin-top:9px}
+@media(max-width:560px){
+  .wrap{padding-left:10px;padding-right:10px}
+  .card{padding:14px;border-radius:17px}
+  .input-head{top:57px;margin:-14px -14px 14px;padding:12px 14px;border-radius:17px 17px 0 0}
+  .result-jump{font-size:11px;padding:8px 10px;min-height:38px}
+  .grid{grid-template-columns:1fr 1fr;gap:10px}
+  .checks{grid-template-columns:1fr 1fr;gap:7px}
+  .check{padding:8px;gap:6px;font-size:12px}
+  .check span{font-size:11px}
+  .gauge-list{grid-template-columns:1fr}
+  .gauge-row select,.fixed-gauge{width:124px;min-width:124px}
+  .results{grid-template-columns:1fr}
+  .result.primary-result{grid-column:auto}
+}
+@media(max-width:390px){
+  .grid{grid-template-columns:1fr}
+  .wide{grid-column:auto}
+  .group-label.wide{grid-column:auto}
+  .checks{grid-template-columns:1fr 1fr}
+  .input-head{align-items:center}
+  .title{font-size:16px}
+  .result-jump{white-space:nowrap}
+  .actions{grid-template-columns:1fr 1fr}
+}
+</style>
+<style>
+.top-action-buttons{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-left:auto;
+}
+.top-return{
+  width:auto;
+  padding:8px 11px;
+  border:1px solid #cbd5e1;
+  border-radius:10px;
+  background:#fff;
+  color:#334155;
+  font-size:12px;
+  font-weight:800;
+  cursor:pointer;
+  white-space:nowrap;
+}
+@media(max-width:640px){
+  .top-action-buttons{gap:6px}
+  .top-return,.result-jump{
+    padding:8px 9px!important;
+    font-size:11px!important;
+  }
+}
+</style>
+<style>
+.result-value-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;min-width:0}
+.result-value-row .value{min-width:0}
+.normal-diff{flex:none;color:#dc2626;font-size:15px;font-weight:900;white-space:nowrap;text-align:right}
+@media(max-width:390px){.normal-diff{font-size:13px}}
+</style>
+
+<style>
+.top-action-buttons{
+  display:grid !important;
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  gap:6px !important;
+  width:100% !important;
+}
+.top-action-buttons > button{
+  width:100% !important;
+  min-width:0 !important;
+  height:42px !important;
+  min-height:42px !important;
+  margin:0 !important;
+  padding:0 6px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  box-sizing:border-box !important;
+  border:1px solid #2563eb !important;
+  border-radius:10px !important;
+  background:#2563eb !important;
+  color:#fff !important;
+  font-size:12px !important;
+  font-weight:800 !important;
+  line-height:1 !important;
+  white-space:nowrap !important;
+  box-shadow:none !important;
+}
+@media(max-width:390px){
+  .top-action-buttons{
+    gap:4px !important;
+  }
+  .top-action-buttons > button{
+    height:40px !important;
+    min-height:40px !important;
+    padding:0 3px !important;
+    font-size:10.5px !important;
+  }
+}
+</style>
+
+<style>
+/* 「条件を入力」＋上部3ボタンをスマホで1行維持 */
+.sticky-head,
+.input-head,
+.section-head{
+  min-width:0 !important;
+}
+.sticky-head .head,
+.input-head .head,
+.section-head .head,
+.head{
+  white-space:nowrap !important;
+}
+
+/* 上部操作ボタンを少しコンパクト化 */
+.top-action-buttons{
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  gap:4px !important;
+  flex:1 1 auto !important;
+  min-width:0 !important;
+}
+.top-action-buttons > button{
+  height:38px !important;
+  min-height:38px !important;
+  padding:0 4px !important;
+  font-size:10.5px !important;
+  border-radius:9px !important;
+  white-space:nowrap !important;
+}
+
+/* 「条件を入力」側の幅を優先確保 */
+.sticky-head,
+.input-head{
+  display:flex !important;
+  align-items:center !important;
+  gap:6px !important;
+}
+.sticky-head > .head,
+.input-head > .head{
+  flex:0 0 auto !important;
+  font-size:13px !important;
+  line-height:1.2 !important;
+}
+
+/* 小型スマホではさらに微調整 */
+@media(max-width:390px){
+  .top-action-buttons{
+    gap:3px !important;
+  }
+  .top-action-buttons > button{
+    height:36px !important;
+    min-height:36px !important;
+    padding:0 2px !important;
+    font-size:9.5px !important;
+  }
+  .sticky-head > .head,
+  .input-head > .head{
+    font-size:12px !important;
+  }
+}
+</style>
+
+<style>
+/* 上部3ボタン：青背景を文字幅ぎりぎりまでコンパクト化 */
+.top-action-buttons{
+  display:flex !important;
+  grid-template-columns:none !important;
+  flex:0 1 auto !important;
+  width:auto !important;
+  gap:4px !important;
+  justify-content:flex-end !important;
+  align-items:center !important;
+}
+.top-action-buttons > button{
+  flex:0 0 auto !important;
+  width:auto !important;
+  min-width:0 !important;
+  height:34px !important;
+  min-height:34px !important;
+  padding:0 5px !important;
+  margin:0 !important;
+  font-size:10.5px !important;
+  line-height:1 !important;
+  white-space:nowrap !important;
+  border-radius:7px !important;
+}
+@media(max-width:390px){
+  .top-action-buttons{
+    gap:3px !important;
+  }
+  .top-action-buttons > button{
+    height:32px !important;
+    min-height:32px !important;
+    padding:0 3px !important;
+    font-size:9.5px !important;
+    border-radius:6px !important;
+  }
+}
+</style>
+</head><body><header class="top"><h1>戦法速度計算</h1><a href="index.html" style="color:inherit">編制へ戻る</a></header><main class="wrap"><p id="formationTransfer" role="status" hidden></p><section class="card"><h2 class="title input-head"><span>⚙️ 条件を入力</span><div class="top-action-buttons"><button type="button" class="top-return" onclick="window.scrollTo({top:0,left:0,behavior:'smooth'})">上に戻る</button><button type="button" onclick="resetForm()">リセット</button><button class="result-jump" type="button" onclick="document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'})">計算結果表示</button></div></h2><div class="grid"><div class="group-label wide">基本設定</div><div class="field"><label class="head">元の発動間隔</label><div class="input"><select id="B"><option value="25">25</option><option value="30">30</option><option value="35">35</option></select><span class="unit">秒</span></div></div><div class="field"><label class="head">機略</label><div class="input"><select id="C"><option value="0">なし　0%</option><option value="5">Ⅰ　5%</option><option value="8">Ⅱ　8%</option><option value="15">Ⅲ　15%</option></select></div></div><div class="field"><label class="head">速攻</label><div class="input"><select id="H"><option value="0">なし　0%</option><option value="3">Ⅰ　3%</option><option value="6">Ⅱ　6%</option><option value="10">Ⅲ　10%</option></select></div></div><div class="group-label wide">固有系</div><div class="field wide unique-box"><label class="head">複数選択可</label><div class="checks"><label class="check"><input id="waterPlan" class="unique" type="checkbox" value="8"><b>水計</b><span>+8%</span></label><label class="check"><input class="unique" type="checkbox" id="ex_shinsan" value="20"><b>神算</b><span>+20%</span></label><label class="check"><input class="unique" type="checkbox" id="ex_kanpa" value="10"><b>看破</b><span>+10%</span></label><label class="check"><input class="unique" type="checkbox" id="ex_jinsoku" value="10"><b>迅速</b><span>+10%</span></label><label class="check"><input class="unique" type="checkbox" id="ex_sairyaku" value="10"><b>才略</b><span>+10%</span></label><label class="check"><input class="unique" type="checkbox" id="ex_buretsu" value="10"><b>武烈</b><span>+10%</span></label><label class="check"><input class="unique" type="checkbox" id="ex_ichinen" value="10"><b>一念</b><span>+10%</span></label><label class="check"><input class="unique" type="checkbox" id="ex_kenbatsu" value="10"><b>剣抜</b><span>+10%</span></label><label class="check"><input class="unique" type="checkbox" id="ex_yoyoku" value="10"><b>耀翼</b><span>+10%</span></label><label class="check"><input id="sensoku" class="unique" type="checkbox" value="5"><b>戦速加速</b><span>+5%</span><select id="sensokuBonus" aria-label="戦速加速補正値" style="width:58px;border:1px solid #cfd6df;border-radius:8px;background:#fff;font-size:12px;font-weight:800;padding:6px 3px;flex:0 0 auto"><option value="0">+0%</option><option value="5">+5%</option></select></label><label class="check"><input id="reiken" class="unique" type="checkbox" value="8"><b>霊剣</b><span>+8%</span><select id="Rbonus" aria-label="霊剣補正値" style="width:58px;border:1px solid #cfd6df;border-radius:8px;background:#fff;font-size:12px;font-weight:800;padding:6px 3px;flex:0 0 auto"><option value="0">+0%</option><option value="1">+1%</option><option value="2">+2%</option><option value="3">+3%</option><option value="4">+4%</option><option value="5">+5%</option><option value="6">+6%</option><option value="7">+7%</option></select></label><label class="check"><input id="kanata" class="unique" type="checkbox" value="3"><b>彼方</b><span>+3%</span><select id="Dbonus" aria-label="彼方補正値" style="width:58px;border:1px solid #cfd6df;border-radius:8px;background:#fff;font-size:12px;font-weight:800;padding:6px 3px;flex:0 0 auto"><option value="0">+0%</option><option value="1">+1%</option><option value="2">+2%</option><option value="3">+3%</option><option value="4">+4%</option><option value="5">+5%</option><option value="6">+6%</option><option value="7">+7%</option></select></label></div><div class="sum"><span>固有系 合計</span><strong id="Dtotal">0%</strong></div></div><div class="group-label wide">出陣時ゲージ加算</div><div class="field wide gauge-section"><label class="head">使用する効果を選択</label><div class="gauge-list">
+<label class="gauge-row"><span class="gauge-name"><input id="yuushiOn" type="checkbox"><b>勇士</b></span><select id="yuushi" disabled></select></label>
+<label class="gauge-row"><span class="gauge-name"><input id="koiOn" type="checkbox"><b>虎威</b></span><select id="koi" disabled></select></label>
+<label class="gauge-row"><span class="gauge-name"><input id="kenchikuOn" type="checkbox"><b>建築戦法加速</b></span><select id="kenchiku" disabled></select></label>
+<label class="gauge-row"><span class="gauge-name"><input id="shinkiOn" type="checkbox"><b>神気</b></span><span class="fixed-gauge">20%</span></label>
+</div><div class="gauge-summary"><div class="selected-total"><span>選択補正値合計</span><b><span id="gaugeSelected">0</span>%</b></div><div class="manual-row"><span>手動補正値</span><div class="input gauge-manual-input"><input id="gaugeManual" type="number" step="1" value="0"><span class="unit">%</span></div></div><div class="gauge-grand-total"><span>出陣時ゲージ加算 合計</span><strong><span id="gaugeTotal">0</span>%</strong></div></div></div><div class="group-label wide">戦法速度バフ</div><div class="field"><label class="head">戦法速度上昇</label><div class="input"><input id="F" type="number" step="1" value="0"><span class="unit">%</span></div></div><div class="field wide"><label class="head">戦法速度上昇時間</label><div class="input"><input id="G" type="number" step="1" value="0"><span class="unit">秒</span></div></div></div><div class="actions"><button class="btn save" onclick="saveData()">保存</button><button class="btn load" onclick="showSaves()">読み込み</button></div><div id="savePanel" class="save-panel" hidden><div class="save-head"><b>保存データ（最大10件）</b><button class="close" onclick="hideSaves()">閉じる</button></div><div id="saveList" class="save-list"></div></div><div id="status" class="status"></div></section><section class="card" id="results"><h2 class="title">📊 計算結果</h2><div class="results"><div class="result primary-result"><div class="label">通常発動間隔</div><div class="result-value-row"><div class="value" id="outB">—</div><div class="normal-diff" id="diffB">—</div></div></div><div class="result"><div class="label">バフあり初回発動</div><div class="result-value-row"><div class="value" id="outC">—</div><div class="normal-diff" id="diffC">—</div></div></div><div class="result"><div class="label">バフゲージ加算あり発動時間</div><div class="result-value-row"><div class="value" id="outD">—</div><div class="normal-diff" id="diffD">—</div></div></div></div><div class="sub">※入力内容を変更すると自動で再計算されます。</div></section></main><script>
+const STORAGE='senpo-speed-calc-v5-slots';
+function n(id){const el=document.getElementById(id);return el?(Number(el.value)||0):0}
+function getD(){return [...document.querySelectorAll('.unique:checked')].reduce((sum,e)=>sum+Number(e.value),0)}
+function fmt(x){return Number.isFinite(x)?x.toFixed(2)+' 秒':'計算不可'}
+function fmtDiff(x){if(!Number.isFinite(x))return '—';const sign=x>0?'＋':x<0?'−':'±';return sign+Math.abs(x).toFixed(2)+' 秒'}
+function setStatus(t){const el=document.getElementById('status');el.textContent=t;clearTimeout(window._st);window._st=setTimeout(()=>el.textContent='',1800)}
+function escapeHtml(t){return String(t).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function fillRange(id,max){const el=document.getElementById(id);el.innerHTML='';for(let i=0;i<=max;i++){const o=document.createElement('option');o.value=i;o.textContent=i+'%';el.appendChild(o)}}
+function fillChoices(id,values){const el=document.getElementById(id);el.innerHTML='';values.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v+'%';el.appendChild(o)})}
+function syncReiken(){document.getElementById('Rbonus').disabled=!document.getElementById('reiken').checked}
+function syncKanata(){document.getElementById('Dbonus').disabled=!document.getElementById('kanata').checked}
+function syncSensoku(){document.getElementById('sensokuBonus').disabled=!document.getElementById('sensoku').checked}
+
+function syncGaugeUI(changedId){
+ const yu=document.getElementById('yuushiOn'), shi=document.getElementById('shinkiOn');
+ if(changedId==='yuushiOn' && yu.checked) shi.checked=false;
+ if(changedId==='shinkiOn' && shi.checked) yu.checked=false;
+ shi.disabled=yu.checked; yu.disabled=shi.checked;
+ document.getElementById('yuushi').disabled=!yu.checked;
+ document.getElementById('koi').disabled=!document.getElementById('koiOn').checked;
+ document.getElementById('kenchiku').disabled=!document.getElementById('kenchikuOn').checked;
+}
+function getGaugeSelected(){let t=0;if(document.getElementById('yuushiOn').checked)t+=n('yuushi');if(document.getElementById('koiOn').checked)t+=n('koi');if(document.getElementById('kenchikuOn').checked)t+=n('kenchiku');if(document.getElementById('shinkiOn').checked)t+=20;return t}
+function getGaugeTotal(){const selected=getGaugeSelected();const total=selected+n('gaugeManual');document.getElementById('gaugeSelected').textContent=selected;document.getElementById('gaugeTotal').textContent=total;return total}
+function calc(){
+ const B=n('B'),C=n('C'),H=n('H');
+ const D=getD()+H+(document.getElementById('reiken').checked?n('Rbonus'):0)+(document.getElementById('kanata').checked?n('Dbonus'):0)+(document.getElementById('sensoku').checked?n('sensokuBonus'):0);
+ const E=getGaugeTotal(),F=n('F'),G=n('G');
+ document.getElementById('Dtotal').textContent=D+'%';
+ const normal=B>0?B/(1+C/100+D/100):NaN;
+ const K2=100/B*(1+(C+D)*.01);
+ const K3=100/B*(1+(C+D+F)*.01);
+ const M3=K3*G;
+ const M2=(100-M3)/K2;
+ const first=B>0?M2+G:NaN;
+ const gauge=first*(1-E*.01);
+ document.getElementById('outB').textContent=fmt(normal);
+ document.getElementById('diffB').textContent=fmtDiff(normal-B);
+ document.getElementById('outC').textContent=fmt(first);
+ document.getElementById('outD').textContent=fmt(gauge);
+ document.getElementById('diffC').textContent=fmtDiff(first-normal);
+ document.getElementById('diffD').textContent=fmtDiff(gauge-normal);
+}
+function state(){return{B:document.getElementById('B').value,C:document.getElementById('C').value,H:document.getElementById('H').value,Dbonus:document.getElementById('Dbonus').value,Rbonus:document.getElementById('Rbonus').value,sensokuBonus:document.getElementById('sensokuBonus').value,F:document.getElementById('F').value,G:document.getElementById('G').value,unique:[...document.querySelectorAll('.unique')].map(x=>x.checked),yuushiOn:document.getElementById('yuushiOn').checked,yuushi:document.getElementById('yuushi').value,koiOn:document.getElementById('koiOn').checked,koi:document.getElementById('koi').value,kenchikuOn:document.getElementById('kenchikuOn').checked,kenchiku:document.getElementById('kenchiku').value,shinkiOn:document.getElementById('shinkiOn').checked,gaugeManual:document.getElementById('gaugeManual').value}}
+function getSaves(){try{return JSON.parse(localStorage.getItem(STORAGE)||'[]')}catch(e){return[]}}
+function saveData(){let saves=getSaves();if(saves.length>=10){setStatus('保存は10件までです。不要なデータを削除してください');showSaves();return}const name=prompt('保存名を入力してください','保存 '+(saves.length+1));if(name===null)return;const clean=name.trim()||('保存 '+(saves.length+1));saves.push({name:clean,data:state(),savedAt:new Date().toISOString()});localStorage.setItem(STORAGE,JSON.stringify(saves));renderSaves();setStatus('「'+clean+'」を保存しました')}
+function showSaves(){document.getElementById('savePanel').hidden=false;renderSaves()}
+function hideSaves(){document.getElementById('savePanel').hidden=true}
+function renderSaves(){const list=document.getElementById('saveList'),saves=getSaves();if(!saves.length){list.innerHTML='<div class="save-empty">保存データはありません</div>';return}list.innerHTML=saves.map((s,i)=>'<div class="save-item"><div class="save-name" title="'+escapeHtml(s.name)+'">'+(i+1)+'. '+escapeHtml(s.name)+'</div><button class="save-load" onclick="loadSlot('+i+')">読み込み</button><button class="save-del" onclick="deleteSlot('+i+')">削除</button></div>').join('')}
+function loadSlot(i){const saves=getSaves(),slot=saves[i];if(!slot)return;const d=slot.data||{};['B','C','H','Dbonus','Rbonus','sensokuBonus','F','G'].forEach(id=>{if(d[id]!==undefined)document.getElementById(id).value=d[id]});document.querySelectorAll('.unique').forEach((x,j)=>x.checked=!!(d.unique&&d.unique[j]));document.getElementById('yuushiOn').checked=!!d.yuushiOn;document.getElementById('yuushi').value=d.yuushi??'0';document.getElementById('koiOn').checked=!!d.koiOn;document.getElementById('koi').value=d.koi??'0';document.getElementById('kenchikuOn').checked=!!d.kenchikuOn;document.getElementById('kenchiku').value=d.kenchiku??'0';document.getElementById('shinkiOn').checked=!!d.shinkiOn;document.getElementById('gaugeManual').value=d.gaugeManual!==undefined?d.gaugeManual:(d.E!==undefined?d.E:'0');normalizeExclusiveState();syncReiken();syncKanata();syncSensoku();syncGaugeUI();calc();hideSaves();setStatus('「'+slot.name+'」を読み込みました')}
+function deleteSlot(i){const saves=getSaves(),slot=saves[i];if(!slot)return;if(!confirm('「'+slot.name+'」を削除しますか？'))return;saves.splice(i,1);localStorage.setItem(STORAGE,JSON.stringify(saves));renderSaves();setStatus('削除しました')}
+function resetForm(){document.getElementById('B').value='25';document.getElementById('C').value='0';document.getElementById('H').value='0';document.getElementById('Dbonus').value='0';document.getElementById('Rbonus').value='0';document.getElementById('sensokuBonus').value='0';document.getElementById('F').value='0';document.getElementById('G').value='0';document.querySelectorAll('.unique').forEach(x=>x.checked=false);document.getElementById('yuushiOn').checked=false;document.getElementById('yuushi').value='0';document.getElementById('koiOn').checked=false;document.getElementById('koi').value='0';document.getElementById('kenchikuOn').checked=false;document.getElementById('kenchiku').value='0';document.getElementById('shinkiOn').checked=false;document.getElementById('gaugeManual').value='0';syncReiken();syncKanata();syncSensoku();syncGaugeUI();calc();setStatus('初期値に戻しました')}
+fillRange('yuushi',30);fillRange('koi',21);fillChoices('kenchiku',[0,10,15,20]);
+
+
+function normalizeExclusiveState(){
+  // 勇士/神気
+  const yuushi=document.getElementById('yuushiOn');
+  const shinki=document.getElementById('shinkiOn');
+  if(yuushi && shinki && yuushi.checked && shinki.checked) shinki.checked=false;
+
+  // 神算/霊剣/彼方
+  const one=['ex_shinsan','reiken','kanata','ex_kenbatsu']
+    .map(id=>document.getElementById(id))
+    .filter(Boolean)
+    .filter(el=>el.checked);
+  one.slice(1).forEach(el=>el.checked=false);
+
+  // 6項目は先頭3つまで
+  const max3=['ex_kanpa','ex_jinsoku','ex_sairyaku','ex_buretsu','ex_ichinen','ex_yoyoku']
+    .map(id=>document.getElementById(id))
+    .filter(Boolean)
+    .filter(el=>el.checked);
+  max3.slice(3).forEach(el=>el.checked=false);
+}
+
+function applySelectionRules(changedId){
+  const changed = document.getElementById(changedId);
+  if(!changed) return;
+
+  // 勇士 / 神気：どちらか1つ
+  const groupGauge = ['yuushiOn','shinkiOn'];
+  if(groupGauge.includes(changedId) && changed.checked){
+    groupGauge.forEach(id=>{
+      if(id !== changedId){
+        const el = document.getElementById(id);
+        if(el) el.checked = false;
+      }
+    });
+  }
+
+  // 神算 / 霊剣 / 彼方：いずれか1つ
+  const groupOne = ['ex_shinsan','reiken','kanata','ex_kenbatsu'];
+  if(groupOne.includes(changedId) && changed.checked){
+    groupOne.forEach(id=>{
+      if(id !== changedId){
+        const el = document.getElementById(id);
+        if(el) el.checked = false;
+      }
+    });
+  }
+
+  // 看破 / 迅速 / 才略 / 武烈 / 一念 / 耀翼：3つまで
+  const groupMax3 = ['ex_kanpa','ex_jinsoku','ex_sairyaku','ex_buretsu','ex_ichinen','ex_yoyoku'];
+  if(groupMax3.includes(changedId) && changed.checked){
+    const count = groupMax3.reduce((sum,id)=>{
+      const el = document.getElementById(id);
+      return sum + (el && el.checked ? 1 : 0);
+    }, 0);
+
+    if(count > 3){
+      changed.checked = false;
+      alert('看破・迅速・才略・武烈・一念・耀翼は3つまで選択できます。');
+    }
+  }
+
+  if(typeof syncReiken === 'function') syncReiken();
+  if(typeof syncKanata === 'function') syncKanata();
+  if(typeof syncSensoku === 'function') syncSensoku();
+  if(typeof syncGaugeUI === 'function') syncGaugeUI(changedId);
+  if(typeof calc === 'function') calc();
+}
+
+function bindSelectionRules(){
+  [
+    'yuushiOn','shinkiOn',
+    'ex_shinsan','reiken','kanata',
+    'ex_kanpa','ex_jinsoku','ex_sairyaku','ex_buretsu','ex_ichinen','ex_yoyoku','ex_kenbatsu','sensoku'
+  ].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el && !el.dataset.exclusiveBound){
+      el.dataset.exclusiveBound = '1';
+      el.addEventListener('change', ()=>applySelectionRules(id));
+    }
+  });
+}
+
+['B','C','H','F','G'].forEach(id=>document.getElementById(id).addEventListener('input',calc));
+document.querySelectorAll('.unique').forEach(x=>x.addEventListener('change',calc));
+document.getElementById('Dbonus').addEventListener('change',calc);document.getElementById('Rbonus').addEventListener('change',calc);document.getElementById('sensokuBonus').addEventListener('change',calc);
+document.getElementById('reiken').addEventListener('change',()=>{syncReiken();calc()});document.getElementById('kanata').addEventListener('change',()=>{syncKanata();calc()});
+['yuushiOn','koiOn','kenchikuOn','shinkiOn'].forEach(id=>document.getElementById(id).addEventListener('change',()=>{syncGaugeUI(id);calc()}));
+['yuushi','koi','kenchiku'].forEach(id=>document.getElementById(id).addEventListener('change',calc));document.getElementById('gaugeManual').addEventListener('input',calc);
+function applyFormationTransfer(){
+ const params=new URLSearchParams(location.hash.slice(1));
+ const encoded=params.get('hadou');
+ if(!encoded)return;
+ const note=document.getElementById('formationTransfer');
+ note.hidden=false;
+ try{
+  const data=JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(encoded),c=>c.charCodeAt(0))));
+  if(data.app!=='hadou-formation-speed-link'||data.version!==4)throw Error();
+  const interval=document.getElementById('B');
+  if([25,30,35].includes(data.B))interval.value=String(data.B);
+  else{
+   interval.insertBefore(new Option('発動間隔を選択',''),interval.firstChild);
+   interval.value='';
+  }
+  for(const id of ['C','H']){
+   const field=document.getElementById(id);
+   if(Array.from(field.options).some(o=>o.value===String(data[id])))field.value=String(data[id]);
+  }
+  const unique={'水計':'waterPlan','戦速加速':'sensoku','霊剣':'reiken','彼方':'kanata','神算':'ex_shinsan','看破':'ex_kanpa','迅速':'ex_jinsoku','才略':'ex_sairyaku','武烈':'ex_buretsu','一念':'ex_ichinen','耀翼':'ex_yoyoku','剣抜':'ex_kenbatsu'};
+  const gauge={'神気':'shinkiOn','勇士':'yuushiOn','虎威':'koiOn'};
+  for(const [name,id] of Object.entries(unique))document.getElementById(id).checked=data.unique?.includes(name)===true;
+  for(const [name,id] of Object.entries(gauge))document.getElementById(id).checked=data.gauge?.includes(name)===true;
+  if(Number.isInteger(data.gaugeValues?.['虎威']))document.getElementById('koi').value=String(Math.max(0,Math.min(21,data.gaugeValues['虎威'])));
+  normalizeExclusiveState();
+  syncReiken();syncKanata();syncSensoku();syncGaugeUI();calc();
+  note.textContent=`編制${data.formation}・${data.role} ${data.generalName} の条件を読み込みました。`+(interval.value?'':'発動間隔を選んでください。')+(data.gauge?.includes('勇士')?' 勇士の補正値は手動で設定してください。':'');
+ }catch{note.textContent='編制の条件を読み込めませんでした。手動で入力できます。';}
+}
+bindSelectionRules();syncReiken();syncKanata();syncSensoku();syncGaugeUI();calc();
+applyFormationTransfer();
+</script></body></html>
