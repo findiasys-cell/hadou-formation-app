@@ -1465,6 +1465,13 @@ function renderAbilityAdjustments(speedActiveOverride){
     });
     if(!added&&targets.length)missing.push(`${skillLevelLabel(name,lv)}：補正値未登録`);
   });
+  for(const trait of getSelectedItemEffectActions()){
+    for(const {stat,value} of trait.abilityActions){
+      totals.set(stat,(totals.get(stat)||0)+value);
+      if(!breakdown.has(stat))breakdown.set(stat,[]);
+      breakdown.get(stat).push(`${trait.itemName}・${trait.traitName} +${formatAbilityNumber(value)}%`);
+    }
+  }
   const baseInfo=currentBranchBaseStats();
   const battleInterval=currentBattleIntervalData();
 
@@ -1502,11 +1509,11 @@ function renderAbilityAdjustments(speedActiveOverride){
         baseHtml=`<div class="ability-base">初期値（${escapeHtml(baseInfo.name)}） <b>未設定</b></div>`;
       }
     }
-    return `<div class="ability-card"><div class="ability-name">${escapeHtml(k)}</div>${baseHtml}<div class="ability-value">+${formatAbilityNumber(totals.get(k))}${unit}</div><div class="ability-mod">技能補正</div>${rows?`<div class="ability-breakdown">${rows}</div>`:''}</div>`;
+    return `<div class="ability-card"><div class="ability-name">${escapeHtml(k)}</div>${baseHtml}<div class="ability-value">+${formatAbilityNumber(totals.get(k))}${unit}</div><div class="ability-mod">技能・逸品補正</div>${rows?`<div class="ability-breakdown">${rows}</div>`:''}</div>`;
   }).join('');
   const missingHtml=missing.length?`<div class="ability-unregistered"><b>DB未登録：</b> ${missing.map(escapeHtml).join(' / ')}</div>`:'';
   const baseNote=!baseInfo.stats?`<div class="ability-unregistered"><b>${escapeHtml(baseInfo.name)}</b> の機動・射程・攻撃間隔の初期値は未設定です。</div>`:'';
-  el.innerHTML=`<div class="ability-summary">${cards}</div>${missingHtml}${baseNote}<div class="ability-db-note">機動・射程は初期値から技能補正による変更がある場合のみ表示します。攻撃間隔と戦法発動間隔は、初期値に有効な速度補正を反映した計算後の秒数を表示します。</div>`;
+  el.innerHTML=`<div class="ability-summary">${cards}</div>${missingHtml}${baseNote}<div class="ability-db-note">機動・射程は初期値から変更がある場合のみ表示します。逸品は対応する常時の部隊補正を内訳に表示します。攻撃間隔と戦法発動間隔は、初期値に有効な速度補正を反映した計算後の秒数を表示します。</div>`;
 }
 function formatAbilityNumber(v){
   const n=Math.round((Number(v)||0)*10)/10;
@@ -1898,7 +1905,16 @@ function saveFormationData(){
   }catch(e){alert('編制を一時保存できませんでした。ブラウザの保存設定をご確認ください。');}
 }
 function applySaveData(data){
-  if(!data||!Array.isArray(data.formations)||!data.formations.length||[...data.formations].some(src=>!src||typeof src!=='object'||Array.isArray(src)))throw new Error('invalid');
+  const isRecord=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
+  if(!isRecord(data)||data.app!=='信長覇道 編制シミュレーター'||![1,2].includes(data.version)||
+    !Array.isArray(data.formations)||data.formations.length!==formationStates.length||
+    data.formations.some(src=>!isRecord(src)||!isRecord(src.selected)||
+      !Object.keys(src.selected).every(role=>allRoles.includes(role))||
+      Object.values(src.selected).some(entry=>entry!==null&&typeof entry!=='string'&&
+        (!isRecord(entry)||typeof entry.name!=='string'||
+         ['kaidenSkill','tsuienTie'].some(key=>entry[key]!=null&&typeof entry[key]!=='string')))||
+      (data.version===2&&['battleConditions','equipment','itemEffects'].some(key=>!isRecord(src[key])))))
+    throw new Error('invalid');
   const unavailable=new Set();
   const seenItems=new Set();
   for(let i=0;i<formationStates.length;i++){
@@ -1912,7 +1928,14 @@ function applySaveData(data){
       if(name&&!base)unavailable.add(name);
       nextSelected[role]=base&&base['レアリティ']==='UR'?{...base,__selectedInstance:true,__star4:typeof entry==='object'?!!entry.star4:false,__kaidenSkill:typeof entry==='object'?(entry.kaidenSkill||''):'',__tsuienTie:typeof entry==='object'?(entry.tsuienTie||''):''}:base?{...base,__kaidenSkill:typeof entry==='object'?(entry.kaidenSkill||''):''}:base;
     }
-    formationStates[i].branch=branches[src.branch]?src.branch:'騎馬';
+    if(data.version===1){
+      for(const role of roles){
+        if(formationStates[i].selected[role]?.['武将名']!==nextSelected[role]?.['武将名']||!nextSelected[role]){
+          detachRoleItems(role,i);
+        }
+      }
+    }
+    formationStates[i].branch=Object.hasOwn(branches,src.branch)?src.branch:'騎馬';
     formationStates[i].armor=!!src.armor;
     formationStates[i].selected=nextSelected;
     if(data.version>=2){
@@ -1924,7 +1947,7 @@ function applySaveData(data){
       for(const [id,role] of Object.entries(src.equipment||{})){
         if(!roles.includes(role)||!nextSelected[role]||seenItems.has(id))continue;
         const item=itemDb.find(entry=>entry.id===id);
-        if(!item){unavailable.add(id);continue;}
+        if(!item||itemEquipBlockReason(item,nextSelected[role])){unavailable.add(id);continue;}
         seenItems.add(id);
         equipment[id]=role;
         buildTraitRecords(item).forEach((trait,index)=>{
@@ -1958,7 +1981,7 @@ function loadFormationData(){
   try{
     const data=JSON.parse(raw);const unavailable=applySaveData(data);
     const d=data.savedAt?new Date(data.savedAt):null;
-    setSaveStatus(unavailable?`読み出し済み · このDBにないデータ ${unavailable}件`:d&&!isNaN(d)?`読み出し：${d.toLocaleString('ja-JP')}`:'保存データを読み出しました');
+    setSaveStatus(unavailable?`読み出し済み · 復元できなかったデータ ${unavailable}件`:d&&!isNaN(d)?`読み出し：${d.toLocaleString('ja-JP')}`:'保存データを読み出しました');
   }catch(e){alert('保存データを読み出せませんでした。');}
 }
 function exportFormationData(){
@@ -1987,7 +2010,7 @@ function importFormationData(file){
       const data=JSON.parse(String(reader.result||''));
       const unavailable=applySaveData(data);
       const d=data.savedAt?new Date(data.savedAt):null;
-      setSaveStatus(unavailable?`読込済み · このDBにないデータ ${unavailable}件`:d&&!isNaN(d)?`ファイル読込：${d.toLocaleString('ja-JP')}`:'編制ファイルを読み込みました');
+      setSaveStatus(unavailable?`読込済み · 復元できなかったデータ ${unavailable}件`:d&&!isNaN(d)?`ファイル読込：${d.toLocaleString('ja-JP')}`:'編制ファイルを読み込みました');
     }catch(e){
       alert('編制ファイルを読み込めませんでした。正しいJSONファイルを選択してください。');
     }finally{
@@ -2154,6 +2177,22 @@ function parseItemEffectActions(text){
   skillPatterns.forEach((re,ri)=>{while((m=re.exec(t)))actions.push({type:'skill_rank',skill:m[1].trim(),value:ri===2?1:Number(m[2]||1),sourceText:m[0]});});
   return actions;
 }
+function getItemAbilityActions(effect,matched){
+  const source=String(effect||'').normalize('NFKC').replace(/[。\s]+$/,'').trim();
+  const stat='兵力|攻撃|防御|武勇|知略|破壊|機動|会心発生率|会心威力';
+  const list='(?:'+stat+')(?:[、,](?:'+stat+'))*';
+  const base=source.match(new RegExp('^部隊の('+list+')\\+(\\d+(?:\\.\\d+)?)%(.*)$'));
+  if(!base || (base[3] && !base[3].startsWith('(縁一致:')))return [];
+  const tail=base[3];
+  // Only one recognized, complete tie enhancement. Other clauses stay informational.
+  const tie=tail.match(/^\(縁一致:(.*)\)$/)?.[1]?.trim();
+  if(tail && (!tie || /[()]/.test(tie)))return [];
+  const replacement=matched&&tie?.match(/^\+?(\d+(?:\.\d+)?)%$/);
+  const actions=base[1].split(/[、,]/).map(stat=>({stat,value:Number(replacement?replacement[1]:base[2])}));
+  const added=matched&&tie?.match(new RegExp('^(?:さらに[、,]?)?(?:部隊の)?('+list+')\\+(\\d+(?:\\.\\d+)?)%$'));
+  if(added)actions.push(...added[1].split(/[、,]/).map(stat=>({stat,value:Number(added[2])})));
+  return actions;
+}
 function buildTraitRecords(x){
   const names=splitTraitLines(x.traitName), effects=splitTraitLines(x.traitEffect), releases=String(x.releaseCondition||'').split(/\r?\n/).map(v=>v.trim());
   const n=Math.max(names.length,effects.length,releases.length);
@@ -2177,14 +2216,14 @@ function replaceLastValue(text,inner){
   return text+(text&&v?'、':'')+v;
 }
 function resolveTieEffectText(effect,matched){
-  const src=String(effect||'');let out='',i=0;
+  const src=String(effect||'').replace(/縁一致：/g,'縁一致:');let out='',i=0;
   while(i<src.length){let p1=src.indexOf('(縁一致:',i),p2=src.indexOf('（縁一致:',i);let p=-1;if(p1<0)p=p2;else if(p2<0)p=p1;else p=Math.min(p1,p2);if(p<0){out+=src.slice(i);break;}out+=src.slice(i,p);const open=src[p],close=open==='（'?'）':')';let depth=0,j=p;for(;j<src.length;j++){const ch=src[j];if(ch===open||ch==='('||ch==='（')depth++;if(ch===close||ch===')'||ch==='）'){depth--;if(depth===0){j++;break;}}}const prefix=open==='（'?'（縁一致:':'(縁一致:';const inner=src.slice(p+prefix.length,j-1).trim();if(matched){if(/^さらに[、,]?/.test(inner)){out+=(out&&/[、,。]$/.test(out)?'':'、')+inner.replace(/^さらに[、,]?/,'');}else out=replaceLastValue(out,inner);}i=j;}
   return out.replace(/[（(]\s*[）)]/g,'').replace(/、、+/g,'、').trim();
 }
 function selectionKey(itemId,traitIndex){return `${itemId}::${traitIndex}`}
 function getFormationEffectSelections(index=activeFormation){const k=String(index);return itemEffectSelections[k]||{}}
 function isItemEffectSelected(itemId,traitIndex){return !!getFormationEffectSelections()[selectionKey(itemId,traitIndex)]}
-function setItemEffectSelected(itemId,traitIndex,on){const k=String(activeFormation);if(!itemEffectSelections[k])itemEffectSelections[k]={};const sk=selectionKey(itemId,traitIndex);if(on)itemEffectSelections[k][sk]=true;else delete itemEffectSelections[k][sk];saveItemEffectSelections();renderItemDb();saveDraft();}
+function setItemEffectSelected(itemId,traitIndex,on){const k=String(activeFormation);if(!itemEffectSelections[k])itemEffectSelections[k]={};const sk=selectionKey(itemId,traitIndex);if(on)itemEffectSelections[k][sk]=true;else delete itemEffectSelections[k][sk];saveItemEffectSelections();renderItemDb();renderAbilityAdjustments();saveDraft();}
 function findItemAssignmentAcrossFormations(itemId){
   for(let i=0;i<formationStates.length;i++){
     const map=getFormationEquipAssignments(i);
@@ -2204,11 +2243,24 @@ function detachRoleItems(role,index=activeFormation){
   saveItemEquipAssignments();
   saveItemEffectSelections();
 }
+function itemEquipBlockReason(item,general){
+  if(!general)return '装備先の武将が編成されていません。';
+  const condition=String(item.condition||'').normalize('NFKC').trim();
+  const aptitude=condition.match(/^(足軽|騎馬|弓|鉄砲|剣豪|忍者)適性([A-S])$/);
+  const order='DCBAS';
+  if(aptitude&&order.indexOf(general[aptitude[1]])<order.indexOf(aptitude[2]))return condition+'が必要です。';
+  if(condition==='対応SSR登用済みのUR武将'&&general['レアリティ']!=='UR')return 'UR武将が必要です。';
+  return '';
+}
 function assignItemToRole(itemId,newRole,index=activeFormation){
   const map=getFormationEquipAssignments(index),item=itemDb.find(x=>x.id===itemId);if(!item)return false;
   const oldHere=map[itemId]||'';
   if(newRole===oldHere)return true;
-  if(newRole&&!formationStates[index]?.selected?.[newRole]){alert('装備先の武将が編成されていません。');return false;}
+  if(newRole){
+    const reason=itemEquipBlockReason(item,formationStates[index]?.selected?.[newRole]);
+    if(reason){alert(reason);return false;}
+    if(item.condition==='対応SSR登用済みのUR武将'&&!confirm('ゲーム内でこのUR武将が装備対象で、対応SSRを登用済みですか？'))return false;
+  }
 
   if(!newRole){
     delete map[itemId];
@@ -2234,7 +2286,7 @@ function assignItemToRole(itemId,newRole,index=activeFormation){
 }
 function getSelectedItemEffectActions(index=activeFormation){
   const selectedMap=getFormationEffectSelections(index),out=[],equip=getFormationEquipAssignments(index);
-  itemDb.forEach(item=>{const role=equip[item.id];const general=role?formationStates[index]?.selected?.[role]:null;if(!role||!general)return;const tie=itemTieMatchInfo(item,role,index);buildTraitRecords(item).forEach(tr=>{if(selectedMap[selectionKey(item.id,tr.index)]){const effectiveEffect=resolveTieEffectText(tr.effect,tie.matched);out.push({itemId:item.id,itemName:item.name,equippedRole:role,equippedGeneral:general['武将名'],tieMatched:tie.matched,tieMatches:tie.matches,traitIndex:tr.index,traitName:tr.name,releaseCondition:tr.releaseCondition,effect:tr.effect,effectiveEffect,actions:parseItemEffectActions(effectiveEffect)});}});});
+  itemDb.forEach(item=>{const role=equip[item.id];const general=role?formationStates[index]?.selected?.[role]:null;if(!role||itemEquipBlockReason(item,general))return;const tie=itemTieMatchInfo(item,role,index);buildTraitRecords(item).forEach(tr=>{if(selectedMap[selectionKey(item.id,tr.index)]){const effectiveEffect=resolveTieEffectText(tr.effect,tie.matched);out.push({itemId:item.id,itemName:item.name,equippedRole:role,equippedGeneral:general['武将名'],tieMatched:tie.matched,tieMatches:tie.matches,traitIndex:tr.index,traitName:tr.name,releaseCondition:tr.releaseCondition,effect:tr.effect,effectiveEffect,actions:parseItemEffectActions(effectiveEffect),abilityActions:getItemAbilityActions(tr.effect,tie.matched)});}});});
   return out;
 }
 window.getSelectedItemEffectActions=getSelectedItemEffectActions;
@@ -2284,7 +2336,6 @@ function loadItemDb(){
 function saveItemDb(){try{localStorage.setItem(ITEM_DB_KEY,JSON.stringify(itemDb));return true;}catch(e){alert('逸品DBを保存できませんでした。ブラウザの保存設定をご確認ください。');return false;}}
 function itemDbField(id){return document.getElementById(id)}
 function resetItemDbForm(){itemDbField('itemDbForm').reset();itemDbField('itemDbEditId').value='';itemDbField('itemDbSaveBtn').textContent='登録';itemDbField('itemDbCancelEdit').hidden=true;}
-function actionLabel(a){if(a.type==='stat_percent')return `${a.stat} +${a.value}%`;if(a.type==='skill_rank')return `${a.skill} +${a.value}ランク`;return ''}
 function renderItemDb(){
   const list=itemDbField('itemDbList');if(!list)return;
   const q=(itemDbField('itemDbSearch')?.value||'').trim().toLowerCase();
@@ -2299,8 +2350,10 @@ function renderItemDb(){
   if(!rows.length){list.innerHTML=`<span class="placeholder">${itemDb.length?'検索条件に一致する逸品がありません':'逸品DBにデータがありません'}</span>`;return;}
   list.innerHTML=rows.map(x=>{
     const equippedRole=getItemEquippedRole(x.id),tie=equippedRole?itemTieMatchInfo(x,equippedRole):{matched:false,matches:[]},g=equippedRole?selected[equippedRole]:null;
-    const roleOptions=['',...roles].map(r=>{const gg=r?selected[r]:null;const label=!r?'未装備':`${r}${gg?'：'+gg['武将名']:'（未編成）'}`;return `<option value="${escapeHtml(r)}" ${r===equippedRole?'selected':''} ${r&&!gg?'disabled':''}>${escapeHtml(label)}</option>`}).join('');
-    const traits=buildTraitRecords(x);const options=traits.length?traits.map(tr=>{const checked=isItemEffectSelected(x.id,tr.index)?'checked':'';const effective=resolveTieEffectText(tr.effect,!!tie.matched);const acts=parseItemEffectActions(effective);const actLabel=acts.length?acts.map(actionLabel).join(' / '):'自動計算対象は未判定';return `<label class="itemdb-effect-option ${equippedRole&&g?'':'disabled'}"><input type="checkbox" data-item-effect="${escapeHtml(x.id)}" data-trait-index="${tr.index}" ${checked} ${equippedRole&&g?'':'disabled'}><span class="itemdb-effect-main"><span class="itemdb-effect-name">${escapeHtml(tr.name)}</span><span class="itemdb-effect-meta">${escapeHtml((tr.releaseCondition||'未確認')+(tr.releaseVerification==='retained'?'（Web記載なし・既存値）':''))}</span><span class="itemdb-effect-action">${escapeHtml(actLabel)}</span><span class="itemdb-effect-effective">実効効果：${escapeHtml(effective||'未登録')}</span></span></label>`;}).join(''):'<div class="itemdb-effect-meta">特性データ未登録</div>';
+    const roleOptions=['',...roles].map(r=>{const gg=r?selected[r]:null;const reason=r?itemEquipBlockReason(x,gg):'';
+      const label=!r?'未装備':gg?`${r}：${gg['武将名']}${reason?'（'+reason+'）':''}`:`${r}（未編成）`;
+      return `<option value="${escapeHtml(r)}" ${r===equippedRole?'selected':''} ${reason&&r!==equippedRole?'disabled':''}>${escapeHtml(label)}</option>`;}).join('');
+    const traits=buildTraitRecords(x);const options=traits.length?traits.map(tr=>{const checked=isItemEffectSelected(x.id,tr.index)?'checked':'';const effective=resolveTieEffectText(tr.effect,!!tie.matched);const acts=getItemAbilityActions(tr.effect,!!tie.matched);const actLabel=acts.length?`能力補正に反映：${acts.map(a=>a.stat+' +'+a.value+'%').join(' / ')}（適用時）`:'詳細表示のみ';return `<label class="itemdb-effect-option ${equippedRole&&g?'':'disabled'}"><input type="checkbox" data-item-effect="${escapeHtml(x.id)}" data-trait-index="${tr.index}" ${checked} ${equippedRole&&g?'':'disabled'}><span class="itemdb-effect-main"><span class="itemdb-effect-name">${escapeHtml(tr.name)}</span><span class="itemdb-effect-meta">${escapeHtml((tr.releaseCondition||'未確認')+(tr.releaseVerification==='retained'?'（Web記載なし・既存値）':''))}</span><span class="itemdb-effect-action">${escapeHtml(actLabel)}</span><span class="itemdb-effect-effective">実効効果：${escapeHtml(effective||'未登録')}</span></span></label>`;}).join(''):'<div class="itemdb-effect-meta">特性データ未登録</div>';
     const status=!equippedRole?'未装備':(tie.matched?`縁一致：${tie.matches.join('・')}`:'縁一致なし');
     return `<article class="itemdb-card" data-item-id="${escapeHtml(x.id)}"><div class="itemdb-card-head"><div class="itemdb-name">${escapeHtml(x.name||'名称未登録')}</div>${x.slot?`<span class="itemdb-slot">${escapeHtml(x.slot)}</span>`:''}</div><div class="itemdb-equip-row"><label>装備武将</label><select class="itemdb-equip-select" data-item-equip="${escapeHtml(x.id)}">${roleOptions}</select><span class="itemdb-tie-status ${equippedRole?(tie.matched?'on':'off'):''}">${escapeHtml(status)}</span></div><div class="itemdb-equip-note">編制1〜6を通して同じ逸品は1つだけ装備可能。別編制・別武将で装備する場合は移動確認します。</div><div class="itemdb-grid"><div class="itemdb-key">装備条件</div><div class="itemdb-value">${escapeHtml(x.condition||'未登録')}</div><div class="itemdb-key">強化縁</div><div class="itemdb-value">${escapeHtml(x.tie||'未登録')}</div><div class="itemdb-key">逸品特性名</div><div class="itemdb-value">${escapeHtml(x.traitName||'未登録')}</div><div class="itemdb-key">解放条件</div><div class="itemdb-value">${escapeHtml(x.releaseCondition||'未登録')}</div><div class="itemdb-key">逸品特性効果</div><div class="itemdb-value">${escapeHtml(x.traitEffect||'未登録')}</div></div>${x.sourceUrl?`<div class="itemdb-equip-note"><a href="${escapeHtml(x.sourceUrl)}" target="_blank" rel="noopener noreferrer">特性の出典</a>${x.releaseSourceUrl?` ・ <a href="${escapeHtml(x.releaseSourceUrl)}" target="_blank" rel="noopener noreferrer">解放条件の補足資料</a>`:''} ・ 確認日 ${escapeHtml(x.verifiedAt||'未確認')}${x.verificationNote?`<br>${escapeHtml(x.verificationNote)}`:''}<br>解放条件の記載がない特性は未確認、既存値がある場合は保持しています。</div>`:''}<div class="itemdb-apply-box"><div class="itemdb-apply-title">編制${activeFormation+1}へ適用する特性</div>${options}</div></article>`;
   }).join('');
@@ -2315,7 +2368,7 @@ function populateItemDbSlotFilter(){
 }
 itemDbField('itemDbSearch')?.addEventListener('input',renderItemDb);
 itemDbField('itemDbSlotFilter')?.addEventListener('change',renderItemDb);
-itemDbField('itemDbList')?.addEventListener('change',e=>{const sel=e.target.closest('select[data-item-equip]');if(!sel)return;const previous=getItemEquippedRole(sel.dataset.itemEquip);if(!assignItemToRole(sel.dataset.itemEquip,sel.value)){sel.value=previous;}renderItemDb();saveDraft();});
+itemDbField('itemDbList')?.addEventListener('change',e=>{const sel=e.target.closest('select[data-item-equip]');if(!sel)return;const previous=getItemEquippedRole(sel.dataset.itemEquip);if(!assignItemToRole(sel.dataset.itemEquip,sel.value)){sel.value=previous;}renderItemDb();renderAbilityAdjustments();saveDraft();});
 itemDbField('itemDbList')?.addEventListener('change',e=>{const c=e.target.closest('input[data-item-effect]');if(!c)return;setItemEffectSelected(c.dataset.itemEffect,Number(c.dataset.traitIndex),c.checked);});
 populateItemDbSlotFilter();
 renderItemDb();
@@ -2419,7 +2472,7 @@ try{
   const draft=localStorage.getItem(DRAFT_KEY);
   if(draft){
     const unavailable=applySaveData(JSON.parse(draft));
-    setSaveStatus(unavailable?`前回の編制を復元 · このDBにないデータ ${unavailable}件`:'前回の編制を復元しました');
+    setSaveStatus(unavailable?`前回の編制を復元 · 復元できなかったデータ ${unavailable}件`:'前回の編制を復元しました');
   }
 }catch{setSaveStatus('前回の自動保存を復元できませんでした。');}
 draftReady=true;
