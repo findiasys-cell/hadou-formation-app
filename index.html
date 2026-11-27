@@ -1247,7 +1247,7 @@ function flagCommonSkillBases(){
   return new Set([...sets[0]].filter(name=>sets[1].has(name)&&sets[2].has(name)));
 }
 const SKILL_MAX_RANK={
-'根性':1,'威風':5,'威光':5,'慈悲':5,'鋭鋒':5,'烈撃':3,'頑健':5,'鉄心':5,'豪勇':5,'剛毅':3,'才気':5,'叡智':3,'一心':3,'突貫':3,'心突':3,'武略':3,'器用':5,'早駆':5,'遠射':3,'兵站':5,'粉砕':3,'忠義':3,'献身':5,'内助':5,'好色':5,'大勇':5,'俊才':5,'参謀':3,'武断':3,'絢爛':3,'兵家':3,'慧眼':3,'牽引':3,'護賢':1,'破勇':1,'旺盛':2,'英明':2,'発揚':3,'進撃':2,'一閃':1,'活路':5,'胆力':5,'決死':3,'闘志':5,'鬼気':3,'鬼謀':5,'逆境':5,'硬骨':1,'万機':1,'強健':1,'大減':1,'地利':5,'気合':5,'不屈':5,'守才':3,'扇動':5,'果敢':5,'不敵':5,'攻才':3,'水兵':3,'水攻':3,'水防':3,'水勇':3,'水才':3,'水破':3,'水駆':3,'袖搦':1,'水計':1,'水雲':1,'船団':1,'紐帯':1,'柱石':3,'求心':3,'駆逐':3,'乱戦':3,'応報':5,'強襲':3,'強圧':2,'風雲':1,'慶雲':1,'発奮':3,'明鏡':3,'封殺':3,'信心':2,'中庸':2,'謹厳':1,'老猾':1,'夜長':1,'連射':2,'姫城督':2,'併呑':2,'大身':1,'飛竜':1,'勇士':1,'連矢':1,'太阿':1,'壮烈':1,'早合':1,'賢兄':1,'獅咆':1,'不撓':1,'自若':1,'狐走':2,'強靭':1,'志操':1,'豪胆':1,'白餅':1,'策動':1,'布武':1,'尊護':1,'普天':1,'自在':1,'睨胆':1,'二天':1,'両刃':2,'討入':2,'暴風':2,'惑乱':1,'狗吠':2,'返報':1,'詭道':1,'離間':1,'口利':3,'功名':5,'余禄':1,'振興':3,'農業':3,'伐採':3,'石工':3,'冶金':3,'治金':3,'利殖':3,'兵心':3,'練磨':3,'巡見':3,'警戒':3,'監督':3,'能吏':1,'人脈':1,'宰相':1,'神算':1,'無双':1,'仁愛':2,'神将':1,'看破':2,'迅速':2,'猛進':2,'才略':2,'鉄壁':2,'精悍':1,'上姓':1,'虎威':1,'扇情':1,'巌流':2,'無形':2,'引落':1,'龍威':1,'義賊':1,'統制':1,'忘我':1,'平心':1,'武烈':1,'一念':2,'剛心':1,'虎牙':1,'野火':1,'薫育':1,'風波':1,'堅靭':1,'開蓋':1,'激情':1,'断切':1,'智慮':1,'厚誼':1,'峻厳':1,'不抜':1,'清凛':1,'竜雲':1,'流光':1,'悠献':1,'神気':1,'聡慧':1,'創意':1,'敬愛':1,'星芒':1,'扶陽':1,'彼方':1,'静胆':1,'重砲':1,'籠固':1,'掌圧':1,'破砕':1,'耀翼':1,'浄導':1,'気炎':1,'斬閃':1,'巧手':1,'先覚':1,'重命':2,'溌剌':1,'不知火':1,'瞬影':1,'征戦':1,'気魄':1,'清爽':1,'炎槍':1,'霊剣':1,'宝輪':1,'召輪':1,'双争・剣忍':1,'色香':1,'恋慕':1,'人痣':1,'瞳力':1,'再起・剣忍':1,'狂奔':1,'扇落':1,'符呪術':1,'機略':3,'速攻':3,'大喊':1
+'根性':1,'威風':5,'威光':5,'慈悲':5,'鋭鋒':5,'烈撃':3,'頑健':5,'鉄心':5,'豪勇':5,'剛毅':3,'才気':5,'叡智':3,'一心':3,'突貫':3,'心突':3,'武略':3,'器用':5,'早駆':5,'遠射':3,'兵站':5,'粉砕':3,'忠義':3,'献身':5,'内助':5,'好色':5,'大勇':5,'俊才':5,'参謀':3,'武断':3,'絢爛':3,'兵家':3,'慧眼':3,'牽引':3,'護賢':1,'破勇':1,'旺盛':2,'英明':2,'発揚':3,'進撃':2,'一閃':1,'活路':5,'胆力':5,'決死':3,'闘志':5,'鬼気':3,'鬼謀':5,'逆境':5,'硬骨':1,'万機':1,'強健':1,'大減':1,'地利':5,'気合':5,'不屈':5,'守才':3,'扇動':5,'果敢':5,'不敵':5,'攻才':3,'水兵':3,'水攻':3,'水防':3,'水勇':3,'水才':3,'水破':3,'水駆':3,'袖搦':1,'水計':1,'水雲':1,'船団':1,'紐帯':1,'柱石':3,'求心':3,'駆逐':3,'乱戦':3,'応報':5,'強襲':3,'強圧':2,'風雲':1,'慶雲':1,'発奮':3,'明鏡':3,'封殺':3,'信心':2,'中庸':2,'謹厳':1,'老猾':1,'夜長':1,'連射':2,'姫城督':2,'併呑':2,'大身':1,'飛竜':1,'勇士':1,'連矢':1,'太阿':1,'壮烈':1,'早合':1,'賢兄':1,'獅咆':1,'不撓':1,'自若':1,'狐走':2,'強靭':1,'志操':1,'豪胆':1,'白餅':1,'策動':1,'布武':1,'尊護':1,'普天':1,'自在':1,'睨胆':1,'二天':1,'両刃':2,'討入':2,'暴風':2,'惑乱':1,'狗吠':2,'返報':1,'詭道':1,'離間':1,'口利':3,'功名':5,'余禄':1,'振興':3,'農業':3,'伐採':3,'石工':3,'冶金':3,'治金':3,'利殖':3,'兵心':3,'練磨':3,'巡見':3,'警戒':3,'監督':3,'能吏':1,'人脈':1,'宰相':1,'神算':1,'無双':1,'仁愛':2,'神将':1,'看破':2,'迅速':2,'猛進':2,'才略':2,'鉄壁':2,'精悍':1,'上姓':1,'虎威':1,'扇情':1,'巌流':2,'無形':2,'引落':1,'龍威':1,'義賊':1,'統制':1,'忘我':1,'平心':1,'武烈':1,'一念':2,'剛心':1,'虎牙':1,'野火':1,'薫育':1,'風波':1,'堅靭':1,'開蓋':1,'激情':1,'断切':1,'智慮':1,'厚誼':1,'峻厳':2,'不抜':1,'清凛':1,'竜雲':1,'流光':1,'悠献':1,'神気':1,'聡慧':1,'創意':1,'敬愛':1,'星芒':1,'扶陽':1,'彼方':1,'静胆':1,'重砲':1,'籠固':1,'掌圧':1,'破砕':1,'耀翼':1,'浄導':1,'気炎':1,'斬閃':1,'巧手':1,'先覚':1,'重命':2,'溌剌':1,'不知火':1,'瞬影':1,'征戦':1,'気魄':1,'清爽':1,'炎槍':1,'霊剣':1,'宝輪':1,'召輪':1,'双争・剣忍':1,'色香':1,'恋慕':1,'人痣':1,'瞳力':1,'再起・剣忍':1,'狂奔':1,'扇落':1,'符呪術':1,'機略':3,'速攻':3,'大喊':1, '剣抜':1
 };
 const ROMAN=['','Ⅰ','Ⅱ','Ⅲ','Ⅳ','Ⅴ','Ⅵ','Ⅶ','Ⅷ','Ⅸ','Ⅹ'];
 
@@ -1284,7 +1284,44 @@ const SKILL_EFFECT_DB={
   '武断':{武勇:[3,6,10],激心発生率:[3,6,10],__kenngouGekishin:[10,17,25]},
   '絢爛':{__dynamic:'female',攻撃:[2,3,4],武勇:[2,3,4],知略:[2,3,4]},
   '兵家':{__dynamic:'sCount',攻撃:[2,3,4],防御:[2,3,4]},
-  '慧眼':{__dynamic:'saCount',攻撃:[2,3,4],防御:[2,3,4]}
+  '慧眼':{__dynamic:'saCount',攻撃:[2,3,4],防御:[2,3,4]},
+  '機略':{"戦法発動速度":[5,8,15]},
+  '地利':{"武勇":[4,7,11,17,25],"知略":[4,7,11,17,25]},
+  '扇動':{"武勇":[4,7,11,17,25],"知略":[4,7,11,17,25]},
+  '胆力':{"攻撃":[8,11,17,25,35],"防御":[8,11,17,25,35]},
+  '闘志':{"会心威力":[16,24,32,40,50]},
+  '鬼気':{"会心発生率":[4,6,10],"会心威力":[8,12,16]},
+  '逆境':{"攻撃間隔":[10,13,16,20,25]},
+  '活路':{"戦法発動速度":[10,13,16,20,25]},
+  '決死':{"会心発生率":[8,13,20]},
+  '鬼謀':{"攻撃間隔":[4,6,8,10,12],"戦法発動速度":[4,6,8,10,12]},
+  '仁愛':{"攻撃":[15,20],"防御":[15,20],"武勇":[15,15],"知略":[15,15],"破壊":[15,15],"機動":[15,15],"激心発生率":[0,15]},
+  '迅速':{"機動":[6,6],"戦法発動速度":[10,10],"攻撃間隔":[0,10]},
+  '看破':{"破壊":[6,6],"戦法発動速度":[10,10],"攻撃間隔":[0,10]},
+  '才略':{"知略":[6,6],"戦法発動速度":[10,10],"攻撃間隔":[0,10]},
+  '発揚':{"攻撃":[3,6,10],"防御":[3,6,10]},
+  '水駆':{"機動":[11,17,25]},
+  '水兵':{"兵力":[11,17,25]},
+  '水攻':{"攻撃":[11,17,25]},
+  '水防':{"防御":[11,17,25]},
+  '守才':{"攻撃":[6,10,18],"防御":[6,10,18]},
+  '英明':{"攻撃":[15,15],"防御":[15,15],"知略":[15,15],"敵大名家領土行動速度低下緩和":[0,75]},
+  '進撃':{"攻撃":[20,20],"防御":[20,20],"攻撃間隔":[0,10],"__levelConditions":["hp50plus",null]},
+  '鉄壁':{"防御":[15,30]},
+  '無形':{"武勇":[6,6],"攻撃間隔":[0,5]},
+  '巌流':{"攻撃":[5,5],"武勇":[5,5]},
+  '一念':{"防御":[6,6],"攻撃間隔":[0,10],"戦法発動速度":[10,10]},
+  '峻厳':{"攻撃間隔":[10,10]},
+  '重命':{"兵力":[5,15],"攻撃":[5,15],"防御":[5,15]},
+  '神算':{"攻撃間隔":[20],"戦法発動速度":[20]},
+  '硬骨':{"防御":[30],"武勇":[30],"知略":[30]},
+  '飛竜':{"機動":[40]},
+  '上姓':{"防御":[10],"知略":[10]},
+  '武烈':{"武勇":[4],"知略":[4],"戦法発動速度":[10]},
+  '清凛':{"攻撃":[5],"防御":[5],"武勇":[5],"知略":[5],"破壊":[5]},
+  '剣抜':{"兵力":[10],"防御":[10]},
+  '敬愛':{"攻撃":[10],"武勇":[10],"知略":[10],"破壊":[10]},
+  '耀翼':{"攻撃間隔":[10],"戦法発動速度":[10]}
 };
 const ABILITY_ORDER=['兵力','攻撃','防御','武勇','知略','破壊','機動','射程','調達','攻撃間隔','戦法発動間隔','負傷兵生存','会心発生率','会心威力','激心発生率','激心威力','敵大名家領土行動速度低下緩和'];
 
@@ -1322,6 +1359,14 @@ function currentBattleIntervalData(){
     const v=BATTLE_SPEED_EFFECT_VALUES[name]||0;
     if(v){bonus+=v;breakdown.push(`${name} +${formatAbilityNumber(v)}%`);}
   });
+  for(const name of ['活路','鬼謀']){
+    const level=effectiveSkillCount(name);
+    if(!level||!skillIsActive(name)||!battleConditionSatisfied(name,level))continue;
+    const value=SKILL_EFFECT_DB[name]['戦法発動速度'][level-1];
+    if(!value)continue;
+    bonus+=value;
+    breakdown.push(`${skillLevelLabel(name,level)} +${formatAbilityNumber(value)}%`);
+  }
   const result=base/(1+bonus/100);
   return {base,bonus,result,breakdown};
 }
@@ -1330,13 +1375,29 @@ function currentBattleIntervalData(){
 
 
 const SKILL_BATTLE_CONDITIONS={
-  // 例: '技能名':['hp50plus'] の形式で登録。
-  // 数値効果が確認済みの技能から順次ここへ追加する。
+  '地利':["ownTerritory"],
+  '扇動':["enemyTerritory"],
+  '胆力':["hp50minus"],
+  '闘志':["hp50minus"],
+  '鬼気':["hp50minus"],
+  '逆境':["hp50minus"],
+  '活路':["hp50minus"],
+  '決死':["hp50minus"],
+  '鬼謀':["hp50minus"],
+  '硬骨':["hp50minus"],
+  '発揚':["hp50plus"],
+  '英明':["hp50plus"],
+  '水駆':["sea"],
+  '水兵':["sea"],
+  '水攻':["sea"],
+  '水防':["sea"],
+  '鉄壁':["ambush"],
+  '守才':["ownTerritory","ownSiege"]
 };
-function battleConditionSatisfied(name){
+function battleConditionSatisfied(name,level=effectiveSkillCount(name)){
   const req=SKILL_BATTLE_CONDITIONS[name];
-  if(!req||!req.length)return true;
-  return req.every(k=>!!battleConditions[k]);
+  const levelCondition=SKILL_EFFECT_DB[name]?.__levelConditions?.[level-1];
+  return (!req||req.some(key=>battleConditions[key])) && (!levelCondition||!!battleConditions[levelCondition]);
 }
 function renderBattleConditionControls(){
   
@@ -1419,12 +1480,13 @@ document.querySelectorAll('[data-battle-condition]').forEach(c=>{
 }
 function skillListEffective(name,speedActive){
   const speedConditional=new Set(['神算','看破','迅速','才略','武烈','一念','耀翼','剣抜','勇士','神気']);
-  return skillIsActive(name)&&battleConditionSatisfied(name)&&!(speedConditional.has(name)&&!speedActive.has(name));
+  return skillIsActive(name)&&battleConditionSatisfied(name)&&!(speedConditional.has(name)&&!speedActive.has(name)&&name!=='剣抜');
 }
 function effectValueForSkill(name,level,target,effect){
   const values=effect[target];
   if(!Array.isArray(values)||level<1||level>values.length)return null;
   let v=values[level-1];
+  if(name==='清凛'&&selected['大将']?.['性別']==='女')v=15;
   if(effect.__dynamic==='female')v*=roles.filter(r=>selected[r]&&selected[r]['性別']==='女').length;
   if(effect.__dynamic==='sCount')v*=roles.filter(r=>selected[r]&&selected[r][branch]==='S').length;
   if(effect.__dynamic==='saCount')v*=roles.filter(r=>selected[r]&&(gradeRank[selected[r][branch]]||0)>=4).length;
@@ -1457,6 +1519,7 @@ function renderAbilityAdjustments(speedActiveOverride){
     targets.forEach(target=>{
       const v=effectValueForSkill(name,lv,target,effect);
       if(v===null){missing.push(`${skillLevelLabel(name,lv)}：${target}のLv${lv}値未登録`);return;}
+      if(v===0){added=true;return;}
       totals.set(target,(totals.get(target)||0)+v);
       if(!breakdown.has(target))breakdown.set(target,[]);
       const unit=effect.__unit&&Object.prototype.hasOwnProperty.call(effect.__unit,target)?effect.__unit[target]:'%';
@@ -1513,7 +1576,7 @@ function renderAbilityAdjustments(speedActiveOverride){
   }).join('');
   const missingHtml=missing.length?`<div class="ability-unregistered"><b>DB未登録：</b> ${missing.map(escapeHtml).join(' / ')}</div>`:'';
   const baseNote=!baseInfo.stats?`<div class="ability-unregistered"><b>${escapeHtml(baseInfo.name)}</b> の機動・射程・攻撃間隔の初期値は未設定です。</div>`:'';
-  el.innerHTML=`<div class="ability-summary">${cards}</div>${missingHtml}${baseNote}<div class="ability-db-note">機動・射程は初期値から変更がある場合のみ表示します。逸品は対応する常時の部隊補正を内訳に表示します。攻撃間隔と戦法発動間隔は、初期値に有効な速度補正を反映した計算後の秒数を表示します。</div>`;
+  el.innerHTML=`<div class="ability-summary">${cards}</div>${missingHtml}${baseNote}<div class="ability-db-note">機動・射程は初期値から変更がある場合のみ表示します。逸品は対応する常時の部隊補正を内訳に表示します。攻撃間隔と戦法発動間隔は初期値に速度補正を反映します。「活路」「鬼謀」の兵力条件による戦法速度は、この能力補正欄で確認できます。</div>`;
 }
 function formatAbilityNumber(v){
   const n=Math.round((Number(v)||0)*10)/10;
@@ -1547,10 +1610,12 @@ function skillHolderQualifies(name,role){
   if(name==='献身'||name==='内助'||name==='仁愛'||name==='敬愛'||name==='色香')return selected['大将']&&selected['大将']['性別']==='男';
   if(name==='好色')return selected['大将']&&selected['大将']['性別']==='女';
   if(name==='激情'||name==='絢爛')return roles.some(r=>selected[r]&&selected[r]['性別']==='女');
+  if(name==='英明')return role==='大将';
   if(name==='大減')return role==='大将'||isDeputy(role);
   if(name==='上姓')return isDeputy(role)||isAssist(role);
   if(name==='連射')return role==='大将'&&branchMatches('鉄砲');
   if(name==='飛竜')return role==='大将'&&holderAptAtLeast(role,5);
+  if(['迅速','看破','才略','武烈','一念','耀翼','剣抜'].includes(name))return commanderOrLinkedDeputy(role);
   if(name==='勇士')return role==='大将'&&branchMatches('騎馬');
   if(name==='連矢')return role==='大将'&&branchMatches('弓');
   if(name==='普天')return role==='大将'&&branchMatches('足軽','鉄砲');
@@ -1607,7 +1672,7 @@ function renderSummary(){
   const skills=[...regular.entries()].map(([k,v])=>{const raw=v+(common.has(k)?1:0),lv=Math.min(raw,SKILL_MAX_RANK[k]||raw);return [k,lv,common.has(k)&&lv>Math.min(v,SKILL_MAX_RANK[k]||v)]}).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],'ja')).filter(([k])=>(showDomesticOnly?DOMESTIC_SKILLS.has(k):!(excludeDomesticSkills&&DOMESTIC_SKILLS.has(k)))&&(!showFavoriteSkillsOnly||favoriteSkills.has(k)));
   const skillHtml=skills.length?skills.map(([k,v,flagBonus])=>{
     const active=speedActive.has(k), formationActive=skillIsActive(k);
-    const missed=!formationActive||(speedConditional.has(k)&&!active);
+    const missed=!formationActive||!battleConditionSatisfied(k,v)||(speedConditional.has(k)&&!active&&k!=='剣抜');
     const cls=`chip${active?' speed-active':''}${missed?' condition-missed':''}`;
     const extra=formationActive&&skillAdditionalActive(k)?' <small>追加効果</small>':'';
     const fav=favoriteSkills.has(k);return `<span class="${cls}${fav?' favorite-skill':''}">${escapeHtml(skillLevelLabel(k,v))}${flagBonus?' <small>旗持+1</small>':''}${missed?' <small>条件未達</small>':''}${extra}<button type="button" class="fav-skill-btn${fav?' is-favorite':''}" data-fav-skill="${escapeHtml(k)}" title="お気に入り技能">${fav?'★':'☆'}</button></span>`;
