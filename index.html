@@ -576,6 +576,8 @@ body.ui-overlay-open .flag-slot .clear{
 
   <div id="formationTabs" class="formation-tabs" aria-label="編制タブ"></div><div class="db-status-row" aria-label="データベース状態"><span class="db-status-chip">武将DB <strong id="statusGeneralCount">—</strong></span><span class="db-status-chip">UR <strong id="statusURCount">—</strong></span><span class="db-status-chip">SSR <strong id="statusSSRCount">—</strong></span><span class="db-status-chip">逸品DB <strong id="statusItemCount">—</strong></span><span class="db-status-chip">アプリ更新 <strong data-release-date>—</strong></span></div>
 
+  <div style="margin:8px 0"><a id="damageLink" class="speed-nav-btn" style="display:inline-flex;align-items:center;color:inherit;text-decoration:none;border:1px solid #526d86;height:auto;min-height:40px" href="damage.html">ダメージ予測</a></div>
+
   <div class="reset-actions" aria-label="リセット操作"><button id="resetCurrent" class="reset-btn current">表示中の編制をリセット</button><button id="resetAll" class="reset-btn all">全編制をリセット</button></div>
 
   <div class="save-actions" aria-label="編制の一時保存・出力・読み出し"><button id="saveFormation" class="save-btn save">一時保存</button><button id="loadFormation" class="save-btn load">保存を読み出し</button><button id="exportFormation" class="save-btn export">ファイル出力</button><button id="importFormation" class="save-btn import">ファイル入力</button><input id="importFormationFile" type="file" accept="application/json,.json" hidden><div id="saveStatus" class="save-status"></div></div>
@@ -1495,8 +1497,7 @@ function effectValueForSkill(name,level,target,effect){
   }
   return v;
 }
-function renderAbilityAdjustments(speedActiveOverride){
-  const el=$('#abilityAdjustments');if(!el)return;
+function collectSkillAbilityAdjustments(speedActiveOverride){
   const regular=regularSkillCounts(),common=flagCommonSkillBases();
   const speedRole=roles.find(r=>selected[r]);
   const speedData=speedRole?makeSpeedTransfer(speedRole):null;
@@ -1528,6 +1529,11 @@ function renderAbilityAdjustments(speedActiveOverride){
     });
     if(!added&&targets.length)missing.push(`${skillLevelLabel(name,lv)}：補正値未登録`);
   });
+  return {totals,breakdown,missing};
+}
+function renderAbilityAdjustments(speedActiveOverride){
+  const el=$('#abilityAdjustments');if(!el)return;
+  const {totals,breakdown,missing}=collectSkillAbilityAdjustments(speedActiveOverride);
   for(const trait of getSelectedItemEffectActions()){
     for(const {stat,value} of trait.abilityActions){
       totals.set(stat,(totals.get(stat)||0)+value);
@@ -1878,6 +1884,30 @@ function openSpeedCalc(role){
   const encoded=btoa(unescape(encodeURIComponent(JSON.stringify(data))));
   window.open(`speed.html#hadou=${encodeURIComponent(encoded)}`,'_blank','noopener');
 }
+function makeDamageTransfer(){
+  const previous={activeFormation,branch,armor,selected,battleConditions};
+  const stats=['攻撃','防御','武勇','知略','破壊'];
+  try{
+    const formations=formationStates.flatMap((state,index)=>{
+      const general=roles.map(role=>state.selected[role]).find(Boolean);
+      if(!general)return [];
+      activeFormation=index;
+      ({branch,armor,selected,battleConditions}=state);
+      const {totals,breakdown}=collectSkillAbilityAdjustments();
+      const bonuses=Object.fromEntries(stats.filter(stat=>totals.has(stat)).map(stat=>[
+        stat,{percent:totals.get(stat),skills:breakdown.get(stat)}
+      ]));
+      return [{index:index+1,branch:equippedBranchName(),general:general['武将名'],bonuses}];
+    });
+    return {active:previous.activeFormation+1,formations};
+  }finally{
+    ({activeFormation,branch,armor,selected,battleConditions}=previous);
+  }
+}
+$('#damageLink').addEventListener('click',event=>{
+  const transfer=makeDamageTransfer();
+  event.currentTarget.hash=transfer.formations.length?new URLSearchParams({formation:JSON.stringify(transfer)}).toString():'';
+});
 const ALL_SKILL_BASES=[...new Set(DB.flatMap(x=>[x['技能1'],x['技能2'],x['技能3'],x['技能4']]).filter(Boolean).map(skillBaseName))].sort((a,b)=>a.localeCompare(b,'ja'));
 const ALL_TIES=[...new Set(DB.flatMap(x=>[x['縁1'],x['縁2'],x['縁3'],x['縁4'],x['縁5']]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ja'));
 function renderKaidenEditor(){
@@ -1915,6 +1945,7 @@ function switchFormation(index){
   branch=formationStates[index].branch;
   armor=!!formationStates[index].armor;
   selected=formationStates[index].selected;
+  battleConditions=formationStates[index].battleConditions;
   activeRole=null; filter='all';
   closePicker(); $('#branchMenu').classList.remove('open');
   updateBranchDisplay();

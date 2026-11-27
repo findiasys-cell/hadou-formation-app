@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ダメージ予測（試作版）｜信長覇道 編制シミュレーター</title>
+<style>
+  :root{color-scheme:dark;background:#09131f;color:#f7f5ef;font-family:system-ui,"Hiragino Sans",Meiryo,sans-serif;line-height:1.55}
+  *{box-sizing:border-box}
+  body{margin:0}
+  main{max-width:860px;margin:auto;padding:22px 14px 56px}
+  a{color:#b9ddff;text-underline-offset:4px}
+  h1{font-size:clamp(22px,5vw,30px);margin:12px 0 4px}
+  h2{font-size:19px;margin:0 0 10px;color:#f4d98a}
+  p{margin:0 0 12px}
+  .hint,.adjustment,small{color:#aebece}
+  .layout,.stats,.settings{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .panel{padding:16px;background:#132235;border:1px solid #36506a;border-radius:14px}
+  .stats{margin-top:12px}
+  .selection{display:grid;gap:10px}
+  .selection p{font-size:13px;margin:0}
+  label{display:block;font-size:14px;font-weight:650}
+  input,select{display:block;width:100%;min-width:0;min-height:42px;padding:7px 9px;margin-top:4px;border:1px solid #54728e;border-radius:8px;background:#09131f;color:inherit;font:inherit;font-size:16px}
+  select:disabled{opacity:.8}
+  :focus-visible{outline:2px solid #f4d98a;outline-offset:2px}
+  .adjustment{display:block;font-size:13px;overflow-wrap:anywhere}
+  .adjustment strong{color:#f4d98a}
+  .results{margin-top:12px}
+  .table{width:100%;border-collapse:collapse;margin:8px 0}
+  th,td{text-align:right;padding:10px 6px;border-bottom:1px solid #36506a;font-variant-numeric:tabular-nums}
+  th:first-child,td:first-child{text-align:left}
+  td:last-child{font-weight:700;color:#f4d98a}
+  details{margin-top:12px}
+  details p{margin:8px 0 0}
+  summary{cursor:pointer}
+  [hidden]{display:none!important}
+  @media (max-width:600px){.layout{grid-template-columns:1fr}.panel{padding:12px}}
+</style>
+<script defer src="damage.js"></script>
+</head>
+<body>
+<main>
+  <nav aria-label="ページ移動"><a href="index.html">← 編制シミュレーター</a></nav>
+  <h1>ダメージ予測 <small>試作版</small></h1>
+  <p class="hint">技能補正前の能力値を入力してください。ゲーム内の表示値など、補正込みの数値を使う場合は「補正なし」を選びます。</p>
+  <div class="layout">
+    <section class="panel" id="attack" aria-labelledby="attack-title">
+      <h2 id="attack-title">攻撃側</h2>
+      <div class="selection">
+        <label>技能補正 <select class="formation"><option value="">補正なし</option></select></label>
+        <label>兵科 <select class="branch"></select></label>
+        <p class="hint source-note"></p>
+      </div>
+      <div class="stats">
+        <div><label>攻撃 <input type="number" min="0" max="999999999" step="any" inputmode="decimal" data-stat="攻撃" aria-describedby="attack-attack"></label><span id="attack-attack" class="adjustment"></span></div>
+        <div><label>武勇 <input type="number" min="0" max="999999999" step="any" inputmode="decimal" data-stat="武勇" aria-describedby="attack-strength"></label><span id="attack-strength" class="adjustment"></span></div>
+        <div><label>知略 <input type="number" min="0" max="999999999" step="any" inputmode="decimal" data-stat="知略" aria-describedby="attack-intelligence"></label><span id="attack-intelligence" class="adjustment"></span></div>
+        <div><label>破壊 <input type="number" min="0" max="999999999" step="any" inputmode="decimal" data-stat="破壊" aria-describedby="attack-demolition"></label><span id="attack-demolition" class="adjustment"></span></div>
+      </div>
+    </section>
+    <section class="panel" id="defense" aria-labelledby="defense-title">
+      <h2 id="defense-title">防御側</h2>
+      <div class="selection">
+        <label>兵科・対象 <select class="branch"></select></label>
+        <label>技能補正 <select class="formation"><option value="">補正なし</option></select></label>
+        <p class="hint source-note"></p>
+      </div>
+      <div class="stats">
+        <div><label>防御 <input type="number" min="0" max="999999999" step="any" inputmode="decimal" data-stat="防御" aria-describedby="defense-defense"></label><span id="defense-defense" class="adjustment"></span></div>
+        <div data-unit><label>武勇 <input type="number" min="0" max="999999999" step="any" inputmode="decimal" data-stat="武勇" aria-describedby="defense-strength"></label><span id="defense-strength" class="adjustment"></span></div>
+        <div data-unit><label>知略 <input type="number" min="0" max="999999999" step="any" inputmode="decimal" data-stat="知略" aria-describedby="defense-intelligence"></label><span id="defense-intelligence" class="adjustment"></span></div>
+      </div>
+    </section>
+  </div>
+  <section class="panel results" aria-labelledby="results-title">
+    <h2 id="results-title">1回あたりの試算</h2>
+    <div class="settings">
+      <label id="affinity-setting">兵科相性倍率（％）<input id="affinity" type="number" min="0" max="1000" step="any" inputmode="decimal" value="100"></label>
+      <label>戦法威力（％）<input id="tactic" type="number" min="0" max="10000" step="any" inputmode="decimal" value="100"></label>
+    </div>
+    <table class="table">
+      <thead><tr><th scope="col">攻撃種別</th><th scope="col">補正前</th><th scope="col">技能補正後</th></tr></thead>
+      <tbody>
+        <tr data-result="normal"><th scope="row">通常攻撃</th><td>—</td><td>—</td></tr>
+        <tr data-result="strength"><th scope="row">武勇戦法</th><td>—</td><td>—</td></tr>
+        <tr data-result="intelligence"><th scope="row">知略戦法</th><td>—</td><td>—</td></tr>
+        <tr data-result="structure"><th scope="row">対物通常攻撃</th><td>—</td><td>—</td></tr>
+        <tr data-result="demolition"><th scope="row">対物破壊戦法</th><td>—</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <p id="input-status" class="hint">数値を入力すると結果を表示します。</p>
+    <details>
+      <summary>仮の計算式と反映範囲</summary>
+      <p>攻撃・防御に使う能力は、通常攻撃が「攻撃／防御」、戦法が「武勇／武勇」または「知略／知略」、対物攻撃が「破壊／防御」です。</p>
+      <p>試算値 ＝ 攻撃側能力 × 2 × 攻撃側能力 ÷（攻撃側能力 ＋ 防御側能力）× 兵科相性倍率 × 戦法威力。対物では兵科相性を100％とし、通常攻撃では戦法威力を100％とします。物体の防御欄は空欄なら0として扱います。</p>
+      <p>能力の補正には編制画面で判定した技能の登録済みの割合を使います。兵科相性は手入力です。会心・連鎖・一時効果・逸品などは試算の対象外です。</p>
+    </details>
+  </section>
+</main>
+</body>
+</html>
