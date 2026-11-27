@@ -345,9 +345,12 @@ function renderFit() {
   const group = groups[Number(fitGroup.value)];
   const candidates = group ? fitModels(group.samples) : [];
   byId('fit-results').hidden = !candidates.length;
+  const hint = group && !group.hasResistance
+    ? '防御側が空欄のため、攻撃側の能力だけを使う式の参考結果です。'
+    : '誤差が近い候補は、このデータだけでは区別できません。';
   byId('fit-status').textContent = candidates.length
-    ? `${group.samples.length}件で比較。誤差が近い候補は、このデータだけでは区別できません。`
-    : '同じ条件の実測が4件以上、かつ、攻側・防側の能力値の組み合わせが2通り以上あると比較できます。候補の式が計算できる能力値が必要です。';
+    ? `${group.samples.length}件で比較。参照する能力値は ${describeParameter(group.offense)}${group.hasResistance ? '／' + describeParameter(group.resistance) : ''}。 ${hint}`
+    : '同じ条件の実測が4件以上、かつ、計算に使う能力値が2通り以上あると比較できます。';
   showRows('fit-rows', candidates.map(result => [result.name, coefficient.format(result.k), number.format(result.mae)]));
 }
 
@@ -364,10 +367,10 @@ function renderSelects() {
   fitGroup.replaceChildren(...groups.map((group,index) => {
     const parts = group.context.filter(([,value]) => value !== null).map(([field,value]) => field === 'kind'
       ? value : `${describeParameter(field)} ${value}`);
-    return new Option(`${group.samples.length}件｜${parts.join(' / ')}`,index);
+    return new Option(`${group.samples.length}件｜${parts.join(' / ')}${group.hasResistance ? '' : ' / 防御側の参照値が空欄'}`,index);
   }));
   fitGroup.disabled = !groups.length;
-  if (!groups.length) fitGroup.add(new Option('能力値の揃った実測がありません',''));
+  if (!groups.length) fitGroup.add(new Option('攻撃側の参照値が入力された実測がありません',''));
   const matching = groups.findIndex(group => group.key === previousGroup);
   if (matching >= 0) fitGroup.value = String(matching);
 }

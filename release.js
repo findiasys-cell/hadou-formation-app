@@ -1,5 +1,5 @@
 // 公開更新時はこの日付と history.html の更新内容を同じ変更で更新する。
-window.APP_RELEASE = Object.freeze({ updatedOn: '2026-11-27', revision: '2026-11-27-research-affinity-1' });
+window.APP_RELEASE = Object.freeze({ updatedOn: '2026-11-27', revision: '2026-11-27-research-relevant-stats-1' });
 function renderReleaseDate() {
   document.querySelectorAll('[data-release-date]').forEach(el => {
     el.textContent = window.APP_RELEASE.updatedOn.replace(/-/g, '/');

@@ -60,7 +60,7 @@
 
   <section class="panel" aria-labelledby="impact-title">
     <h2 id="impact-title">パラメータの影響</h2>
-    <p class="muted">選んだ項目だけが異なり、ほかの入力値が一致する実測を比較します。空欄同士も一致として扱います。</p>
+    <p class="muted">選んだ項目だけが異なる実測を比較します。会心・兵科相性などの条件と、その攻撃種別で使う能力値をそろえます。選択した項目自体は比較対象になります。</p>
     <label for="impact-field">比較する項目</label>
     <select id="impact-field"></select>
     <p id="impact-status" class="muted" role="status"></p>
@@ -71,7 +71,7 @@
 
   <section class="panel" aria-labelledby="fit-title">
     <h2 id="fit-title">計算式の候補</h2>
-    <p class="muted">攻撃種別に対応する攻撃側・防御側の能力値を使います。会心・兵科など残りの条件が一致するグループに分け、実測を1件ずつ除いて係数を推定し、除いた実測との平均誤差が小さい順に表示します。</p>
+    <p class="muted">通常攻撃は攻撃と防御、武勇戦法は双方の武勇、知略戦法は双方の知略、対物攻撃は破壊と防御を参照します。ほかの能力値は比較条件から外します。会心・兵科などがそろう実測について、1件ずつ除いて係数を推定し、除いた実測との平均誤差が小さい順に表示します。</p>
     <label for="fit-group">検証するグループ</label>
     <select id="fit-group"></select>
     <p id="fit-status" class="muted" role="status"></p>

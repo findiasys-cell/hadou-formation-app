@@ -9,6 +9,7 @@ const HIT_TYPES = {
   '対物通常攻撃': ['demolition', 'defense'],
   '対物破壊戦法': ['demolition', 'defense']
 };
+const COMBAT_STATS = [...new Set(Object.values(HIT_TYPES).flat())];
 
 const FIELD_GROUPS = {
   hit: [
@@ -97,20 +98,28 @@ function conditions(record, ignored) {
   ];
 }
 
+function analysisConditions(record, ...ignored) {
+  const used = HIT_TYPES[record.kind];
+  const omitted = COMBAT_STATS.filter(id => !used.includes(id));
+  if (!record.kind.endsWith('戦法')) omitted.push('power');
+  return conditions(record, new Set([...omitted, ...ignored]));
+}
+
 function describeParameter(key) {
   return BUILT_IN_NAMES.get(key) ?? key.slice('param:'.length);
 }
 
 function compareParameter(records, field) {
   const matched = new Map();
-  const ignored = new Set([field]);
   for (const record of records) {
     const name = field.slice(6);
     const value = field.startsWith('param:')
       ? Object.hasOwn(record.params,name) ? record.params[name] : null
       : record[field];
     if (value === null || value === undefined) continue;
-    const context = JSON.stringify(conditions(record, ignored));
+    const context = JSON.stringify(field === 'kind'
+      ? conditions(record, new Set([field]))
+      : analysisConditions(record, field));
     if (!matched.has(context)) matched.set(context, new Map());
     const levels = matched.get(context);
     if (!levels.has(value)) levels.set(value, {count:0, sum:0});
@@ -155,10 +164,11 @@ function fitGroups(records) {
   for (const record of records) {
     const [offense, resistance] = HIT_TYPES[record.kind];
     const x = record[offense], z = record[resistance];
-    if (x === null || z === null) continue;
-    const context = conditions(record, new Set([offense, resistance]));
-    const key = JSON.stringify(context);
-    if (!groups.has(key)) groups.set(key, {key, context, offense, resistance, samples:[]});
+    if (x === null) continue;
+    const hasResistance = z !== null;
+    const context = analysisConditions(record, offense, resistance);
+    const key = JSON.stringify([hasResistance, context]);
+    if (!groups.has(key)) groups.set(key, {key, context, offense, resistance, hasResistance, samples:[]});
     groups.get(key).samples.push({x, z, damage:record.damage});
   }
   return [...groups.values()].sort((a,b) => b.samples.length-a.samples.length);
@@ -169,7 +179,7 @@ function normalizedDamageBase(attack, resistance) {
 }
 
 function resistanceContext(record) {
-  return JSON.stringify(conditions(record, new Set(HIT_TYPES[record.kind])));
+  return JSON.stringify(analysisConditions(record, ...HIT_TYPES[record.kind]));
 }
 
 function resistanceCalibration(records) {
@@ -239,7 +249,7 @@ function estimateResistance(record, calibration, settings) {
 }
 
 const MODELS = [
-  {name:'k × 攻側能力', predict:x => x},
+  {name:'k × 攻側能力', offenseOnly:true, predict:x => x},
   {name:'k × 攻側能力 ÷ 防側能力', predict:(x,z) => z > 0 ? x/z : null},
   {name:'k × 2 × 攻側能力² ÷（攻側能力 + 防側能力）', predict:normalizedDamageBase},
   {name:'k × max（攻側能力 − 防側能力, 0）', predict:(x,z) => Math.max(0,x-z)}
@@ -247,7 +257,9 @@ const MODELS = [
 
 function fitModels(samples) {
   if (samples.length < 4 || new Set(samples.map(({x,z}) => x + '/' + z)).size < 2) return [];
+  const hasResistance = samples.every(({z}) => z !== null);
   return MODELS.flatMap(model => {
+    if (!hasResistance && !model.offenseOnly) return [];
     const values = samples.map(({x,z,damage}) => ({f:model.predict(x,z), damage}));
     if (values.some(({f}) => f === null)) return [];
     const xx = values.reduce((sum,{f}) => sum+f*f,0);
