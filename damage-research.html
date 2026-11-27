@@ -28,7 +28,7 @@
       </fieldset>
       <p class="muted" id="shared-help">攻撃種別、部隊条件、その他のパラメータ、メモは入力した行すべてに共通です。</p>
       <div class="grid" id="hit-fields"></div>
-      <p class="muted">能力値は攻撃が命中した時点の値を入力します。不明な項目は空欄のまま記録できます。</p>
+      <p class="muted">能力値は攻撃が命中した時点の値を入力します。防御側の対応する能力値が空欄の場合は、ダメージ欄の下に推定を表示します。</p>
       <div class="sides">
         <fieldset><legend>攻撃側</legend><div class="grid" id="attack-fields"></div></fieldset>
         <fieldset><legend>防御側</legend><div class="grid" id="defense-fields"></div></fieldset>
@@ -44,6 +44,16 @@
         <span id="record-status" role="status"></span>
       </div>
     </form>
+    <details id="resistance-settings">
+      <summary>防御側の未入力値を推定する条件</summary>
+      <p class="muted">通常攻撃と対物攻撃からは「防御」、武勇戦法からは「武勇」、知略戦法からは「知略」を推定します。同じ条件で防御側の能力値が入力された記録があれば、優先して係数を調整します。</p>
+      <p class="muted">未入力値 ＝ 2 × 係数 × 攻撃側能力² ÷ 実測ダメージ − 攻撃側能力。入力済みの記録がない場合の係数は、基準倍率 × 戦法威力 × 会心時の倍率です。</p>
+      <div class="grid">
+        <label for="resistance-base">基準倍率（％）<input id="resistance-base" type="number" min="0" max="10000" step="any" inputmode="decimal" value="100"></label>
+        <label for="resistance-critical">会心時の倍率（％）<input id="resistance-critical" type="number" min="0" max="10000" step="any" inputmode="decimal" placeholder="任意"></label>
+      </div>
+      <p class="muted">基準倍率には、判明している兵科相性などを含めます。倍率を変えると、保存済みの記録も含めて推定を更新します。推定値は記録の能力値欄に書き込みません。</p>
+    </details>
   </section>
 
   <section class="panel" aria-labelledby="impact-title">

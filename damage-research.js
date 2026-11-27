@@ -1,6 +1,7 @@
 'use strict';
 
 const STORAGE_KEY = 'hadou-damage-research-v1';
+const RESISTANCE_SETTINGS_KEY = 'hadou-damage-resistance-settings-v1';
 const FILE_FORMAT = 'hadou-damage-observations';
 const MAX_HITS = 10;
 const sharedFields = FIELDS.filter(({id}) => id !== 'damage' && id !== 'critical');
@@ -22,6 +23,10 @@ let records = [];
 let editing = null;
 let newRecordDraft = null;
 let groups = [];
+let calibratedResistance = new Map();
+const resistanceSettings = byId('resistance-settings');
+const baseMultiplier = byId('resistance-base');
+const criticalMultiplier = byId('resistance-critical');
 let storageUnavailable = false;
 
 function makeFieldInput(field) {
@@ -83,9 +88,13 @@ function appendHitRow(hit = {}) {
     const nextFocus = row.nextElementSibling ?? row.previousElementSibling;
     row.remove();
     updateHitRows();
+    renderDraftEstimates();
     nextFocus.querySelector('input').focus();
   });
-  row.append(labeledInput(damage,''), labeledInput(critical,''), remove);
+  const estimate = document.createElement('p');
+  estimate.className = 'muted hit-estimate';
+  estimate.hidden = true;
+  row.append(labeledInput(damage,''), labeledInput(critical,''), remove, estimate);
   hitRows.append(row);
   updateHitRows();
   return damage;
@@ -156,6 +165,7 @@ function startEdit(index) {
   byId('batch-help').hidden = true;
   byId('shared-help').hidden = true;
   appendHitRow(record).focus();
+  renderDraftEstimates();
 }
 
 function finishEdit() {
@@ -172,6 +182,7 @@ function finishEdit() {
   byId('batch-help').hidden = false;
   byId('shared-help').hidden = false;
   updateHitRows();
+  renderDraftEstimates();
 }
 
 recordForm.addEventListener('submit', event => {
@@ -187,12 +198,7 @@ recordForm.addEventListener('submit', event => {
       firstDamage.focus();
       throw new Error('ダメージを1件以上入力してください。');
     }
-    const values = Object.fromEntries(sharedFields.map(field => {
-      const input = fieldInput(field.id);
-      const value = input.value === '' ? null : field.options ? input.value : input.valueAsNumber;
-      return [field.id, value];
-    }));
-    const shared = {...values, params:parseParameters(parameters.value), note:note.value.trim()};
+    const shared = readSharedValues();
     const additions = hits.map(hit => readRecord({...shared, ...hit}));
     const next = records.slice();
     if (editing === null) {
@@ -200,6 +206,7 @@ recordForm.addEventListener('submit', event => {
       saveRecords(next);
       for (const element of hitRows.querySelectorAll('input, select')) element.value = '';
       firstDamage.focus();
+      renderDraftEstimates();
       recordStatus.textContent = `${additions.length}件を保存しました。`;
     } else {
       next[editing] = additions[0];
@@ -216,6 +223,80 @@ byId('cancel-edit').addEventListener('click', () => {
   finishEdit();
   recordStatus.textContent = '';
   hitRows.querySelector('input').focus();
+});
+
+function readSharedValues() {
+  const values = Object.fromEntries(sharedFields.map(field => {
+    const input = fieldInput(field.id);
+    const value = input.value === '' ? null : field.options ? input.value : input.valueAsNumber;
+    return [field.id, value];
+  }));
+  return {...values, params:parseParameters(parameters.value), note:note.value.trim()};
+}
+
+function updateResistanceReadout(element, record) {
+  const result = record ? estimateResistance(record, calibratedResistance, {
+    base: baseMultiplier.validity.valid ? baseMultiplier.valueAsNumber : NaN,
+    critical: criticalMultiplier.validity.valid ? criticalMultiplier.valueAsNumber : NaN
+  }) : null;
+  element.hidden = !result;
+  if (!result) {
+    element.textContent = '';
+    return;
+  }
+  element.textContent = result.error
+    ? `${result.label}の推定：${result.error}`
+    : `${result.label}の推定 約 ${number.format(result.value)}（${result.basis}、係数 ${coefficient.format(result.scale)}）`;
+}
+
+function renderDraftEstimates() {
+  let shared = null;
+  try {
+    if (fieldInput('kind').value) shared = readSharedValues();
+  } catch {
+    // 不完全なパラメータの入力中は、保存時の検証を優先する。
+  }
+  for (const row of hitRows.children) {
+    const damage = row.querySelector('input');
+    const critical = row.querySelector('select');
+    let record = null;
+    if (shared && damage.value !== '' && damage.validity.valid) {
+      try {
+        record = readRecord({...shared, damage:damage.valueAsNumber, critical:critical.value || null});
+      } catch {
+        // 条件が揃った時点で試算を再開する。
+      }
+    }
+    updateResistanceReadout(row.querySelector('.hit-estimate'), record);
+  }
+}
+
+recordForm.addEventListener('input', renderDraftEstimates);
+recordForm.addEventListener('change', renderDraftEstimates);
+function loadResistanceSettings() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(RESISTANCE_SETTINGS_KEY));
+    if (typeof saved?.base === 'string') baseMultiplier.value = saved.base;
+    if (typeof saved?.critical === 'string') criticalMultiplier.value = saved.critical;
+  } catch {
+    // ブラウザーに保存できない場合も、表示中の設定で試算する。
+  }
+}
+
+resistanceSettings.addEventListener('input', () => {
+  if (baseMultiplier.validity.valid && criticalMultiplier.validity.valid) {
+    try {
+      localStorage.setItem(RESISTANCE_SETTINGS_KEY, JSON.stringify({
+        base:baseMultiplier.value, critical:criticalMultiplier.value
+      }));
+    } catch {
+      // 表示中の設定で試算を続ける。
+    }
+  }
+  renderDraftEstimates();
+  byId('record-list').querySelectorAll('[data-resistance-record]').forEach(element => {
+    updateResistanceReadout(element, records[Number(element.dataset.resistanceRecord)]);
+  });
 });
 
 function signed(value, suffix='') {
@@ -299,6 +380,10 @@ function renderList() {
         .map(([key,value]) => `${describeParameter(key)} ${value}`),
       record.note
     ].filter(Boolean).join(' ／ ') || '追加の条件は空欄です。';
+    const estimate = document.createElement('p');
+    estimate.className = 'muted';
+    estimate.dataset.resistanceRecord = index;
+    updateResistanceReadout(estimate, record);
     const actions = document.createElement('div');
     actions.className = 'actions';
     const edit = document.createElement('button');
@@ -322,13 +407,15 @@ function renderList() {
       }
     });
     actions.append(edit,remove);
-    entry.append(header,detail,actions);
+    entry.append(header,detail,estimate,actions);
     return entry;
   }).reverse();
   byId('record-list').replaceChildren(...items);
 }
 
 function renderAll() {
+  calibratedResistance = resistanceCalibration(records);
+  renderDraftEstimates();
   renderSelects();
   renderImpact();
   renderFit();
@@ -367,4 +454,5 @@ for (const [group,fields] of Object.entries(FIELD_GROUPS)) {
 }
 appendHitRow();
 loadRecords();
+loadResistanceSettings();
 renderAll();

@@ -162,10 +162,78 @@ function fitGroups(records) {
   return [...groups.values()].sort((a,b) => b.samples.length-a.samples.length);
 }
 
+function normalizedDamageBase(attack, resistance) {
+  return attack + resistance > 0 ? 2 * attack * attack / (attack + resistance) : 0;
+}
+
+function resistanceContext(record) {
+  return JSON.stringify(conditions(record, new Set(HIT_TYPES[record.kind])));
+}
+
+function resistanceCalibration(records) {
+  const groups = new Map();
+  for (const record of records) {
+    const [offense, resistance] = HIT_TYPES[record.kind];
+    if (record[offense] === null || record[resistance] === null ||
+        record[offense] <= 0 || record.damage <= 0) continue;
+    const base = normalizedDamageBase(record[offense], record[resistance]);
+    if (base <= 0 || !Number.isFinite(base)) continue;
+    const key = resistanceContext(record);
+    const group = groups.get(key) ?? {count:0, xx:0, xy:0};
+    group.count++;
+    group.xx += base * base;
+    group.xy += base * record.damage;
+    groups.set(key, group);
+  }
+  return groups;
+}
+
+function estimateResistance(record, calibration, settings) {
+  const [offense, field] = HIT_TYPES[record.kind];
+  if (record[field] !== null) return null;
+  const label = describeParameter(field);
+  const attack = record[offense];
+  if (!(attack > 0) || !(record.damage > 0)) {
+    return {label, error:`${describeParameter(offense)}と実測ダメージには、0より大きい値が必要です。`};
+  }
+
+  const matching = calibration.get(resistanceContext(record));
+  let scale;
+  let basis;
+  if (matching && matching.xx > 0) {
+    scale = matching.xy / matching.xx;
+    basis = `同条件の入力済みデータ ${matching.count}件で係数を調整`;
+  } else {
+    const tactic = record.kind.endsWith('戦法');
+    const power = tactic ? (record.power ?? 100) : 100;
+    const critical = record.critical === 'あり' ? settings.critical : 100;
+    if (record.critical === 'あり' && !(critical > 0)) {
+      return {label, error:'会心時の倍率を入力すると試算できます。'};
+    }
+    if (!(settings.base > 0) || !(power > 0)) {
+      return {label, error:'基準倍率と、戦法の場合は戦法威力に0より大きい値が必要です。'};
+    }
+    scale = (settings.base / 100) * (power / 100) * (critical / 100);
+    const assumptions = ['仮の式'];
+    if (tactic && record.power === null) assumptions.push('戦法威力100%と仮定');
+    if (record.critical === null) assumptions.push('会心不明を通常相当と仮定');
+    basis = assumptions.join('・');
+  }
+
+  const value = (2 * scale * attack * attack) / record.damage - attack;
+  if (!Number.isFinite(value) || value > MAX_NUMBER) {
+    return {label, error:'この条件での逆算値は入力可能な範囲を超えています。'};
+  }
+  if (value < 0) {
+    return {label, error:'実測ダメージが、この式で防御側の能力値を0とした場合の上限を超えています。'};
+  }
+  return {label, value, scale, basis};
+}
+
 const MODELS = [
   {name:'k × 攻側能力', predict:x => x},
   {name:'k × 攻側能力 ÷ 防側能力', predict:(x,z) => z > 0 ? x/z : null},
-  {name:'k × 2 × 攻側能力² ÷（攻側能力 + 防側能力）', predict:(x,z) => x+z > 0 ? 2*x*x/(x+z) : 0},
+  {name:'k × 2 × 攻側能力² ÷（攻側能力 + 防側能力）', predict:normalizedDamageBase},
   {name:'k × max（攻側能力 − 防側能力, 0）', predict:(x,z) => Math.max(0,x-z)}
 ];
 
