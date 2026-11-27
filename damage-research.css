@@ -30,6 +30,9 @@ th:first-child,td:first-child{text-align:left;white-space:normal;min-width:105px
 .hit-row + .hit-row{margin-top:3px}
 .hit-row input,.hit-row select{margin-bottom:0}
 .hit-estimate{grid-column:1/-1;margin:0 0 4px;overflow-wrap:anywhere}
+.analysis-checkbox{display:flex;align-items:center;gap:9px;min-height:44px;margin-top:8px;cursor:pointer}
+.analysis-checkbox input{width:20px;height:20px;min-height:0;margin:0;flex:none}
+.analysis-help{margin:0 0 8px}
 #resistance-settings{margin:12px 0}
 #resistance-settings summary{cursor:pointer}
 .hit-row button{min-width:43px}

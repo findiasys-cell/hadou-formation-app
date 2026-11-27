@@ -2,6 +2,7 @@
 
 const STORAGE_KEY = 'hadou-damage-research-v1';
 const RESISTANCE_SETTINGS_KEY = 'hadou-damage-resistance-settings-v1';
+const NEUTRAL_AFFINITY_KEY = 'hadou-damage-assume-neutral-affinity-v1';
 const FILE_FORMAT = 'hadou-damage-observations';
 const MAX_HITS = 10;
 const sharedFields = FIELDS.filter(({id}) => id !== 'damage' && id !== 'critical');
@@ -25,6 +26,8 @@ let newRecordDraft = null;
 let groups = [];
 let calibratedResistance = new Map();
 const resistanceSettings = byId('resistance-settings');
+const assumeNeutralAffinity = byId('assume-neutral-affinity');
+let analysisRecords = [];
 const resistanceInputs = {
   base:byId('resistance-base'),
   critical:byId('resistance-critical'),
@@ -242,15 +245,17 @@ function updateResistanceReadout(element, record) {
   const settings = Object.fromEntries(Object.entries(resistanceInputs).map(([key,input]) => [
     key, input.validity.valid ? input.valueAsNumber : NaN
   ]));
-  const result = record ? estimateResistance(record, calibratedResistance, settings) : null;
+  const adjusted = record ? recordForAffinityAnalysis(record, assumeNeutralAffinity.checked) : null;
+  const result = adjusted ? estimateResistance(adjusted, calibratedResistance, settings) : null;
   element.hidden = !result;
   if (!result) {
     element.textContent = '';
     return;
   }
+  const assumption = adjusted !== record ? '、兵科相性不明を補正なしとして集計' : '';
   element.textContent = result.error
     ? `${result.label}の推定：${result.error}`
-    : `${result.label}の推定 約 ${number.format(result.value)}（${result.basis}、係数 ${coefficient.format(result.scale)}）`;
+    : `${result.label}の推定 約 ${number.format(result.value)}（${result.basis}、係数 ${coefficient.format(result.scale)}${assumption}）`;
 }
 
 function renderDraftEstimates() {
@@ -300,9 +305,23 @@ resistanceSettings.addEventListener('input', () => {
     }
   }
   renderDraftEstimates();
+  updateSavedEstimates();
+});
+
+function updateSavedEstimates() {
   byId('record-list').querySelectorAll('[data-resistance-record]').forEach(element => {
     updateResistanceReadout(element, records[Number(element.dataset.resistanceRecord)]);
   });
+}
+
+assumeNeutralAffinity.addEventListener('change', () => {
+  try {
+    localStorage.setItem(NEUTRAL_AFFINITY_KEY, String(assumeNeutralAffinity.checked));
+  } catch {
+    // 保存できない場合も、表示中の設定で集計する。
+  }
+  renderAnalysis();
+  updateSavedEstimates();
 });
 
 function signed(value, suffix='') {
@@ -327,7 +346,7 @@ function showRows(bodyId, values) {
 }
 
 function renderImpact() {
-  const contrasts = compareParameter(records, impactField.value);
+  const contrasts = compareParameter(analysisRecords, impactField.value);
   const limit = 40;
   byId('impact-results').hidden = !contrasts.length;
   const status = byId('impact-status');
@@ -363,7 +382,7 @@ function renderSelects() {
   impactField.value = [...impactField.options].some(option => option.value === previousField) ? previousField : 'critical';
 
   const previousGroup = groups[Number(fitGroup.value)]?.key;
-  groups = fitGroups(records);
+  groups = fitGroups(analysisRecords);
   fitGroup.replaceChildren(...groups.map((group,index) => {
     const parts = group.context.filter(([,value]) => value !== null).map(([field,value]) => field === 'kind'
       ? value : `${describeParameter(field)} ${value}`);
@@ -422,12 +441,17 @@ function renderList() {
   byId('record-list').replaceChildren(...items);
 }
 
-function renderAll() {
-  calibratedResistance = resistanceCalibration(records);
+function renderAnalysis() {
+  analysisRecords = records.map(record => recordForAffinityAnalysis(record, assumeNeutralAffinity.checked));
+  calibratedResistance = resistanceCalibration(analysisRecords);
   renderDraftEstimates();
   renderSelects();
   renderImpact();
   renderFit();
+}
+
+function renderAll() {
+  renderAnalysis();
   renderList();
 }
 
@@ -464,4 +488,9 @@ for (const [group,fields] of Object.entries(FIELD_GROUPS)) {
 appendHitRow();
 loadRecords();
 loadResistanceSettings();
+try {
+  assumeNeutralAffinity.checked = localStorage.getItem(NEUTRAL_AFFINITY_KEY) === 'true';
+} catch {
+  // 保存領域にアクセスできない場合は既定値を使う。
+}
 renderAll();

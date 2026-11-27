@@ -98,6 +98,11 @@ function conditions(record, ignored) {
   ];
 }
 
+function recordForAffinityAnalysis(record, assumeNeutral) {
+  return assumeNeutral && record.affinity === null && !record.kind.startsWith('対物')
+    ? {...record, affinity:'補正なし'} : record;
+}
+
 function analysisConditions(record, ...ignored) {
   const used = HIT_TYPES[record.kind];
   const omitted = COMBAT_STATS.filter(id => !used.includes(id));
