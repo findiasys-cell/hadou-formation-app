@@ -26,6 +26,11 @@ button:disabled{opacity:.5;cursor:default}
 table{width:100%;border-collapse:collapse;line-height:1.4;font-size:.86rem}
 th,td{border-bottom:1px solid #36506a;padding:8px 6px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 th:first-child,td:first-child{text-align:left;white-space:normal;min-width:105px;overflow-wrap:anywhere}
+.hit-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.75fr) auto;align-items:end;gap:8px}
+.hit-row + .hit-row{margin-top:3px}
+.hit-row input,.hit-row select{margin-bottom:0}
+.hit-row button{min-width:43px}
+.hit-row button[hidden]{display:block!important;visibility:hidden}
 .record{border-top:1px solid #36506a;margin-top:10px;padding-top:10px}
 .record summary{cursor:pointer;overflow-wrap:anywhere}
 .record p{overflow-wrap:anywhere}

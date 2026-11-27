@@ -2,9 +2,14 @@
 
 const STORAGE_KEY = 'hadou-damage-research-v1';
 const FILE_FORMAT = 'hadou-damage-observations';
+const MAX_HITS = 10;
+const sharedFields = FIELDS.filter(({id}) => id !== 'damage' && id !== 'critical');
+const criticalField = FIELDS.find(({id}) => id === 'critical');
 const byId = id => document.getElementById(id);
 const recordForm = byId('record-form');
 const recordStatus = byId('record-status');
+const hitRows = byId('hit-rows');
+const addHit = byId('add-hit');
 const listStatus = byId('list-status');
 const parameters = byId('record-parameters');
 const note = byId('record-note');
@@ -15,30 +20,80 @@ const number = new Intl.NumberFormat('ja-JP', {maximumFractionDigits:2});
 const coefficient = new Intl.NumberFormat('ja-JP', {maximumSignificantDigits:6});
 let records = [];
 let editing = null;
+let newRecordDraft = null;
 let groups = [];
 let storageUnavailable = false;
 
+function makeFieldInput(field) {
+  const input = document.createElement(field.options ? 'select' : 'input');
+  input.required = !!field.required;
+  if (field.options) {
+    input.add(new Option(field.empty ?? (field.required ? '選択してください' : '不明'), ''));
+    for (const value of field.options) input.add(new Option(value, value));
+  } else {
+    input.type = 'number';
+    input.min = 0;
+    input.max = MAX_NUMBER;
+    input.step = field.integer ? '1' : 'any';
+    input.inputMode = field.integer ? 'numeric' : 'decimal';
+  }
+  return input;
+}
+
+function labeledInput(input, text) {
+  const label = document.createElement('label');
+  const name = document.createElement('span');
+  name.textContent = text;
+  label.append(name, input);
+  return label;
+}
+
 function makeFields(container, definitions) {
   for (const field of definitions) {
-    const label = document.createElement('label');
-    label.textContent = field.label;
-    const input = document.createElement(field.options ? 'select' : 'input');
+    const input = makeFieldInput(field);
     input.id = 'field-' + field.id;
-    input.required = !!field.required;
-    if (field.options) {
-      input.add(new Option(field.empty ?? (field.required ? '選択してください' : '不明'), ''));
-      for (const value of field.options) input.add(new Option(value, value));
-    } else {
-      input.type = 'number';
-      input.min = 0;
-      input.max = MAX_NUMBER;
-      input.step = field.integer ? '1' : 'any';
-      input.inputMode = field.integer ? 'numeric' : 'decimal';
-    }
-    label.append(input);
-    container.append(label);
+    container.append(labeledInput(input, field.label));
   }
 }
+
+function updateHitRows() {
+  const count = hitRows.children.length;
+  [...hitRows.children].forEach((row, index) => {
+    row.querySelector('label:first-child span').textContent = `ダメージ ${index+1}`;
+    row.querySelector('label:nth-child(2) span').textContent = `会心 ${index+1}`;
+    const remove = row.querySelector('button');
+    remove.setAttribute('aria-label', `入力行 ${index+1} を削除`);
+    remove.hidden = count === 1;
+  });
+  addHit.disabled = count >= MAX_HITS;
+  byId('hit-count').textContent = `${count} / ${MAX_HITS} 行`;
+}
+
+function appendHitRow(hit = {}) {
+  const row = document.createElement('div');
+  row.className = 'hit-row';
+  const damage = makeFieldInput({integer:true, required:editing !== null});
+  const critical = makeFieldInput(criticalField);
+  damage.value = hit.damage ?? '';
+  critical.value = hit.critical ?? '';
+  const remove = document.createElement('button');
+  remove.type = 'button';
+  remove.textContent = '−';
+  remove.addEventListener('click', () => {
+    const nextFocus = row.nextElementSibling ?? row.previousElementSibling;
+    row.remove();
+    updateHitRows();
+    nextFocus.querySelector('input').focus();
+  });
+  row.append(labeledInput(damage,''), labeledInput(critical,''), remove);
+  hitRows.append(row);
+  updateHitRows();
+  return damage;
+}
+
+addHit.addEventListener('click', () => {
+  if (hitRows.children.length < MAX_HITS) appendHitRow().focus();
+});
 
 function fieldInput(fieldId) {
   return byId('field-' + fieldId);
@@ -79,48 +134,79 @@ function loadRecords() {
 }
 
 function startEdit(index) {
+  if (editing === null) {
+    newRecordDraft = {
+      rows:[...hitRows.children],
+      values:sharedFields.map(field => fieldInput(field.id).value),
+      parameters:parameters.value,
+      note:note.value
+    };
+  }
   const record = records[index];
   editing = index;
-  for (const field of FIELDS) fieldInput(field.id).value = record[field.id] ?? '';
+  hitRows.replaceChildren();
+  for (const field of sharedFields) fieldInput(field.id).value = record[field.id] ?? '';
   parameters.value = Object.entries(record.params).map(([key,value]) => `${key}=${value}`).join('\n');
   note.value = record.note;
   recordStatus.textContent = '';
   byId('form-title').textContent = '実測を編集';
   byId('save-record').textContent = '編集を保存';
   byId('cancel-edit').hidden = false;
-  fieldInput('damage').focus();
+  byId('batch-actions').hidden = true;
+  byId('batch-help').hidden = true;
+  byId('shared-help').hidden = true;
+  appendHitRow(record).focus();
 }
 
 function finishEdit() {
   editing = null;
+  hitRows.replaceChildren(...newRecordDraft.rows);
+  sharedFields.forEach((field,index) => fieldInput(field.id).value = newRecordDraft.values[index]);
+  parameters.value = newRecordDraft.parameters;
+  note.value = newRecordDraft.note;
+  newRecordDraft = null;
   byId('form-title').textContent = '実測を記録';
-  byId('save-record').textContent = '実測を保存';
+  byId('save-record').textContent = 'まとめて保存';
   byId('cancel-edit').hidden = true;
+  byId('batch-actions').hidden = false;
+  byId('batch-help').hidden = false;
+  byId('shared-help').hidden = false;
+  updateHitRows();
 }
 
 recordForm.addEventListener('submit', event => {
   event.preventDefault();
   try {
-    const values = Object.fromEntries(FIELDS.map(field => {
+    const hits = [...hitRows.children].flatMap(row => {
+      const damage = row.querySelector('input');
+      const critical = row.querySelector('select');
+      return damage.value === '' ? [] : [{damage:damage.valueAsNumber, critical:critical.value || null}];
+    });
+    const firstDamage = hitRows.querySelector('input');
+    if (!hits.length) {
+      firstDamage.focus();
+      throw new Error('ダメージを1件以上入力してください。');
+    }
+    const values = Object.fromEntries(sharedFields.map(field => {
       const input = fieldInput(field.id);
       const value = input.value === '' ? null : field.options ? input.value : input.valueAsNumber;
       return [field.id, value];
     }));
-    const record = readRecord({...values, params:parseParameters(parameters.value), note:note.value.trim()});
-    const isNew = editing === null;
+    const shared = {...values, params:parseParameters(parameters.value), note:note.value.trim()};
+    const additions = hits.map(hit => readRecord({...shared, ...hit}));
     const next = records.slice();
-    if (isNew) next.push(record);
-    else next[editing] = record;
-    saveRecords(next);
-    finishEdit();
-    if (isNew) {
-      fieldInput('damage').value = '';
-      note.value = '';
-      fieldInput('damage').focus();
+    if (editing === null) {
+      next.push(...additions);
+      saveRecords(next);
+      for (const element of hitRows.querySelectorAll('input, select')) element.value = '';
+      firstDamage.focus();
+      recordStatus.textContent = `${additions.length}件を保存しました。`;
     } else {
-      recordForm.reset();
+      next[editing] = additions[0];
+      saveRecords(next);
+      finishEdit();
+      recordStatus.textContent = '編集を保存しました。';
     }
-    recordStatus.textContent = isNew ? '実測を保存しました。次の測定に同じ条件を使えます。' : '編集を保存しました。';
   } catch (error) {
     recordStatus.textContent = error.message;
   }
@@ -128,8 +214,8 @@ recordForm.addEventListener('submit', event => {
 
 byId('cancel-edit').addEventListener('click', () => {
   finishEdit();
-  recordForm.reset();
   recordStatus.textContent = '';
+  hitRows.querySelector('input').focus();
 });
 
 function signed(value, suffix='') {
@@ -226,7 +312,6 @@ function renderList() {
         saveRecords(records.filter((_,i) => i !== index));
         if (editing === index) {
           finishEdit();
-          recordForm.reset();
           recordStatus.textContent = '';
         } else if (editing !== null && editing > index) {
           editing--;
@@ -277,6 +362,9 @@ fileInput.addEventListener('change', async () => {
 impactField.addEventListener('change', renderImpact);
 fitGroup.addEventListener('change', renderFit);
 
-for (const [group,fields] of Object.entries(FIELD_GROUPS)) makeFields(byId(group+'-fields'),fields);
+for (const [group,fields] of Object.entries(FIELD_GROUPS)) {
+  makeFields(byId(group+'-fields'), fields.filter(field => sharedFields.includes(field)));
+}
+appendHitRow();
 loadRecords();
 renderAll();

@@ -12,11 +12,21 @@
 <main>
   <nav aria-label="ページ移動"><a href="index.html">編制シミュレーター</a><a href="damage.html">ダメージ予測</a></nav>
   <h1>ダメージ実測・計算式検証</h1>
-  <p class="muted">戦闘ログのダメージを、1ヒットにつき1件記録できます。効果を比べたい項目だけを変え、同じ条件で複数回測ると比較しやすくなります。</p>
+  <p class="muted">同じ部隊条件で測ったダメージを、一度に10件まで記録できます。効果を比べたい項目だけを変え、同じ条件で複数回測ると比較しやすくなります。</p>
 
   <section class="panel" aria-labelledby="form-title">
     <h2 id="form-title">実測を記録</h2>
     <form id="record-form">
+      <fieldset>
+        <legend>実測ダメージ</legend>
+        <p id="batch-help" class="muted">「入力行を追加」で最大10件。ダメージを入力した行だけ保存します。</p>
+        <div id="hit-rows"></div>
+        <div class="actions" id="batch-actions">
+          <button id="add-hit" type="button">＋ 入力行を追加</button>
+          <span id="hit-count" class="muted" role="status"></span>
+        </div>
+      </fieldset>
+      <p class="muted" id="shared-help">攻撃種別、部隊条件、その他のパラメータ、メモは入力した行すべてに共通です。</p>
       <div class="grid" id="hit-fields"></div>
       <p class="muted">能力値は攻撃が命中した時点の値を入力します。不明な項目は空欄のまま記録できます。</p>
       <div class="sides">
@@ -29,7 +39,7 @@
       <label for="record-note">メモ</label>
       <input id="record-note" maxlength="240" placeholder="戦闘ログの時刻など">
       <div class="actions">
-        <button class="primary" id="save-record" type="submit">実測を保存</button>
+        <button class="primary" id="save-record" type="submit">まとめて保存</button>
         <button id="cancel-edit" type="button" hidden>編集を取り消す</button>
         <span id="record-status" role="status"></span>
       </div>
