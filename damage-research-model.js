@@ -98,9 +98,13 @@ function conditions(record, ignored) {
   ];
 }
 
-function recordForAffinityAnalysis(record, assumeNeutral) {
-  return assumeNeutral && record.affinity === null && !record.kind.startsWith('対物')
-    ? {...record, affinity:'補正なし'} : record;
+function recordForAffinityAnalysis(record, assumeNeutral, poolNeutralBranches) {
+  if (record.kind.startsWith('対物')) return record;
+  const affinity = assumeNeutral && record.affinity === null ? '補正なし' : record.affinity;
+  if (poolNeutralBranches && affinity === '補正なし') {
+    return {...record, affinity, attackBranch:null, defenseBranch:null};
+  }
+  return affinity === record.affinity ? record : {...record, affinity};
 }
 
 function analysisConditions(record, ...ignored) {

@@ -48,7 +48,11 @@
       <input id="assume-neutral-affinity" type="checkbox">
       <span>兵科相性が不明の記録を「補正なし」として扱う</span>
     </label>
-    <p class="muted analysis-help">パラメータ比較・計算式の検証・防御側の逆算に適用します。保存済みの相性は「不明」のままです。</p>
+    <label class="analysis-checkbox">
+      <input id="pool-neutral-branches" type="checkbox">
+      <span>「補正なし」の記録は兵科を区別せずに集計する</span>
+    </label>
+    <p class="muted analysis-help">パラメータ比較・計算式の検証・防御側の逆算に適用します。両方にチェックすると、「不明」も兵科を区別せずに集計します。元の記録には入力した兵科と相性が残ります。</p>
     <details id="resistance-settings">
       <summary>防御側の未入力値を推定する条件</summary>
       <p class="muted">通常攻撃と対物攻撃からは「防御」、武勇戦法からは「武勇」、知略戦法からは「知略」を推定します。同じ条件で防御側の能力値が入力された記録があれば、優先して係数を調整します。</p>

@@ -2,7 +2,6 @@
 
 const STORAGE_KEY = 'hadou-damage-research-v1';
 const RESISTANCE_SETTINGS_KEY = 'hadou-damage-resistance-settings-v1';
-const NEUTRAL_AFFINITY_KEY = 'hadou-damage-assume-neutral-affinity-v1';
 const FILE_FORMAT = 'hadou-damage-observations';
 const MAX_HITS = 10;
 const sharedFields = FIELDS.filter(({id}) => id !== 'damage' && id !== 'critical');
@@ -27,6 +26,11 @@ let groups = [];
 let calibratedResistance = new Map();
 const resistanceSettings = byId('resistance-settings');
 const assumeNeutralAffinity = byId('assume-neutral-affinity');
+const poolNeutralBranches = byId('pool-neutral-branches');
+const affinityPreferences = [
+  [assumeNeutralAffinity, 'hadou-damage-assume-neutral-affinity-v1'],
+  [poolNeutralBranches, 'hadou-damage-pool-neutral-branches-v1']
+];
 let analysisRecords = [];
 const resistanceInputs = {
   base:byId('resistance-base'),
@@ -241,18 +245,25 @@ function readSharedValues() {
   return {...values, params:parseParameters(parameters.value), note:note.value.trim()};
 }
 
+function analysisRecord(record) {
+  return recordForAffinityAnalysis(record, assumeNeutralAffinity.checked, poolNeutralBranches.checked);
+}
+
 function updateResistanceReadout(element, record) {
   const settings = Object.fromEntries(Object.entries(resistanceInputs).map(([key,input]) => [
     key, input.validity.valid ? input.valueAsNumber : NaN
   ]));
-  const adjusted = record ? recordForAffinityAnalysis(record, assumeNeutralAffinity.checked) : null;
+  const adjusted = record ? analysisRecord(record) : null;
   const result = adjusted ? estimateResistance(adjusted, calibratedResistance, settings) : null;
   element.hidden = !result;
   if (!result) {
     element.textContent = '';
     return;
   }
-  const assumption = adjusted !== record ? '、兵科相性不明を補正なしとして集計' : '';
+  const assumptions = [];
+  if (adjusted.affinity !== record.affinity) assumptions.push('兵科相性不明を補正なしとして集計');
+  if (poolNeutralBranches.checked && adjusted.affinity === '補正なし') assumptions.push('兵科を区別せず集計');
+  const assumption = assumptions.length ? '、' + assumptions.join('、') : '';
   element.textContent = result.error
     ? `${result.label}の推定：${result.error}`
     : `${result.label}の推定 約 ${number.format(result.value)}（${result.basis}、係数 ${coefficient.format(result.scale)}${assumption}）`;
@@ -314,15 +325,17 @@ function updateSavedEstimates() {
   });
 }
 
-assumeNeutralAffinity.addEventListener('change', () => {
-  try {
-    localStorage.setItem(NEUTRAL_AFFINITY_KEY, String(assumeNeutralAffinity.checked));
-  } catch {
-    // 保存できない場合も、表示中の設定で集計する。
-  }
-  renderAnalysis();
-  updateSavedEstimates();
-});
+for (const [input, key] of affinityPreferences) {
+  input.addEventListener('change', () => {
+    try {
+      localStorage.setItem(key, String(input.checked));
+    } catch {
+      // 保存できない場合も、表示中の設定で集計する。
+    }
+    renderAnalysis();
+    updateSavedEstimates();
+  });
+}
 
 function signed(value, suffix='') {
   if (value === null) return '—';
@@ -442,7 +455,7 @@ function renderList() {
 }
 
 function renderAnalysis() {
-  analysisRecords = records.map(record => recordForAffinityAnalysis(record, assumeNeutralAffinity.checked));
+  analysisRecords = records.map(analysisRecord);
   calibratedResistance = resistanceCalibration(analysisRecords);
   renderDraftEstimates();
   renderSelects();
@@ -489,7 +502,9 @@ appendHitRow();
 loadRecords();
 loadResistanceSettings();
 try {
-  assumeNeutralAffinity.checked = localStorage.getItem(NEUTRAL_AFFINITY_KEY) === 'true';
+  for (const [input, key] of affinityPreferences) {
+    input.checked = localStorage.getItem(key) === 'true';
+  }
 } catch {
   // 保存領域にアクセスできない場合は既定値を使う。
 }
