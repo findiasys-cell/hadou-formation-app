@@ -25,8 +25,12 @@ let newRecordDraft = null;
 let groups = [];
 let calibratedResistance = new Map();
 const resistanceSettings = byId('resistance-settings');
-const baseMultiplier = byId('resistance-base');
-const criticalMultiplier = byId('resistance-critical');
+const resistanceInputs = {
+  base:byId('resistance-base'),
+  critical:byId('resistance-critical'),
+  advantage:byId('resistance-advantage'),
+  disadvantage:byId('resistance-disadvantage')
+};
 let storageUnavailable = false;
 
 function makeFieldInput(field) {
@@ -228,17 +232,17 @@ byId('cancel-edit').addEventListener('click', () => {
 function readSharedValues() {
   const values = Object.fromEntries(sharedFields.map(field => {
     const input = fieldInput(field.id);
-    const value = input.value === '' ? null : field.options ? input.value : input.valueAsNumber;
+    const value = input.disabled || input.value === '' ? null : field.options ? input.value : input.valueAsNumber;
     return [field.id, value];
   }));
   return {...values, params:parseParameters(parameters.value), note:note.value.trim()};
 }
 
 function updateResistanceReadout(element, record) {
-  const result = record ? estimateResistance(record, calibratedResistance, {
-    base: baseMultiplier.validity.valid ? baseMultiplier.valueAsNumber : NaN,
-    critical: criticalMultiplier.validity.valid ? criticalMultiplier.valueAsNumber : NaN
-  }) : null;
+  const settings = Object.fromEntries(Object.entries(resistanceInputs).map(([key,input]) => [
+    key, input.validity.valid ? input.valueAsNumber : NaN
+  ]));
+  const result = record ? estimateResistance(record, calibratedResistance, settings) : null;
   element.hidden = !result;
   if (!result) {
     element.textContent = '';
@@ -250,6 +254,7 @@ function updateResistanceReadout(element, record) {
 }
 
 function renderDraftEstimates() {
+  fieldInput('affinity').disabled = fieldInput('kind').value.startsWith('対物');
   let shared = null;
   try {
     if (fieldInput('kind').value) shared = readSharedValues();
@@ -276,19 +281,20 @@ recordForm.addEventListener('change', renderDraftEstimates);
 function loadResistanceSettings() {
   try {
     const saved = JSON.parse(localStorage.getItem(RESISTANCE_SETTINGS_KEY));
-    if (typeof saved?.base === 'string') baseMultiplier.value = saved.base;
-    if (typeof saved?.critical === 'string') criticalMultiplier.value = saved.critical;
+    for (const [key,input] of Object.entries(resistanceInputs)) {
+      if (typeof saved?.[key] === 'string') input.value = saved[key];
+    }
   } catch {
     // ブラウザーに保存できない場合も、表示中の設定で試算する。
   }
 }
 
 resistanceSettings.addEventListener('input', () => {
-  if (baseMultiplier.validity.valid && criticalMultiplier.validity.valid) {
+  const inputs = Object.entries(resistanceInputs);
+  if (inputs.every(([,input]) => input.validity.valid)) {
     try {
-      localStorage.setItem(RESISTANCE_SETTINGS_KEY, JSON.stringify({
-        base:baseMultiplier.value, critical:criticalMultiplier.value
-      }));
+      const values = Object.fromEntries(inputs.map(([key,input]) => [key,input.value]));
+      localStorage.setItem(RESISTANCE_SETTINGS_KEY, JSON.stringify(values));
     } catch {
       // 表示中の設定で試算を続ける。
     }

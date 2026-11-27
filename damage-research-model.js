@@ -15,7 +15,8 @@ const FIELD_GROUPS = {
     {id:'damage', label:'実測ダメージ', integer:true, required:true},
     {id:'kind', label:'攻撃種別', options:Object.keys(HIT_TYPES), required:true},
     {id:'critical', label:'会心', options:['なし', 'あり'], empty:'不明'},
-    {id:'power', label:'戦法威力（％）'}
+    {id:'power', label:'戦法威力（％）'},
+    {id:'affinity', label:'兵科相性（攻撃側）', options:['有利','補正なし','不利']}
   ],
   attack: [
     {id:'attackBranch', label:'攻撃側の兵科', options:BRANCHES},
@@ -54,6 +55,7 @@ function readRecord(raw) {
   if (record.defenseBranch && (record.defenseBranch === STRUCTURE) !== record.kind.startsWith('対物')) {
     throw new Error('攻撃種別と防御側の対象をそろえてください。');
   }
+  if (record.kind.startsWith('対物')) record.affinity = null;
   const params = raw.params ?? {};
   if (typeof params !== 'object' || Array.isArray(params)) throw new Error('パラメータの形式が正しくありません。');
   const entries = Object.entries(params);
@@ -213,8 +215,14 @@ function estimateResistance(record, calibration, settings) {
     if (!(settings.base > 0) || !(power > 0)) {
       return {label, error:'基準倍率と、戦法の場合は戦法威力に0より大きい値が必要です。'};
     }
-    scale = (settings.base / 100) * (power / 100) * (critical / 100);
+    const affinity = record.affinity === '有利' ? settings.advantage
+      : record.affinity === '不利' ? settings.disadvantage : 100;
+    if (!(affinity > 0)) return {label, error:'選択した兵科相性の倍率に、0より大きい値が必要です。'};
+    scale = (settings.base / 100) * (power / 100) * (critical / 100) * (affinity / 100);
     const assumptions = ['仮の式'];
+    if (!record.kind.startsWith('対物')) {
+      assumptions.push(record.affinity ? `兵科相性 ${record.affinity} ${affinity}%` : '兵科相性不明を100%と仮定');
+    }
     if (tactic && record.power === null) assumptions.push('戦法威力100%と仮定');
     if (record.critical === null) assumptions.push('会心不明を通常相当と仮定');
     basis = assumptions.join('・');

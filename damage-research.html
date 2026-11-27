@@ -47,12 +47,14 @@
     <details id="resistance-settings">
       <summary>防御側の未入力値を推定する条件</summary>
       <p class="muted">通常攻撃と対物攻撃からは「防御」、武勇戦法からは「武勇」、知略戦法からは「知略」を推定します。同じ条件で防御側の能力値が入力された記録があれば、優先して係数を調整します。</p>
-      <p class="muted">未入力値 ＝ 2 × 係数 × 攻撃側能力² ÷ 実測ダメージ − 攻撃側能力。入力済みの記録がない場合の係数は、基準倍率 × 戦法威力 × 会心時の倍率です。</p>
+      <p class="muted">未入力値 ＝ 2 × 係数 × 攻撃側能力² ÷ 実測ダメージ − 攻撃側能力。入力済みの記録がない場合の係数は、基準倍率 × 兵科相性倍率 × 戦法威力 × 会心時の倍率です。</p>
       <div class="grid">
         <label for="resistance-base">基準倍率（％）<input id="resistance-base" type="number" min="0" max="10000" step="any" inputmode="decimal" value="100"></label>
         <label for="resistance-critical">会心時の倍率（％）<input id="resistance-critical" type="number" min="0" max="10000" step="any" inputmode="decimal" placeholder="任意"></label>
+        <label for="resistance-advantage">兵科有利の倍率（％）<input id="resistance-advantage" type="number" min="0" max="10000" step="any" inputmode="decimal" value="115"></label>
+        <label for="resistance-disadvantage">兵科不利の倍率（％）<input id="resistance-disadvantage" type="number" min="0" max="10000" step="any" inputmode="decimal" value="85"></label>
       </div>
-      <p class="muted">基準倍率には、判明している兵科相性などを含めます。倍率を変えると、保存済みの記録も含めて推定を更新します。推定値は記録の能力値欄に書き込みません。</p>
+      <p class="muted">兵科倍率の初期値は試算用です。補正なし・不明・対物は100％で試算します。基準倍率には、兵科相性と別の補正を含めます。倍率を変えると、保存済みの記録も含めて推定を更新します。推定値は記録の能力値欄に書き込みません。</p>
     </details>
   </section>
 
